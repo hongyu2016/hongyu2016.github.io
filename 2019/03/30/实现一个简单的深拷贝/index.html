@@ -96,28 +96,25 @@
 
 
 
-  <meta name="description" content="在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。 使用constructor检测 1234var">
+  <meta name="description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js判断一个变量是对象还是数组的实用方法记录">
-<meta property="og:url" content="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/index.html">
+<meta property="og:title" content="实现一个简单的深拷贝">
+<meta property="og:url" content="http://yoursite.com/2019/03/30/实现一个简单的深拷贝/index.html">
 <meta property="og:site_name" content="刘宏羽的博客">
-<meta property="og:description" content="在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。 使用constructor检测 1234var">
+<meta property="og:description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/1.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/2.jpg">
-<meta property="og:updated_time" content="2019-03-14T03:47:03.097Z">
+<meta property="og:updated_time" content="2019-03-30T13:36:19.088Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js判断一个变量是对象还是数组的实用方法记录">
-<meta name="twitter:description" content="在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。 使用constructor检测 1234var">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/1.jpg">
+<meta name="twitter:title" content="实现一个简单的深拷贝">
+<meta name="twitter:description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/30/实现一个简单的深拷贝/">
 
 
 
@@ -127,7 +124,7 @@
   };
 </script>
 
-  <title>js判断一个变量是对象还是数组的实用方法记录 | 刘宏羽的博客</title>
+  <title>实现一个简单的深拷贝 | 刘宏羽的博客</title>
   
 
 
@@ -372,7 +369,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/30/实现一个简单的深拷贝/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘宏羽">
@@ -389,7 +386,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">js判断一个变量是对象还是数组的实用方法记录
+          <h1 class="post-title" itemprop="name headline">实现一个简单的深拷贝
 
               
             
@@ -415,7 +412,7 @@
                 
               
 
-              <time title="创建时间：2019-03-14 10:54:51 / 修改时间：11:47:03" itemprop="dateCreated datePublished" datetime="2019-03-14T10:54:51+08:00">2019-03-14</time>
+              <time title="创建时间：2019-03-30 19:42:44 / 修改时间：21:36:19" itemprop="dateCreated datePublished" datetime="2019-03-30T19:42:44+08:00">2019-03-30</time>
             
 
             
@@ -472,16 +469,10 @@
       
 
       
-        <p>在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。<br><img src="1.jpg" alt=""><br>由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。</p>
-<h3 id="使用constructor检测"><a href="#使用constructor检测" class="headerlink" title="使用constructor检测"></a>使用constructor检测</h3><p><img src="2.jpg" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var arr=[1,2];</span><br><span class="line">var obj=&#123;&#125;;</span><br><span class="line">console.log(arr.constructor === Array) //true</span><br><span class="line">console.log(obj.constructor === Array) //false</span><br></pre></td></tr></table></figure>
-<h3 id="使用instanceof"><a href="#使用instanceof" class="headerlink" title="使用instanceof"></a>使用instanceof</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   var arr=[1,2];</span><br><span class="line">   var obj=&#123;&#125;;</span><br><span class="line">   console.log(arr instanceof Array); //true</span><br><span class="line">console.log(obj instanceof Array); //false</span><br></pre></td></tr></table></figure>
-<p>constructor和instanceof 在iframe下使用时会失效，每个iframe都有一套环境，都有一个window，不共享原型链。</p>
-<p><font color="red">下面的代码取自网络</font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var iframe = document.createElement(&apos;iframe&apos;); //创建iframe</span><br><span class="line">document.body.appendChild(iframe); //添加到body中</span><br><span class="line">xArray = window.frames[window.frames.length-1].Array;</span><br><span class="line">var arr = new xArray(1,2,3); // 声明数组[1,2,3]</span><br><span class="line">alert(arr instanceof Array); // false</span><br><span class="line">alert(arr.constructor === Array); // false</span><br></pre></td></tr></table></figure></p>
-<p>为什么会出现这样的情况呢？原因就是：在当前窗口引入框架，其实就是引入了window对象，当我们在遍历iframe框架里的变量时使用arr instanceof Array 或者arr.constructor === Array，要注意这个Array是当前window对象的Array，而不是构造出arr的iframe里的window，所以会返回false。</p>
-<h3 id="使用toString方法"><a href="#使用toString方法" class="headerlink" title="使用toString方法"></a>使用toString方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   var arr=[1,2];</span><br><span class="line">   var obj=&#123;&#125;;</span><br><span class="line">   console.log(Object.prototype.toString.call(arr)); // &quot;[object Array]&quot;</span><br><span class="line">console.log(Object.prototype.toString.call(obj)); // &quot;[object Object]&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="使用Array-isArray"><a href="#使用Array-isArray" class="headerlink" title="使用Array.isArray()"></a>使用Array.isArray()</h3><p>ECMAScript5将Array.isArray()正式引入JavaScript，目的就是准确地检测一个值是否为数组。IE9+、 Firefox 4+、Safari 5+、Opera 10.5+和 Chrome都实现了这个方法。但是在IE8之前的版本是不支持的。</p>
-<p><font color="red">综合上述方法，自己封装一个函数</font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var arr = [];</span><br><span class="line">var arr2 = &#123;&#125;;</span><br><span class="line">function isArrayFn(value)&#123;</span><br><span class="line">    if (typeof Array.isArray === &quot;function&quot;) &#123;</span><br><span class="line">        //先检测是否有isArray方法</span><br><span class="line">        return Array.isArray(value);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        //不支持isArray方法，则使用toString方法</span><br><span class="line">        return Object.prototype.toString.call(value) === &quot;[object Array]&quot;;</span><br><span class="line">        //如果是对象则是&quot;[object Object]&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(isArrayFn(arr)); // true</span><br><span class="line">console.log(isArrayFn(arr2)); // false</span><br></pre></td></tr></table></figure></p>
+        <p>在js中经常需要用到变量的拷贝，比如<code>var a=1;var b=a;</code> 这个时候修改b的值，a不会改变<code>b=2;console.log(a); //1</code>,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a=[1,2,3]; </span><br><span class="line">var b=a;</span><br><span class="line">b[0]=66;</span><br><span class="line">console.log(a); //[66,2,3];</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var arr = [1,2,3,4];</span><br><span class="line">var arr_copy = arr ;</span><br><span class="line">arr_copy = [1,2,3,4,5];</span><br><span class="line"></span><br><span class="line">console.log(arr); //[1,2,3,4]</span><br><span class="line">console.log(arr_copy);//[1,2,3,4,5]</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    name:&apos;张三&apos;,</span><br><span class="line">    age:20</span><br><span class="line">&#125;;</span><br><span class="line">var obj_copy = obj ;</span><br><span class="line">obj_copy = &#123;</span><br><span class="line">    name:&apos;李四&apos;,</span><br><span class="line">    age:20</span><br><span class="line">&#125;;</span><br><span class="line">console.log(obj.name);//张三</span><br><span class="line">console.log(obj_copy.name);//李四</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用递归进行深拷贝。"><a href="#使用递归进行深拷贝。" class="headerlink" title="使用递归进行深拷贝。"></a>使用递归进行深拷贝。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">var car = &#123;</span><br><span class="line">    name : &apos;宝马&apos;,</span><br><span class="line">    color:&apos;红色&apos;,</span><br><span class="line">&#125;</span><br><span class="line">//判断是数组还是对象</span><br><span class="line">function getType(obj)&#123;</span><br><span class="line">    if(Object.prototype.toString.call(obj)==&apos;[object Object]&apos;)&#123;</span><br><span class="line">        return &apos;Object&apos;;</span><br><span class="line">    &#125;else if(Object.prototype.toString.call(obj)==&apos;[object Array]&apos;)&#123;</span><br><span class="line">        return &apos;Array&apos;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        return &apos;nomal&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function deepCopy(obj) &#123;</span><br><span class="line">    if (getType(obj)==&apos;nomal&apos;) &#123;</span><br><span class="line">        return obj ;  //如果是基本类型则直接返回</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        var newObj = getType(obj)==&apos;Object&apos;?&#123;&#125;:[];</span><br><span class="line">        for(var key in obj)&#123;</span><br><span class="line">            if(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                newObj[key] = deepCopy(obj[key]); //递归</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return newObj;</span><br><span class="line">&#125;</span><br><span class="line">var newCar = deepCopy(car) ;</span><br><span class="line">newInfo.name = &apos;奔驰&apos;;</span><br><span class="line">console.log(newCar); //&#123;name:&apos;奔驰&apos;,color:&apos;红色&apos;&#125;</span><br><span class="line">console.log(car);//&#123;name:&apos;宝马&apos;,color:&apos;红色&apos;&#125;</span><br></pre></td></tr></table></figure>
+<p>这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）</p>
 
       
     </div>
@@ -518,8 +509,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/27/用hexo-github搭建个人博客/" rel="next" title="用hexo+github搭建个人博客">
-                <i class="fa fa-chevron-left"></i> 用hexo+github搭建个人博客
+              <a href="/2019/03/30/1-2-3-map-parseInt-报错问解决办法/" rel="next" title="[" 1",="" "2",="" "3"].map(parseint)报错问题解决办法"="">
+                <i class="fa fa-chevron-left"></i> ["1", "2", "3"].map(parseInt)报错问题解决办法
               </a>
             
           </div>
@@ -527,10 +518,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/30/1-2-3-map-parseInt-报错问解决办法/" rel="prev" title="[" 1",="" "2",="" "3"].map(parseint)报错问题解决办法"="">
-                ["1", "2", "3"].map(parseInt)报错问题解决办法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -672,7 +659,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用constructor检测"><span class="nav-number">1.</span> <span class="nav-text">使用constructor检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用instanceof"><span class="nav-number">2.</span> <span class="nav-text">使用instanceof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用toString方法"><span class="nav-number">3.</span> <span class="nav-text">使用toString方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Array-isArray"><span class="nav-number">4.</span> <span class="nav-text">使用Array.isArray()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用递归进行深拷贝。"><span class="nav-number">1.</span> <span class="nav-text">使用递归进行深拷贝。</span></a></li></ol></div>
             
 
           </div>

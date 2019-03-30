@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[实现一个简单的深拷贝]]></title>
+    <url>%2F2019%2F03%2F30%2F%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D%2F</url>
+    <content type="text"><![CDATA[在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]=66;console.log(a); //[66,2,3]; 可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：123456789101112131415161718var arr = [1,2,3,4];var arr_copy = arr ;arr_copy = [1,2,3,4,5];console.log(arr); //[1,2,3,4]console.log(arr_copy);//[1,2,3,4,5]var obj = &#123; name:&apos;张三&apos;, age:20&#125;;var obj_copy = obj ;obj_copy = &#123; name:&apos;李四&apos;, age:20&#125;;console.log(obj.name);//张三console.log(obj_copy.name);//李四 使用递归进行深拷贝。1234567891011121314151617181920212223242526272829303132var car = &#123; name : &apos;宝马&apos;, color:&apos;红色&apos;,&#125;//判断是数组还是对象function getType(obj)&#123; if(Object.prototype.toString.call(obj)==&apos;[object Object]&apos;)&#123; return &apos;Object&apos;; &#125;else if(Object.prototype.toString.call(obj)==&apos;[object Array]&apos;)&#123; return &apos;Array&apos;; &#125;else&#123; return &apos;nomal&apos;; &#125;&#125;function deepCopy(obj) &#123; if (getType(obj)==&apos;nomal&apos;) &#123; return obj ; //如果是基本类型则直接返回 &#125;else&#123; var newObj = getType(obj)==&apos;Object&apos;?&#123;&#125;:[]; for(var key in obj)&#123; if(obj.hasOwnProperty(key))&#123; newObj[key] = deepCopy(obj[key]); //递归 &#125; &#125; &#125; return newObj;&#125;var newCar = deepCopy(car) ;newInfo.name = &apos;奔驰&apos;;console.log(newCar); //&#123;name:&apos;奔驰&apos;,color:&apos;红色&apos;&#125;console.log(car);//&#123;name:&apos;宝马&apos;,color:&apos;红色&apos;&#125; 这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[["1", "2", "3"].map(parseInt)报错问题解决办法]]></title>
     <url>%2F2019%2F03%2F30%2F1-2-3-map-parseInt-%E6%8A%A5%E9%94%99%E9%97%AE%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%2F</url>
     <content type="text"><![CDATA[第一次使用 [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(parseInt)时，以为会得到[1,2,3]这个结果，结果很不幸得到的是[1,NaN,NaN]，为什么会这样呢，其实是因为map函数传递的是三个参数value,index,arry,而parseInt函数传递的是value,radix，radix不传时默认使用10，表示十进制，但是如果radix在2-36之外会返回NaN。好了，既然已经知道了原因，那么应该怎么修改，才能得到正确的结果呢，很简单，把map和parseIntDe完整参数写出来就可以了[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map((value,index,array)=&gt;parseInt(value,10)); 给parseInt指定10进制，用es5的写法则是123[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(function(value,index,array)&#123; return parseInt(value,10)&#125;); //返回 [1,2,3]]]></content>
