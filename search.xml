@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[["1", "2", "3"].map(parseInt)报错问题解决办法]]></title>
+    <url>%2F2019%2F03%2F30%2F1-2-3-map-parseInt-%E6%8A%A5%E9%94%99%E9%97%AE%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[第一次使用 [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(parseInt)时，以为会得到[1,2,3]这个结果，结果很不幸得到的是[1,NaN,NaN]，为什么会这样呢，其实是因为map函数传递的是三个参数value,index,arry,而parseInt函数传递的是value,radix，radix不传时默认使用10，表示十进制，但是如果radix在2-36之外会返回NaN。好了，既然已经知道了原因，那么应该怎么修改，才能得到正确的结果呢，很简单，把map和parseIntDe完整参数写出来就可以了[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map((value,index,array)=&gt;parseInt(value,10)); 给parseInt指定10进制，用es5的写法则是123[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(function(value,index,array)&#123; return parseInt(value,10)&#125;); //返回 [1,2,3]]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[js判断一个变量是对象还是数组的实用方法记录]]></title>
     <url>%2F2019%2F03%2F14%2Fjs%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E5%8F%98%E9%87%8F%E6%98%AF%E5%AF%B9%E8%B1%A1%E8%BF%98%E6%98%AF%E6%95%B0%E7%BB%84%E7%9A%84%E5%AE%9E%E7%94%A8%E6%96%B9%E6%B3%95%E8%AE%B0%E5%BD%95%2F</url>
     <content type="text"><![CDATA[在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。 使用constructor检测 1234var arr=[1,2];var obj=&#123;&#125;;console.log(arr.constructor === Array) //trueconsole.log(obj.constructor === Array) //false 使用instanceof1234 var arr=[1,2]; var obj=&#123;&#125;; console.log(arr instanceof Array); //trueconsole.log(obj instanceof Array); //false constructor和instanceof 在iframe下使用时会失效，每个iframe都有一套环境，都有一个window，不共享原型链。 下面的代码取自网络123456var iframe = document.createElement(&apos;iframe&apos;); //创建iframedocument.body.appendChild(iframe); //添加到body中xArray = window.frames[window.frames.length-1].Array;var arr = new xArray(1,2,3); // 声明数组[1,2,3]alert(arr instanceof Array); // falsealert(arr.constructor === Array); // false 为什么会出现这样的情况呢？原因就是：在当前窗口引入框架，其实就是引入了window对象，当我们在遍历iframe框架里的变量时使用arr instanceof Array 或者arr.constructor === Array，要注意这个Array是当前window对象的Array，而不是构造出arr的iframe里的window，所以会返回false。 使用toString方法1234 var arr=[1,2]; var obj=&#123;&#125;; console.log(Object.prototype.toString.call(arr)); // &quot;[object Array]&quot;console.log(Object.prototype.toString.call(obj)); // &quot;[object Object]&quot; 使用Array.isArray()ECMAScript5将Array.isArray()正式引入JavaScript，目的就是准确地检测一个值是否为数组。IE9+、 Firefox 4+、Safari 5+、Opera 10.5+和 Chrome都实现了这个方法。但是在IE8之前的版本是不支持的。 综合上述方法，自己封装一个函数1234567891011121314var arr = [];var arr2 = &#123;&#125;;function isArrayFn(value)&#123; if (typeof Array.isArray === &quot;function&quot;) &#123; //先检测是否有isArray方法 return Array.isArray(value); &#125;else&#123; //不支持isArray方法，则使用toString方法 return Object.prototype.toString.call(value) === &quot;[object Array]&quot;; //如果是对象则是&quot;[object Object]&quot; &#125;&#125;console.log(isArrayFn(arr)); // trueconsole.log(isArrayFn(arr2)); // false]]></content>
