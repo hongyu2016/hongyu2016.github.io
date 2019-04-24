@@ -257,7 +257,7 @@ new Vue({
 
 ### 11. 区分环境引入不同地址
 
-新建config文件夹并新建dev.ev.js和prod.env.js
+新建config文件夹并新建dev.env.js和prod.env.js
 ```
 //dev.env.js 开发环境配置
 'use strict'
@@ -297,6 +297,7 @@ plugins: [
 `npm i mini-css-extract-plugin -D`
 ```
 //webpack.prod.conf.js
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module: {
     rules: [
         {
@@ -321,10 +322,11 @@ module: {
         }
     ]
 },
-
-new MiniCssExtractPlugin({
-    filename: '[name].[hash].js'
-})
+plugins: [
+    new MiniCssExtractPlugin({
+        filename: '[name].[hash].css'
+    })
+]
 
 ```
 <font color="red">webpack.base.conf.js中删除使用vue-style-loader的代码，并在webpack.dev.conf.js中定义</font>
@@ -388,7 +390,7 @@ tips: inject 为 true，插件会自动把打包出来的第三方库文件插�
 #### 打包时压缩js和css
 下载optimize-css-assets-webpack-plugin和uglifyjs-webpack-plugin
 
-`npm i uglifyjs-webpack-plugin uglifyjs-webpack-plugin -D`
+`npm i uglifyjs-webpack-plugin uglifyjs-webpack-plugin optimize-css-assets-webpack-plugin -D`
 
 在webpack.prod.conf.js中分别引入optimize-css-assets-webpack-plugin和uglifyjs-webpack-plugin并增加optimization
 ```
@@ -421,6 +423,7 @@ optimization: {
 下载postcss-loader 和autoprefixer
 `npm i postcss-loader autoprefixer -D`
 分别在webpack.dev.conf.js和webpack.prod.conf.js的use中添加postcss-loader
+在module中的rules中的use中追加：
 ```
 use: [
     'postcss-loader'
@@ -435,4 +438,4 @@ module.exports = {
   ]
 }
 ```
-差不多就这样了
+差不多就这样了,对了，还有一点就是打包出来的html里面引用`/dll/vendor.js`需要手动改成`./dll/vendor.js`这个下次也要优化下，我记得vue-cli 2版本中有一个地方是可以配置的
