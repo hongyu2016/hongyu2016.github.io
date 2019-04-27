@@ -1,5 +1,5 @@
 ---
-title: element-ui 表格中的form 的inpu动态t验证规则
+title: element-ui 表格中的form的input动态验证规则
 date: 2019-04-27 21:23:46
 tags: [element-ui,vue]
 categories: 前端
