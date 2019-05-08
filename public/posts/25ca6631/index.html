@@ -96,24 +96,25 @@
 
 
 
-  <meta name="description" content="记录技术点滴">
-<meta name="keywords" content="vue js nodejs es6 webpack react 前端 mysql 小程序">
-<meta property="og:type" content="website">
-<meta property="og:title" content="羽歌天地博客">
-<meta property="og:url" content="http://blog.iyuge.cn/categories/前端/index.html">
+  <meta name="description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现一个简单的深拷贝">
+<meta property="og:url" content="http://blog.iyuge.cn/posts/25ca6631/index.html">
 <meta property="og:site_name" content="羽歌天地博客">
-<meta property="og:description" content="记录技术点滴">
+<meta property="og:description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-08T10:53:20.950Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="羽歌天地博客">
-<meta name="twitter:description" content="记录技术点滴">
+<meta name="twitter:title" content="实现一个简单的深拷贝">
+<meta name="twitter:description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
 
 
 
 
 
 
-  <link rel="canonical" href="http://blog.iyuge.cn/categories/前端/">
+  <link rel="canonical" href="http://blog.iyuge.cn/posts/25ca6631/">
 
 
 
@@ -123,7 +124,7 @@
   };
 </script>
 
-  <title>分类: 前端 | 羽歌天地博客</title>
+  <title>实现一个简单的深拷贝 | 羽歌天地博客</title>
   
 
 
@@ -171,7 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -264,7 +265,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -352,239 +353,232 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>前端<small>分类</small>
-        </h2>
-      </div>
-
-      
-        
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.iyuge.cn/posts/25ca6631/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="刘宏羽">
+      <meta itemprop="description" content="记录技术点滴">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="羽歌天地博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/posts/845b95cc/" itemprop="url">
-            
-              <span itemprop="name">element-ui 上传组件函数自定义参数传递</span>
-            
-          </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">实现一个简单的深拷贝
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-07T20:09:05-07:00" content="2019-05-07">
-          05-07
-        </time>
-      </div>
+              
+            
+          </h2>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
 
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-30 19:42:44" itemprop="dateCreated datePublished" datetime="2019-03-30T19:42:44-07:00">2019-03-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-08 03:53:20" itemprop="dateModified" datetime="2019-05-08T03:53:20-07:00">2019-05-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/posts/25ca6631/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/25ca6631/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/3156ccd5/" itemprop="url">
-            
-              <span itemprop="name">element-ui 表格中的form的input动态验证规则</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-27T21:23:46-07:00" content="2019-04-27">
-          04-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/7f247ba3/" itemprop="url">
-            
-              <span itemprop="name">记录element-ui 二次封装table时formatter的使用问题</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-24T22:11:01-07:00" content="2019-04-24">
-          04-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/b38ec8f3/" itemprop="url">
-            
-              <span itemprop="name">webpack4从头构建一个简单的vue2项目</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-20T16:22:45-07:00" content="2019-04-20">
-          04-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/25ca6631/" itemprop="url">
-            
-              <span itemprop="name">实现一个简单的深拷贝</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-30T19:42:44-07:00" content="2019-03-30">
-          03-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/1428c068/" itemprop="url">
-            
-              <span itemprop="name">["1", "2", "3"].map(parseInt)报错问题解决办法</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-30T11:41:08-07:00" content="2019-03-30">
-          03-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/367b716d/" itemprop="url">
-            
-              <span itemprop="name">js判断一个变量是对象还是数组的实用方法记录</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-14T10:54:51-07:00" content="2019-03-14">
-          03-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>在js中经常需要用到变量的拷贝，比如<code>var a=1;var b=a;</code> 这个时候修改b的值，a不会改变<code>b=2;console.log(a); //1</code>,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; </span><br><span class="line">var b=a;</span><br><span class="line">b[<span class="number">0</span>]=<span class="number">66</span>;</span><br><span class="line">console.log(a); <span class="comment">//[66,2,3];</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr_copy = arr ;</span><br><span class="line">arr_copy = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">//[1,2,3,4]</span></span><br><span class="line"><span class="built_in">console</span>.log(arr_copy);<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name:<span class="string">'张三'</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> obj_copy = obj ;</span><br><span class="line">obj_copy = &#123;</span><br><span class="line">    name:<span class="string">'李四'</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj.name);<span class="comment">//张三</span></span><br><span class="line"><span class="built_in">console</span>.log(obj_copy.name);<span class="comment">//李四</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="使用递归进行深拷贝。"><a href="#使用递归进行深拷贝。" class="headerlink" title="使用递归进行深拷贝。"></a>使用递归进行深拷贝。</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> car = &#123;</span><br><span class="line">    name : <span class="string">'宝马'</span>,</span><br><span class="line">    color:<span class="string">'红色'</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断是数组还是对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">'[object Object]'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Object'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">'[object Array]'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Array'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'nomal'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getType(obj)==<span class="string">'nomal'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj ;  <span class="comment">//如果是基本类型则直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newObj = getType(obj)==<span class="string">'Object'</span>?&#123;&#125;:[];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                newObj[key] = deepCopy(obj[key]); <span class="comment">//递归</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newCar = deepCopy(car) ;</span><br><span class="line">newInfo.name = <span class="string">'奔驰'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newCar); <span class="comment">//&#123;name:'奔驰',color:'红色'&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(car);<span class="comment">//&#123;name:'宝马',color:'红色'&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）</p>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/1428c068/" rel="next" title="[" 1",="" "2",="" "3"].map(parseint)报错问题解决办法"="">
+                <i class="fa fa-chevron-left"></i> ["1", "2", "3"].map(parseInt)报错问题解决办法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/b38ec8f3/" rel="prev" title="webpack4从头构建一个简单的vue2项目">
+                webpack4从头构建一个简单的vue2项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -605,8 +599,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -690,6 +693,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用递归进行深拷贝。"><span class="nav-number">1.</span> <span class="nav-text">使用递归进行深拷贝。</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -820,6 +840,10 @@
 
 
   
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
 
   
 
@@ -859,6 +883,8 @@
 
 
 
+
+  
 
 
   

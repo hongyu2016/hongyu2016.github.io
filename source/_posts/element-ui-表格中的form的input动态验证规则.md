@@ -1,8 +1,11 @@
 ---
 title: element-ui 表格中的form的input动态验证规则
-date: 2019-04-27 21:23:46
-tags: [element-ui,vue]
+tags:
+  - element-ui
+  - vue
 categories: 前端
+abbrlink: 3156ccd5
+date: 2019-04-27 21:23:46
 ---
 ### 表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：
 ```

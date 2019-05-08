@@ -16,7 +16,8 @@ timezone:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://blog.iyuge.cn
 root: /
-permalink: :title.html #:year/:month/:day/:title/
+#permalink: :title.html #:year/:month/:day/:title/
+permalink: posts/:abbrlink/ #url链接方式，不用文章标题做链接，方便seo
 permalink_defaults:
 
 # Directory

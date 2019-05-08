@@ -1,8 +1,12 @@
 ---
 title: webpack4从头构建一个简单的vue2项目
-date: 2019-04-20 16:22:45
-tags: [nodejs,webpack,vue]
+tags:
+  - nodejs
+  - webpack
+  - vue
 categories: 前端
+abbrlink: b38ec8f3
+date: 2019-04-20 16:22:45
 ---
 
 ### 前言

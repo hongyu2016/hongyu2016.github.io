@@ -1,8 +1,11 @@
 ---
 title: 记录element-ui 二次封装table时formatter的使用问题
-date: 2019-04-24 22:11:01
-tags: [element-ui,vue]
+tags:
+  - element-ui
+  - vue
 categories: 前端
+abbrlink: 7f247ba3
+date: 2019-04-24 22:11:01
 ---
 
 ### 二次封装element table表格中遇到的问题记录

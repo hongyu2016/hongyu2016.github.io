@@ -1,8 +1,9 @@
 ---
 title: 部署在github page的hexo博客绑定二级域名
-date: 2019-02-26 19:45:45
 tags: 技术
 categories: 技术
+abbrlink: a7642960
+date: 2019-02-26 19:45:45
 ---
 ## 前提：已经有了域名（这里以阿里云为例）以及能成功访问的github page（这里以hexo部署的博客为例）。
 ### 1.增加域名解析：

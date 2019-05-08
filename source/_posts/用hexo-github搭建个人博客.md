@@ -1,8 +1,9 @@
 ---
 title: 用hexo+github搭建个人博客
-date: 2019-02-27 15:33:57
 tags: 技术
 categories: 技术
+abbrlink: 4443dac6
+date: 2019-02-27 15:33:57
 ---
 ## 用hexo+github page快速搭建个人静态博客
 
