@@ -96,25 +96,31 @@
 
 
 
-  <meta name="description" content="第一次使用 [&amp;quot;1&amp;quot;, &amp;quot;2&amp;quot;, &amp;quot;3&amp;quot;].map(parseInt)时，以为会得到[1,2,3]这个结果，结果很不幸得到的是[1,NaN,NaN]，为什么会这样呢，其实是因为map函数传递的是三个参数value,index,arry,而parseInt函数传递的是value,radix，radix不传时默认使用10，表示十进制，但是如果">
-<meta name="keywords" content="js">
+  <meta name="description" content="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：123date2: [    &amp;#123; type: &apos;date&apos;, required: true, message: &apos;请选择时间&apos;, trigger: &apos;change&apos; &amp;#125;], 而我们项目中">
+<meta name="keywords" content="element-ui,vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(parseInt)报错问题解决办法">
-<meta property="og:url" content="http://yoursite.com/2019/03/30/1-2-3-map-parseInt-报错问解决办法/index.html">
+<meta property="og:title" content="element-ui 表格中的form的input动态验证规则">
+<meta property="og:url" content="http://blog.iyuge.cn/element-ui-表格中的form的input动态验证规则.html">
 <meta property="og:site_name" content="羽歌天地博客">
-<meta property="og:description" content="第一次使用 [&amp;quot;1&amp;quot;, &amp;quot;2&amp;quot;, &amp;quot;3&amp;quot;].map(parseInt)时，以为会得到[1,2,3]这个结果，结果很不幸得到的是[1,NaN,NaN]，为什么会这样呢，其实是因为map函数传递的是三个参数value,index,arry,而parseInt函数传递的是value,radix，radix不传时默认使用10，表示十进制，但是如果">
+<meta property="og:description" content="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：123date2: [    &amp;#123; type: &apos;date&apos;, required: true, message: &apos;请选择时间&apos;, trigger: &apos;change&apos; &amp;#125;], 而我们项目中">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.iyuge.cn/4.png">
+<meta property="og:image" content="http://blog.iyuge.cn/1.png">
+<meta property="og:image" content="http://blog.iyuge.cn/2.png">
+<meta property="og:image" content="http://blog.iyuge.cn/3.png">
+<meta property="og:image" content="http://blog.iyuge.cn/5.png">
 <meta property="og:updated_time" content="2019-04-30T06:44:25.566Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(parseInt)报错问题解决办法">
-<meta name="twitter:description" content="第一次使用 [&amp;quot;1&amp;quot;, &amp;quot;2&amp;quot;, &amp;quot;3&amp;quot;].map(parseInt)时，以为会得到[1,2,3]这个结果，结果很不幸得到的是[1,NaN,NaN]，为什么会这样呢，其实是因为map函数传递的是三个参数value,index,arry,而parseInt函数传递的是value,radix，radix不传时默认使用10，表示十进制，但是如果">
+<meta name="twitter:title" content="element-ui 表格中的form的input动态验证规则">
+<meta name="twitter:description" content="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：123date2: [    &amp;#123; type: &apos;date&apos;, required: true, message: &apos;请选择时间&apos;, trigger: &apos;change&apos; &amp;#125;], 而我们项目中">
+<meta name="twitter:image" content="http://blog.iyuge.cn/4.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/30/1-2-3-map-parseInt-报错问解决办法/">
+  <link rel="canonical" href="http://blog.iyuge.cn/element-ui-表格中的form的input动态验证规则.html">
 
 
 
@@ -124,7 +130,7 @@
   };
 </script>
 
-  <title>["1", "2", "3"].map(parseInt)报错问题解决办法 | 羽歌天地博客</title>
+  <title>element-ui 表格中的form的input动态验证规则 | 羽歌天地博客</title>
   
 
 
@@ -189,7 +195,7 @@
     </div>
     
       
-        <p class="site-subtitle">爱羽歌</p>
+        <h1 class="site-subtitle" itemprop="description">爱羽歌</h1>
       
     
     
@@ -373,7 +379,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/30/1-2-3-map-parseInt-报错问解决办法/">
+    <link itemprop="mainEntityOfPage" href="http://blog.iyuge.cn/element-ui-表格中的form的input动态验证规则.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘宏羽">
@@ -390,11 +396,11 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">["1", "2", "3"].map(parseInt)报错问题解决办法
+          <h2 class="post-title" itemprop="name headline">element-ui 表格中的form的input动态验证规则
 
               
             
-          </h1>
+          </h2>
         
 
         <div class="post-meta">
@@ -416,7 +422,7 @@
                 
               
 
-              <time title="创建时间：2019-03-30 11:41:08" itemprop="dateCreated datePublished" datetime="2019-03-30T11:41:08-07:00">2019-03-30</time>
+              <time title="创建时间：2019-04-27 21:23:46" itemprop="dateCreated datePublished" datetime="2019-04-27T21:23:46-07:00">2019-04-27</time>
             
 
             
@@ -469,8 +475,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/03/30/1-2-3-map-parseInt-报错问解决办法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/30/1-2-3-map-parseInt-报错问解决办法/" itemprop="commentCount"></span>
+                <a href="/element-ui-表格中的form的input动态验证规则.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/element-ui-表格中的form的input动态验证规则.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -498,7 +504,10 @@
       
 
       
-        <p>第一次使用 <code>[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(parseInt)</code>时，以为会得到[1,2,3]这个结果，结果很不幸得到的是[1,NaN,NaN]，为什么会这样呢，其实是因为map函数传递的是三个参数<code>value,index,arry</code>,而parseInt函数传递的是<code>value,radix</code>，<code>radix</code>不传时默认使用10，表示十进制，但是如果radix在2-36之外会返回NaN。<br>好了，既然已经知道了原因，那么应该怎么修改，才能得到正确的结果呢，<br>很简单，把map和parseIntDe完整参数写出来就可以了<code>[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map((value,index,array)=&gt;parseInt(value,10));</code> 给parseInt指定10进制，用es5的写法则是<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>].map(<span class="function"><span class="keyword">function</span>(<span class="params">value,index,array</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">parseInt</span>(value,<span class="number">10</span>)</span><br><span class="line">&#125;);  <span class="comment">//返回 [1,2,3]</span></span><br></pre></td></tr></table></figure></p>
+        <h3 id="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："><a href="#表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：" class="headerlink" title="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："></a>表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">date2:</span> [</span><br><span class="line">    &#123; <span class="string">type:</span> <span class="string">'date'</span>, <span class="string">required:</span> <span class="literal">true</span>, <span class="string">message:</span> <span class="string">'请选择时间'</span>, <span class="string">trigger:</span> <span class="string">'change'</span> &#125;</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>而我们项目中的是这样的:<br><img src="4.png" alt=""> 又不想自定义指令来做，还是看下element能不能做吧，于是就开始看文档，发现只能用自定义rules，但是自定义指令，写死的规则也不符合要求啊，因为表格的数据都是不固定的，<br>首先我们把表格的数据源字段移到我们的form中<br><img src="1.png" alt=""><br><img src="2.png" alt=""><br><img src="3.png" alt=""><br>然后自定义规则：<br><img src="5.png" alt=""><br>这里需要用到一些技巧，比如在模板中，<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:prop=<span class="string">"`inputTaxTable.<span class="subst">$&#123;scope.$index&#125;</span>.thisApplyMoney`"</span></span><br></pre></td></tr></table></figure></p>
+<p>在需要校验的列中，<code>inputTaxTable.${scope.$index}.thisApplyMoney</code> 查找当前行的数据源，</p>
+<p>以及查找“未报销金额”这行的数据来跟当前金额进行对比的时候，保证找到的当前行的数据。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//field字段中包含了该行表格的index</span></span><br><span class="line">    <span class="keyword">let</span> field=rule.field;<span class="comment">//规则名称</span></span><br><span class="line">    <span class="keyword">let</span> _fieldArr=[];</span><br><span class="line">    _fieldArr=field.split(<span class="string">'.'</span>);</span><br><span class="line">    <span class="keyword">let</span> _index=_fieldArr[<span class="number">1</span>];<span class="comment">//得到表格的第n行</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Number</span>.parseFloat(value)&gt;<span class="built_in">Number</span>.parseFloat(<span class="keyword">this</span>.ruleForm.inputTaxTable[_index].notApplyMoney))&#123;</span><br><span class="line">        <span class="keyword">return</span> callback(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'不可大于未报销金额'</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -522,7 +531,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/js/" rel="tag"># js</a>
+            <a href="/tags/element-ui/" rel="tag"># element-ui</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
           
         </div>
       
@@ -535,8 +546,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/" rel="next" title="js判断一个变量是对象还是数组的实用方法记录">
-                <i class="fa fa-chevron-left"></i> js判断一个变量是对象还是数组的实用方法记录
+              <a href="/怎么样在别的电脑同步更新发表hexo博客？.html" rel="next" title="怎么样在别的电脑同步更新发表hexo博客？">
+                <i class="fa fa-chevron-left"></i> 怎么样在别的电脑同步更新发表hexo博客？
               </a>
             
           </div>
@@ -545,8 +556,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/30/实现一个简单的深拷贝/" rel="prev" title="实现一个简单的深拷贝">
-                实现一个简单的深拷贝 <i class="fa fa-chevron-right"></i>
+              <a href="/element-ui-上传组件函数自定义参数传递.html" rel="prev" title="element-ui 上传组件函数自定义参数传递">
+                element-ui 上传组件函数自定义参数传递 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -596,8 +607,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -681,6 +701,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："><span class="nav-number">1.</span> <span class="nav-text">表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

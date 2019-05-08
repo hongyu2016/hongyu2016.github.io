@@ -96,28 +96,25 @@
 
 
 
-  <meta name="description" content="在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。 使用constructor检测 1234var">
-<meta name="keywords" content="js">
+  <meta name="description" content="用hexo+github page快速搭建个人静态博客1.hexo环境搭建首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo npm install -g hexo-cli 可以使用 hexo v 来检查是否安装成功。接下来使用hexo cli来创建项目：使用hexo init 就会在当前文件夹下创建了项目，当然也可以使用hexo i">
+<meta name="keywords" content="技术">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js判断一个变量是对象还是数组的实用方法记录">
-<meta property="og:url" content="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/index.html">
+<meta property="og:title" content="用hexo+github搭建个人博客">
+<meta property="og:url" content="http://blog.iyuge.cn/用hexo-github搭建个人博客.html">
 <meta property="og:site_name" content="羽歌天地博客">
-<meta property="og:description" content="在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。 使用constructor检测 1234var">
+<meta property="og:description" content="用hexo+github page快速搭建个人静态博客1.hexo环境搭建首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo npm install -g hexo-cli 可以使用 hexo v 来检查是否安装成功。接下来使用hexo cli来创建项目：使用hexo init 就会在当前文件夹下创建了项目，当然也可以使用hexo i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/1.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/2.jpg">
 <meta property="og:updated_time" content="2019-04-30T06:44:25.570Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js判断一个变量是对象还是数组的实用方法记录">
-<meta name="twitter:description" content="在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。 使用constructor检测 1234var">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/1.jpg">
+<meta name="twitter:title" content="用hexo+github搭建个人博客">
+<meta name="twitter:description" content="用hexo+github page快速搭建个人静态博客1.hexo环境搭建首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo npm install -g hexo-cli 可以使用 hexo v 来检查是否安装成功。接下来使用hexo cli来创建项目：使用hexo init 就会在当前文件夹下创建了项目，当然也可以使用hexo i">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/">
+  <link rel="canonical" href="http://blog.iyuge.cn/用hexo-github搭建个人博客.html">
 
 
 
@@ -127,7 +124,7 @@
   };
 </script>
 
-  <title>js判断一个变量是对象还是数组的实用方法记录 | 羽歌天地博客</title>
+  <title>用hexo+github搭建个人博客 | 羽歌天地博客</title>
   
 
 
@@ -192,7 +189,7 @@
     </div>
     
       
-        <p class="site-subtitle">爱羽歌</p>
+        <h1 class="site-subtitle" itemprop="description">爱羽歌</h1>
       
     
     
@@ -376,7 +373,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/">
+    <link itemprop="mainEntityOfPage" href="http://blog.iyuge.cn/用hexo-github搭建个人博客.html">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘宏羽">
@@ -393,11 +390,11 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">js判断一个变量是对象还是数组的实用方法记录
+          <h2 class="post-title" itemprop="name headline">用hexo+github搭建个人博客
 
               
             
-          </h1>
+          </h2>
         
 
         <div class="post-meta">
@@ -419,7 +416,7 @@
                 
               
 
-              <time title="创建时间：2019-03-14 10:54:51" itemprop="dateCreated datePublished" datetime="2019-03-14T10:54:51-07:00">2019-03-14</time>
+              <time title="创建时间：2019-02-27 15:33:57" itemprop="dateCreated datePublished" datetime="2019-02-27T15:33:57-08:00">2019-02-27</time>
             
 
             
@@ -453,7 +450,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
 
                 
                 
@@ -472,8 +469,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/14/js判断一个变量是对象还是数组的实用方法记录/" itemprop="commentCount"></span>
+                <a href="/用hexo-github搭建个人博客.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/用hexo-github搭建个人博客.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -501,17 +498,12 @@
       
 
       
-        <p>在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。<br><img src="1.jpg" alt=""><br>由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。</p>
-<h3 id="使用constructor检测"><a href="#使用constructor检测" class="headerlink" title="使用constructor检测"></a>使用constructor检测</h3><p><img src="2.jpg" alt=""></p>
-<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> obj=<span class="comment">&#123;&#125;</span>;</span><br><span class="line">console.log(arr.<span class="keyword">constructor</span> === <span class="keyword">Array</span>) <span class="comment">//true</span></span><br><span class="line">console.log(obj.<span class="keyword">constructor</span> === <span class="keyword">Array</span>) <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
-<h3 id="使用instanceof"><a href="#使用instanceof" class="headerlink" title="使用instanceof"></a>使用instanceof</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">   <span class="keyword">var</span> obj=&#123;&#125;;</span><br><span class="line">   <span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
-<p>constructor和instanceof 在iframe下使用时会失效，每个iframe都有一套环境，都有一个window，不共享原型链。</p>
-<p><font color="red">下面的代码取自网络</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>); <span class="comment">//创建iframe</span></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(iframe); <span class="comment">//添加到body中</span></span><br><span class="line">xArray = <span class="built_in">window</span>.frames[<span class="built_in">window</span>.frames.length<span class="number">-1</span>].Array;</span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> xArray(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); <span class="comment">// 声明数组[1,2,3]</span></span><br><span class="line">alert(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">// false</span></span><br><span class="line">alert(arr.constructor === <span class="built_in">Array</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
-<p>为什么会出现这样的情况呢？原因就是：在当前窗口引入框架，其实就是引入了window对象，当我们在遍历iframe框架里的变量时使用arr instanceof Array 或者arr.constructor === Array，要注意这个Array是当前window对象的Array，而不是构造出arr的iframe里的window，所以会返回false。</p>
-<h3 id="使用toString方法"><a href="#使用toString方法" class="headerlink" title="使用toString方法"></a>使用toString方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">   <span class="keyword">var</span> obj=&#123;&#125;;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(arr)); <span class="comment">// "[object Array]"</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(obj)); <span class="comment">// "[object Object]"</span></span><br></pre></td></tr></table></figure>
-<h3 id="使用Array-isArray"><a href="#使用Array-isArray" class="headerlink" title="使用Array.isArray()"></a>使用Array.isArray()</h3><p>ECMAScript5将Array.isArray()正式引入JavaScript，目的就是准确地检测一个值是否为数组。IE9+、 Firefox 4+、Safari 5+、Opera 10.5+和 Chrome都实现了这个方法。但是在IE8之前的版本是不支持的。</p>
-<p><font color="red">综合上述方法，自己封装一个函数</font><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [];</span><br><span class="line"><span class="keyword">var</span> arr2 = &#123;&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isArrayFn</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="built_in">Array</span>.isArray === <span class="string">"function"</span>) &#123;</span><br><span class="line">        <span class="comment">//先检测是否有isArray方法</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Array</span>.isArray(value);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//不支持isArray方法，则使用toString方法</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(value) === <span class="string">"[object Array]"</span>;</span><br><span class="line">        <span class="comment">//如果是对象则是"[object Object]"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(isArrayFn(arr)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(isArrayFn(arr2)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure></p>
-
+        <h2 id="用hexo-github-page快速搭建个人静态博客"><a href="#用hexo-github-page快速搭建个人静态博客" class="headerlink" title="用hexo+github page快速搭建个人静态博客"></a>用hexo+github page快速搭建个人静态博客</h2><h3 id="1-hexo环境搭建"><a href="#1-hexo环境搭建" class="headerlink" title="1.hexo环境搭建"></a>1.hexo环境搭建</h3><p>首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo <code>npm install -g hexo-cli</code> 可以使用 <code>hexo v</code> 来检查是否安装成功。<br>接下来使用hexo cli来创建项目：使用<code>hexo init</code> 就会在当前文件夹下创建了项目，当然也可以使用<code>hexo init 文件夹名称</code> 来创建文件夹的同时创建项目。接着运行 <code>npm install</code>安装依赖，注意，安装hexo的文件夹需要是空文件夹。</p>
+<h3 id="2-hexo的基本使用及常见的命令"><a href="#2-hexo的基本使用及常见的命令" class="headerlink" title="2.hexo的基本使用及常见的命令"></a>2.hexo的基本使用及常见的命令</h3><p><code>hexo s</code> 使用这个命令可以在本地跑起来，可以看到cmd窗口提示项目运行在 <code>http://localhost:4000</code>，打开浏览器输入提示的地址即可访问了，不过可以看到，默认的主题有点丑，我们可以换一个，在这里我们换next这个简洁的主题。我们可以直接百度搜索hexo next主题官网或者去hexo官网找next主题都可以，我们找到next的github，克隆下来，放到博客项目的themes目录下，接下来打开根目录的配置文件_config.yml文件找到 theme，把默认的该为next，然后命令行<code>hexo clean &amp;&amp; hexo s</code>刷新页面即可成功替换主题了。<br>快速创建文章命令为 <code>hexo new &quot;文章名字&quot;</code>  执行完这个命令后就会在sources下的_posts目录下创建名称为 刚刚创建的同名md文件，可以用编辑器直接打开编辑了。</p>
+<h4 id="这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面-hexo-new-page-quot-about-quot-这时-source里面多了个目录about，里面有个index-md，就可以正常访问了，内容就在那个index-md里添加"><a href="#这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面-hexo-new-page-quot-about-quot-这时-source里面多了个目录about，里面有个index-md，就可以正常访问了，内容就在那个index-md里添加" class="headerlink" title="这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面 hexo new page &quot;about&quot; 这时 source里面多了个目录about，里面有个index.md，就可以正常访问了，内容就在那个index.md里添加"></a>这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面 <code>hexo new page &quot;about&quot;</code> 这时 source里面多了个目录about，里面有个index.md，就可以正常访问了，内容就在那个index.md里添加</h4><h3 id="与github对接"><a href="#与github对接" class="headerlink" title="与github对接"></a>与github对接</h3><p>在github上新建一个名为xxx.github.io 的仓库，然后在hexo的_config.yml中的</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>: </span><br><span class="line">  <span class="attribute">type</span>: git </span><br><span class="line">  <span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:hongyu2016/hongyu2016.github.io.git </span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure>
+<p>填写相应的git地址，然后需要把本地项目与git仓库相关联起来，需要使用ssh来连接，git ssh连接请参考 <a href="https://www.cnblogs.com/superGG1990/p/6844952.html" target="_blank" rel="noopener">配置git ssh</a> 。在本地仓库与远程仓库连接的过程中可能会出现分支不匹配等错误，需要具体问题然后再进行针对性解决。本地仓库与远程仓库关联上后就可以在本地进行发布了，<code>hexo d</code>为发布命令，会将项目发布到github page，发布成功后，会在本地生成的静态文件推送到到github，其他文件是不会推送的，这个时候会把原本在github上的readme文件删除，不要慌，在resoures下新建readme文件再次发布就好了，注意：千万不要使用github的git push发布，这样发布是没有效果的，github会在每次push时发编译失败的邮件给你，因为github page只支持静态文件，所以只能使用<code>hexo d</code>命令，另外在发布前最好先<code>hexo clean &amp;&amp; hexo g</code>先清除和重新生成静态文件发发布。发布成功后，输入xxx.github.io就可以正常访问博客了。</p>
+<h2 id="结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。"><a href="#结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。" class="headerlink" title="结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。"></a>结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。</h2>
       
     </div>
 
@@ -534,7 +526,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/js/" rel="tag"># js</a>
+            <a href="/tags/技术/" rel="tag"># 技术</a>
           
         </div>
       
@@ -547,8 +539,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/02/27/用hexo-github搭建个人博客/" rel="next" title="用hexo+github搭建个人博客">
-                <i class="fa fa-chevron-left"></i> 用hexo+github搭建个人博客
+              <a href="/部署在github-page的hexo博客绑定二级域名.html" rel="next" title="部署在github page的hexo博客绑定二级域名">
+                <i class="fa fa-chevron-left"></i> 部署在github page的hexo博客绑定二级域名
               </a>
             
           </div>
@@ -557,8 +549,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/30/1-2-3-map-parseInt-报错问解决办法/" rel="prev" title="[" 1",="" "2",="" "3"].map(parseint)报错问题解决办法"="">
-                ["1", "2", "3"].map(parseInt)报错问题解决办法 <i class="fa fa-chevron-right"></i>
+              <a href="/js判断一个变量是对象还是数组的实用方法记录.html" rel="prev" title="js判断一个变量是对象还是数组的实用方法记录">
+                js判断一个变量是对象还是数组的实用方法记录 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -713,7 +705,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用constructor检测"><span class="nav-number">1.</span> <span class="nav-text">使用constructor检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用instanceof"><span class="nav-number">2.</span> <span class="nav-text">使用instanceof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用toString方法"><span class="nav-number">3.</span> <span class="nav-text">使用toString方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Array-isArray"><span class="nav-number">4.</span> <span class="nav-text">使用Array.isArray()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用hexo-github-page快速搭建个人静态博客"><span class="nav-number">1.</span> <span class="nav-text">用hexo+github page快速搭建个人静态博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-hexo环境搭建"><span class="nav-number">1.1.</span> <span class="nav-text">1.hexo环境搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-hexo的基本使用及常见的命令"><span class="nav-number">1.2.</span> <span class="nav-text">2.hexo的基本使用及常见的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面-hexo-new-page-quot-about-quot-这时-source里面多了个目录about，里面有个index-md，就可以正常访问了，内容就在那个index-md里添加"><span class="nav-number">1.2.1.</span> <span class="nav-text">这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面 hexo new page &quot;about&quot; 这时 source里面多了个目录about，里面有个index.md，就可以正常访问了，内容就在那个index.md里添加</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与github对接"><span class="nav-number">1.3.</span> <span class="nav-text">与github对接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。"><span class="nav-number">2.</span> <span class="nav-text">结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。</span></a></li></ol></div>
             
 
           </div>
