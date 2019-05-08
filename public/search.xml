@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[element-ui 上传组件函数自定义参数传递]]></title>
+    <url>%2F2019%2F05%2F07%2Felement-ui-%E4%B8%8A%E4%BC%A0%E7%BB%84%E4%BB%B6%E5%87%BD%E6%95%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%2F</url>
+    <content type="text"><![CDATA[有时候在表格中需要在每行中有上传需求时，需要定位到是哪一行上传的图片，然后才能组合数组发送到后端，这个时候默认的参数就无法满足我们的需求了，我们需要根据当前行的index来一一对应当前行的文件上传。比如要实现下面的效果：要实现参数的自定义，我们需要在vue模板中修改函数调用的方式，通过类似：((val)=&gt;{func(val)})的方式来调用相应的函数。以及在文件编辑时要注意修改:file-list为表格中的字段，才能一一对应上]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>element-ui</tag>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[element-ui 表格中的form的input动态验证规则]]></title>
     <url>%2F2019%2F04%2F27%2Felement-ui-%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84form%E7%9A%84input%E5%8A%A8%E6%80%81%E9%AA%8C%E8%AF%81%E8%A7%84%E5%88%99%2F</url>
     <content type="text"><![CDATA[表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：123date2: [ &#123; type: 'date', required: true, message: '请选择时间', trigger: 'change' &#125;], 而我们项目中的是这样的: 又不想自定义指令来做，还是看下element能不能做吧，于是就开始看文档，发现只能用自定义rules，但是自定义指令，写死的规则也不符合要求啊，因为表格的数据都是不固定的，首先我们把表格的数据源字段移到我们的form中然后自定义规则：这里需要用到一些技巧，比如在模板中，1:prop="`inputTaxTable.$&#123;scope.$index&#125;.thisApplyMoney`" 在需要校验的列中，inputTaxTable.${scope.$index}.thisApplyMoney 查找当前行的数据源， 以及查找“未报销金额”这行的数据来跟当前金额进行对比的时候，保证找到的当前行的数据。12345678910 //field字段中包含了该行表格的index let field=rule.field;//规则名称 let _fieldArr=[]; _fieldArr=field.split('.'); let _index=_fieldArr[1];//得到表格的第n行 if(Number.parseFloat(value)&gt;Number.parseFloat(this.ruleForm.inputTaxTable[_index].notApplyMoney))&#123; return callback(new Error('不可大于未报销金额')); &#125;&#125;]]></content>
