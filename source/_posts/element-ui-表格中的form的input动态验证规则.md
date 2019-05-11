@@ -37,7 +37,10 @@ date2: [
 
     if(Number.parseFloat(value)>Number.parseFloat(this.ruleForm.inputTaxTable[_index].notApplyMoney)){
         return callback(new Error('不可大于未报销金额'));
+    }else{
+        callback()  //这里一定要这样返回，否则validate函数只会执行一次
     }
 }
 ```
+
 
