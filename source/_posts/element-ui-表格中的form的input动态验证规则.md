@@ -40,6 +40,7 @@ date2: [
     }else{
         callback()  //这里一定要这样返回，否则validate函数只会执行一次
     }
+    
 }
 ```
 
