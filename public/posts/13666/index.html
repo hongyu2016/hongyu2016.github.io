@@ -96,25 +96,25 @@
 
 
 
-  <meta name="description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
-<meta name="keywords" content="js">
+  <meta name="description" content="在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等 sudo apt-get install mysql-server 安装mysql核心服务 sudo apt-get install mysql-server 安装mysql客户端  安装完成后我们需要去mysql目录查看用户名和密码sudo vim /etc/mysql/deb">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实现一个简单的深拷贝">
-<meta property="og:url" content="http://blog.iyuge.cn/2019/03/30/实现一个简单的深拷贝/index.html">
+<meta property="og:title" content="ubantu apt-get install方式安装mysql">
+<meta property="og:url" content="http://blog.iyuge.cn/posts/13666/index.html">
 <meta property="og:site_name" content="羽歌天地博客">
-<meta property="og:description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
+<meta property="og:description" content="在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等 sudo apt-get install mysql-server 安装mysql核心服务 sudo apt-get install mysql-server 安装mysql客户端  安装完成后我们需要去mysql目录查看用户名和密码sudo vim /etc/mysql/deb">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-08T10:53:20.950Z">
+<meta property="og:updated_time" content="2019-05-15T07:07:45.603Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="实现一个简单的深拷贝">
-<meta name="twitter:description" content="在js中经常需要用到变量的拷贝，比如var a=1;var b=a; 这个时候修改b的值，a不会改变b=2;console.log(a); //1,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，1234var a=[1,2,3]; var b=a;b[0]">
+<meta name="twitter:title" content="ubantu apt-get install方式安装mysql">
+<meta name="twitter:description" content="在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等 sudo apt-get install mysql-server 安装mysql核心服务 sudo apt-get install mysql-server 安装mysql客户端  安装完成后我们需要去mysql目录查看用户名和密码sudo vim /etc/mysql/deb">
 
 
 
 
 
 
-  <link rel="canonical" href="http://blog.iyuge.cn/2019/03/30/实现一个简单的深拷贝/">
+  <link rel="canonical" href="http://blog.iyuge.cn/posts/13666/">
 
 
 
@@ -124,7 +124,7 @@
   };
 </script>
 
-  <title>实现一个简单的深拷贝 | 羽歌天地博客</title>
+  <title>ubantu apt-get install方式安装mysql | 羽歌天地博客</title>
   
 
 
@@ -373,7 +373,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.iyuge.cn/2019/03/30/实现一个简单的深拷贝/">
+    <link itemprop="mainEntityOfPage" href="http://blog.iyuge.cn/posts/13666/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="刘宏羽">
@@ -390,7 +390,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">实现一个简单的深拷贝
+          <h2 class="post-title" itemprop="name headline">ubantu apt-get install方式安装mysql
 
               
             
@@ -416,24 +416,12 @@
                 
               
 
-              <time title="创建时间：2019-03-30 19:42:44" itemprop="dateCreated datePublished" datetime="2019-03-30T19:42:44-07:00">2019-03-30</time>
+              <time title="创建时间：2019-05-15 14:41:02 / 修改时间：00:07:45" itemprop="dateCreated datePublished" datetime="2019-05-15T14:41:02-07:00">2019-05-15</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-08 03:53:20" itemprop="dateModified" datetime="2019-05-08T03:53:20-07:00">2019-05-08</time>
               
             
           </span>
@@ -450,7 +438,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a></span>
 
                 
                 
@@ -469,8 +457,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/03/30/实现一个简单的深拷贝/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/30/实现一个简单的深拷贝/" itemprop="commentCount"></span>
+                <a href="/posts/13666/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/posts/13666/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -498,10 +486,16 @@
       
 
       
-        <p>在js中经常需要用到变量的拷贝，比如<code>var a=1;var b=a;</code> 这个时候修改b的值，a不会改变<code>b=2;console.log(a); //1</code>,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; </span><br><span class="line">var b=a;</span><br><span class="line">b[<span class="number">0</span>]=<span class="number">66</span>;</span><br><span class="line">console.log(a); <span class="comment">//[66,2,3];</span></span><br></pre></td></tr></table></figure></p>
-<p>可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">var</span> arr_copy = arr ;</span><br><span class="line">arr_copy = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr); <span class="comment">//[1,2,3,4]</span></span><br><span class="line"><span class="built_in">console</span>.log(arr_copy);<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name:<span class="string">'张三'</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> obj_copy = obj ;</span><br><span class="line">obj_copy = &#123;</span><br><span class="line">    name:<span class="string">'李四'</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(obj.name);<span class="comment">//张三</span></span><br><span class="line"><span class="built_in">console</span>.log(obj_copy.name);<span class="comment">//李四</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="使用递归进行深拷贝。"><a href="#使用递归进行深拷贝。" class="headerlink" title="使用递归进行深拷贝。"></a>使用递归进行深拷贝。</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> car = &#123;</span><br><span class="line">    name : <span class="string">'宝马'</span>,</span><br><span class="line">    color:<span class="string">'红色'</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断是数组还是对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">'[object Object]'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Object'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">'[object Array]'</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'Array'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'nomal'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getType(obj)==<span class="string">'nomal'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj ;  <span class="comment">//如果是基本类型则直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newObj = getType(obj)==<span class="string">'Object'</span>?&#123;&#125;:[];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                newObj[key] = deepCopy(obj[key]); <span class="comment">//递归</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newCar = deepCopy(car) ;</span><br><span class="line">newInfo.name = <span class="string">'奔驰'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newCar); <span class="comment">//&#123;name:'奔驰',color:'红色'&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(car);<span class="comment">//&#123;name:'宝马',color:'红色'&#125;</span></span><br></pre></td></tr></table></figure>
-<p>这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）</p>
+        <h1 id="在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等"><a href="#在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等" class="headerlink" title="在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等"></a>在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等</h1><ol>
+<li><code>sudo apt-get install mysql-server</code> 安装mysql核心服务</li>
+<li><code>sudo apt-get install mysql-server</code> 安装mysql客户端</li>
+</ol>
+<p>安装完成后我们需要去mysql目录查看用户名和密码<br><code>sudo vim /etc/mysql/debain.cnf</code><br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[client]</span><br><span class="line">host     = localhost</span><br><span class="line">user     = debian-sys-maint</span><br><span class="line">password = wrMqzOiffsyheEe1</span><br><span class="line">socket   = /var/run/mysqld/mysqld.sock</span><br><span class="line">[mysql_upgrade]</span><br><span class="line">host     = localhost</span><br><span class="line">user     = debian-sys-maint</span><br><span class="line">password = wrMqzOiffsyheEe1</span><br><span class="line">socket   = /var/run/mysqld/mysqld.sock</span><br></pre></td></tr></table></figure></p>
+<p>我们用debian-sys-maint用户来登陆<br><code>mysql -u debian-sys-maint -p</code><br>输入密码：<code>wrMqzOiffsyheEe1</code><br>然后修改密码：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> mysql.user <span class="keyword">set</span> authentication_string=<span class="keyword">PASSWORD</span>(<span class="string">'root'</span>), <span class="keyword">plugin</span>=<span class="string">'mysql_native_password'</span> <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">'root'</span>;</span><br></pre></td></tr></table></figure></p>
+<p><font color="red"><br>注意，authentication_string是密码 ，plugin是验证方式，这两个一定要同时改。从mysql5.7开始root的默认验证方式是auth_socket<br></font><br>可以输入 <code>select user, plugin from mysql.user;</code> 查看到以下内容：<br><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+------------------+-----------------------+</span><br><span class="line">|<span class="string"> user             </span>|<span class="string"> plugin                </span>|</span><br><span class="line">+------------------+-----------------------+</span><br><span class="line">|<span class="string"> root             </span>|<span class="string"> auth_socket           </span>|</span><br><span class="line">|<span class="string"> mysql.session    </span>|<span class="string"> mysql_native_password </span>|</span><br><span class="line">|<span class="string"> mysql.sys        </span>|<span class="string"> mysql_native_password </span>|</span><br><span class="line">|<span class="string"> debian-sys-maint </span>|<span class="string"> mysql_native_password </span>|</span><br><span class="line">+------------------+-----------------------+</span><br><span class="line">4 rows in set (0.02 sec)</span><br></pre></td></tr></table></figure></p>
+<p>修改后的：<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">+------------------+</span>-----------------------+</span><br><span class="line">| user             | plugin                |</span><br><span class="line"><span class="code">+------------------+</span>-----------------------+</span><br><span class="line">| root             | mysql<span class="emphasis">_native_</span>password |</span><br><span class="line">| mysql.session    | mysql<span class="emphasis">_native_</span>password |</span><br><span class="line">| mysql.sys        | mysql<span class="emphasis">_native_</span>password |</span><br><span class="line">| debian-sys-maint | mysql<span class="emphasis">_native_</span>password |</span><br><span class="line"><span class="code">+------------------+</span>-----------------------+</span><br><span class="line">4 rows in set (0.02 sec)</span><br></pre></td></tr></table></figure></p>
+<p>mysql_native_password这种系统root用户登录时才可以登录数据库的root用户。所以需要把auth_socket改为mysql_native_password，才可以不受系统用户限制。</p>
+<p>然后<code>exit;</code>推出mysql。<code>sudo service mysql restart</code> 重启mysql服务</p>
 
       
     </div>
@@ -525,7 +519,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/js/" rel="tag"># js</a>
+            <a href="/tags/linux/" rel="tag"># linux</a>
           
         </div>
       
@@ -538,8 +532,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/30/1-2-3-map-parseInt-报错问解决办法/" rel="next" title="[" 1",="" "2",="" "3"].map(parseint)报错问题解决办法"="">
-                <i class="fa fa-chevron-left"></i> ["1", "2", "3"].map(parseInt)报错问题解决办法
+              <a href="/posts/60785/" rel="next" title="解决npm install安装任何包都报错的问题">
+                <i class="fa fa-chevron-left"></i> 解决npm install安装任何包都报错的问题
               </a>
             
           </div>
@@ -547,10 +541,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/20/webpack4从头构建一个简单的vue2项目/" rel="prev" title="webpack4从头构建一个简单的vue2项目">
-                webpack4从头构建一个简单的vue2项目 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -626,7 +616,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -643,7 +633,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -668,7 +660,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -704,7 +698,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用递归进行深拷贝。"><span class="nav-number">1.</span> <span class="nav-text">使用递归进行深拷贝。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等"><span class="nav-number">1.</span> <span class="nav-text">在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等</span></a></li></ol></div>
             
 
           </div>
