@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.iyuge.cn/404.html</loc>
+    <loc>http://blog.iyuge.cn//404.html</loc>
     
-    <lastmod>2019-05-15T09:23:51.260Z</lastmod>
+    <lastmod>2019-05-15T09:31:27.751Z</lastmod>
     
   </url>
   
@@ -100,14 +100,14 @@
   </url>
   
   <url>
-    <loc>http://blog.iyuge.cn/archives/index.html</loc>
+    <loc>http://blog.iyuge.cn/categories/index.html</loc>
     
     <lastmod>2019-04-30T06:44:25.570Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.iyuge.cn/categories/index.html</loc>
+    <loc>http://blog.iyuge.cn/archives/index.html</loc>
     
     <lastmod>2019-04-30T06:44:25.570Z</lastmod>
     
