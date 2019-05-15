@@ -1,6 +1,8 @@
 ---
 title: 关于
 date: 2019-02-18 22:03:57
+toc: false
+comments: false
 ---
 ## 建立此博客的初衷
 
