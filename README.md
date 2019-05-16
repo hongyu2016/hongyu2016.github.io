@@ -1,2 +1,2 @@
 # hongyu2016.github.io
-hexo博客
+hexo 博客
