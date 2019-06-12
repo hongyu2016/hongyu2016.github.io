@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.iyuge.cn/posts/d86f9c95/</loc>
+    
+    <lastmod>2019-06-12T03:57:23.006Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.iyuge.cn/posts/b38ec8f3/</loc>
     
     <lastmod>2019-05-28T12:47:30.455Z</lastmod>
@@ -9,14 +16,14 @@
   </url>
   
   <url>
-    <loc>http://blog.iyuge.cn//404.html</loc>
+    <loc>http://blog.iyuge.cn/archives/index.html</loc>
     
     <lastmod>2019-05-16T08:04:20.831Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.iyuge.cn/archives/index.html</loc>
+    <loc>http://blog.iyuge.cn//404.html</loc>
     
     <lastmod>2019-05-16T08:04:20.831Z</lastmod>
     
@@ -44,14 +51,14 @@
   </url>
   
   <url>
-    <loc>http://blog.iyuge.cn/posts/13666/</loc>
+    <loc>http://blog.iyuge.cn/posts/60785/</loc>
     
     <lastmod>2019-05-15T07:33:01.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.iyuge.cn/posts/60785/</loc>
+    <loc>http://blog.iyuge.cn/posts/13666/</loc>
     
     <lastmod>2019-05-15T07:33:01.903Z</lastmod>
     

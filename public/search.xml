@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[用Xshell登录阿里云服务器]]></title>
+    <url>%2Fposts%2Fd86f9c95%2F</url>
+    <content type="text"><![CDATA[使用Xshell登录阿里云最需要注意的一个地方就是要使用阿里云服务器的公共ip，阿里云一个有两个ip，一个是公共的，一个是私有的，这个登录管理后台查看实例就可以看得到最后会弹出是否接受密钥什么的，点确定就好，或者是弹出密码不对的，也重新输入密码即可。]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ubantu apt-get install方式安装mysql]]></title>
     <url>%2Fposts%2F13666%2F</url>
     <content type="text"><![CDATA[在ubantu上安装mysql并不难，主要是记录下安装数据库时居然不像windows那样选择安装位置，设置用户和密码等 sudo apt-get install mysql-server 安装mysql核心服务 sudo apt-get install mysql-server 安装mysql客户端 安装完成后我们需要去mysql目录查看用户名和密码sudo vim /etc/mysql/debain.cnf12345678910[client]host = localhostuser = debian-sys-maintpassword = wrMqzOiffsyheEe1socket = /var/run/mysqld/mysqld.sock[mysql_upgrade]host = localhostuser = debian-sys-maintpassword = wrMqzOiffsyheEe1socket = /var/run/mysqld/mysqld.sock 我们用debian-sys-maint用户来登陆mysql -u debian-sys-maint -p输入密码：wrMqzOiffsyheEe1然后修改密码：1update mysql.user set authentication_string=PASSWORD('root'), plugin='mysql_native_password' where user='root'; 注意，authentication_string是密码 ，plugin是验证方式，这两个一定要同时改。从mysql5.7开始root的默认验证方式是auth_socket可以输入 select user, plugin from mysql.user; 查看到以下内容：123456789+------------------+-----------------------+| user | plugin |+------------------+-----------------------+| root | auth_socket || mysql.session | mysql_native_password || mysql.sys | mysql_native_password || debian-sys-maint | mysql_native_password |+------------------+-----------------------+4 rows in set (0.02 sec) 修改后的：123456789+------------------+-----------------------+| user | plugin |+------------------+-----------------------+| root | mysql_native_password || mysql.session | mysql_native_password || mysql.sys | mysql_native_password || debian-sys-maint | mysql_native_password |+------------------+-----------------------+4 rows in set (0.02 sec) mysql_native_password这种系统root用户登录时才可以登录数据库的root用户。所以需要把auth_socket改为mysql_native_password，才可以不受系统用户限制。 然后exit;推出mysql。sudo service mysql restart 重启mysql服务]]></content>
