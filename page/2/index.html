@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>羽歌天地博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记录技术点滴">
+<meta property="og:type" content="website">
+<meta property="og:title" content="羽歌天地博客">
+<meta property="og:url" content="https://blog.iyuge.cn/page/2/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="记录技术点滴">
+<meta property="og:locale">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="vue js nodejs es6 webpack react 前端 mysql 小程序">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="羽歌天地博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">羽歌天地博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.iyuge.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-怎么样在别的电脑同步更新发表hexo博客？" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/301aa86/" class="article-date">
+  <time datetime="2019-04-24T14:12:23.000Z" itemprop="datePublished">2019-04-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/301aa86/">怎么样在别的电脑同步更新发表hexo博客？</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在git上放两个分支，一个master分支，用来存放hexo 生成public代码的（发布），另一个分支随便取名字吧比如hexo，就是放整个hexo源码的，到时候在别的电脑直接克隆hexo代码，然后写文章，发布，然后同步hexo分支代码。就可以了，很简单。<br><font color="red">注意：如果主题文件是从git克隆下来的，比如next主题，再提交之前先把next下的.git和.github文件夹删掉。如果之前没有删掉，发现next无法提交到github。此时要删掉你博客目录下的.git目录价下的index.lock文件</font><br>然后：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached themes<span class="regexp">/next/</span></span><br><span class="line">git add themes<span class="regexp">/next/</span></span><br></pre></td></tr></table></figure>
+<p> 如果一次不行，尝试多几次。<br> 这个时候就可以提交到github了</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/301aa86/" data-id="ckdqs3sft0010mgm08q0x4sqf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-记录element-ui-二次封装table时formatter的使用问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/7f247ba3/" class="article-date">
+  <time datetime="2019-04-24T14:11:01.000Z" itemprop="datePublished">2019-04-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/7f247ba3/">记录element-ui 二次封装table时formatter的使用问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="二次封装element-table表格中遇到的问题记录"><a href="#二次封装element-table表格中遇到的问题记录" class="headerlink" title="二次封装element table表格中遇到的问题记录"></a>二次封装element table表格中遇到的问题记录</h3><p>我们都知道element-ui 的table 中表格行的通过prop指定显示数据源中的字段，我们在进行二次封装时，如果数据都是很简单的字符串或者数字之类的，那就可以直接使用prop就行了，不需要做特殊的操作，但是如果是数组，那就得进行特殊的处理了。<br>我们知道element 对于表格行还提供了一个格式化的函数：formatter，常规的用法没有什么好说的了，格式化显示货币，时间等，这里要说的是当字段是数组的时候，而且要在当前列显示html元素的时候就有点蛋疼了，如果是不需要html元素，直接循环数组就行。<br>下面是element table的formatter的常规用法（来自element官网）：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">template</span>&gt;</span><br><span class="line">  &lt;el-<span class="keyword">table</span></span><br><span class="line">    :data=&quot;tableData&quot;</span><br><span class="line">    style=&quot;width: 100%&quot;</span><br><span class="line">    :<span class="keyword">default</span>-sort = &quot;&#123;prop: &#x27;date&#x27;, order: &#x27;descending&#x27;&#125;&quot;</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span></span><br><span class="line">      prop=&quot;date&quot;</span><br><span class="line">      label=&quot;日期&quot;</span><br><span class="line">      sortable</span><br><span class="line">      width=&quot;180&quot;&gt;</span><br><span class="line">    &lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span></span><br><span class="line">      prop=&quot;name&quot;</span><br><span class="line">      label=&quot;姓名&quot;</span><br><span class="line">      sortable</span><br><span class="line">      width=&quot;180&quot;&gt;</span><br><span class="line">    &lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span></span><br><span class="line">      prop=&quot;address&quot;</span><br><span class="line">      label=&quot;地址&quot;</span><br><span class="line">      :formatter=&quot;formatter&quot;&gt;</span><br><span class="line">    &lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">  &lt;/el-<span class="keyword">table</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">template</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export <span class="keyword">default</span> &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        tableData: [&#123;</span><br><span class="line">          <span class="type">date</span>: <span class="string">&#x27;2016-05-02&#x27;</span>,</span><br><span class="line">          <span class="type">name</span>: <span class="string">&#x27;王小虎&#x27;</span>,</span><br><span class="line">          address: <span class="string">&#x27;上海市普陀区金沙江路 1518 弄&#x27;</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">          <span class="type">date</span>: <span class="string">&#x27;2016-05-04&#x27;</span>,</span><br><span class="line">          <span class="type">name</span>: <span class="string">&#x27;王小虎&#x27;</span>,</span><br><span class="line">          address: <span class="string">&#x27;上海市普陀区金沙江路 1517 弄&#x27;</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">          <span class="type">date</span>: <span class="string">&#x27;2016-05-01&#x27;</span>,</span><br><span class="line">          <span class="type">name</span>: <span class="string">&#x27;王小虎&#x27;</span>,</span><br><span class="line">          address: <span class="string">&#x27;上海市普陀区金沙江路 1519 弄&#x27;</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">          <span class="type">date</span>: <span class="string">&#x27;2016-05-03&#x27;</span>,</span><br><span class="line">          <span class="type">name</span>: <span class="string">&#x27;王小虎&#x27;</span>,</span><br><span class="line">          address: <span class="string">&#x27;上海市普陀区金沙江路 1516 弄&#x27;</span></span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      formatter(<span class="keyword">row</span>, <span class="keyword">column</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">row</span>.address;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面来说下我们项目的需求<br><img src="1.png"><br>如果不是二次封装也很容易解决，可以用template，但是我们这里说的是二次封装，这里只能用formatter函数了，父组件在调用时需要提供类似这样的数据：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tablelable:</span>[</span><br><span class="line">    &#123;<span class="attr">lable:</span><span class="string">&#x27;表格行1&#x27;</span>,<span class="attr">prop:</span><span class="string">&#x27;prop_1&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">lable:</span><span class="string">&#x27;时间&#x27;</span>,<span class="attr">prop:</span><span class="string">&#x27;time&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">lable:</span><span class="string">&#x27;附件&#x27;</span>,<span class="attr">prop:</span><span class="string">&#x27;files&#x27;</span>,</span><br><span class="line">    <span class="symbol">formatter:</span>(row,column,cellvalue,index)=&#123;</span><br><span class="line">            <span class="comment">//在这里进行格式化输出</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"><span class="comment">// 这里提供的数据源</span></span><br><span class="line"><span class="attr">tableData:</span>[</span><br><span class="line">    &#123;<span class="attr">prop_1:</span><span class="string">&#x27;***&#x27;</span>,<span class="attr">time:</span><span class="string">&#x27;2015-20-2&#x27;</span>,<span class="attr">files:</span>[<span class="attr">name:</span><span class="string">&#x27;12.jpg&#x27;</span>,<span class="attr">url:</span><span class="string">&#x27;&#x27;</span>]&#125;,</span><br><span class="line">    &#123;<span class="attr">prop_1:</span><span class="string">&#x27;***&#x27;</span>,<span class="attr">time:</span><span class="string">&#x27;2015-20-2&#x27;</span>,<span class="attr">files:</span>[<span class="attr">name:</span><span class="string">&#x27;12.jpg&#x27;</span>,<span class="attr">url:</span><span class="string">&#x27;&#x27;</span>]&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>下面贴出图片吧<br><img src="2.png"><br><img src="3.png"><br>这里的formatter必须要返回一个对象才能渲染出html，如果是返回一个字符串是没有用的，会原样输出字符串，比如’<a heref="">12.jpg</a>‘ 他不会渲染出可点击的a  而是把一整个当成字符串输出，没有渲染。<font color="red">还有一个需要注意的地方就是在这里返回的对象中的元素的属性要采用原生的写法，比如class要写成className，还有变量等也需要注意写法</font>。好了，记录下，以后再遇到就懂得处理了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/7f247ba3/" data-id="ckdqs3sg0001fmgm0cdhghrpe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/element-ui/" rel="tag">element-ui</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-webpack4从头构建一个简单的vue2项目" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/b38ec8f3/" class="article-date">
+  <time datetime="2019-04-20T08:22:45.000Z" itemprop="datePublished">2019-04-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/b38ec8f3/">webpack4从头构建一个简单的vue2项目</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>vue早就有成熟的vue-cli工具了，现在是vue-cli 3.0了，但是觉得很有必要自己去实现一下，有助于自己技术的提高，也能更好地去了解webpack。本人是webpack菜鸟，有些资料是网上学习整理过来的。</p>
+<h3 id="1-新建目录文件夹"><a href="#1-新建目录文件夹" class="headerlink" title="1.新建目录文件夹"></a>1.新建目录文件夹</h3><p>第一步当然是新建工程目录了，具体怎么建就随便了，比如我建立webpackVue这个目录</p>
+<h3 id="2-新建package-json文件"><a href="#2-新建package-json文件" class="headerlink" title="2.新建package.json文件"></a>2.新建package.json文件</h3><p>package.json是nodejs项目必需的配置文件。使用<code>npm init</code>,按照提示一步步填写项目名称，作者等信息</p>
+<h3 id="3-webpack配置"><a href="#3-webpack配置" class="headerlink" title="3.webpack配置"></a>3.webpack配置</h3><p>新建build文件夹<br>build目录下新建webpack.base.conf.js,webpack.dev.conf.js,webpack.prod.conf.js文件，webpack.base.conf.js是公共基础配置，webpack.dev.conf.js是生产环境配置文件，webpack.prod.conf.js是生产环境配置。<br>创建一个src目录，用来存放我们的项目源文件，然后创建main.js文件，创建一个index.html</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;ie=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>webpack4搭建vue<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="1.jpg"> 目录结构是这样的</p>
+<p>下载webpack webpack-dev-server webpack-cli (这里webpack是局部安装)<br><code>npm i webpack webpack-dev-server webpack-cli -D</code><br>打开webpack.base.config.js，逐步添加配置</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">&#x27;webpack&#x27;</span>);</span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> =&#123;</span><br><span class="line">    <span class="comment">//入口文件</span></span><br><span class="line">    entry:&#123;</span><br><span class="line">        main: path.resolve(__dirname, <span class="string">&#x27;../src/main.js&#x27;</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//输出目录</span></span><br><span class="line">    output:&#123;</span><br><span class="line">        path: path.resolve(__dirname, <span class="string">&#x27;../dist&#x27;</span>),</span><br><span class="line">        filename: <span class="string">&#x27;[name].[hash].js&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">module</span>:&#123;</span><br><span class="line">        rules:[]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins:[</span><br><span class="line">        <span class="keyword">new</span> webpack.HashedModuleIdsPlugin(), <span class="comment">// 解决vender后面的hash每次都改变</span></span><br><span class="line">    ],</span><br><span class="line">    resolve:&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-配置loader"><a href="#4-配置loader" class="headerlink" title="4.配置loader"></a>4.配置loader</h3><p>配置babel编译代码：下载babel-loader，babel-core，babel-preset-dev。<br><code>npm i babel-loader babel-core babel-preset-env -D</code></p>
+<p>babel-preset-env 帮助我们配置 babel。我们只需要告诉它我们要兼容的情况（目标运行环境），它就会自动把代码转换为兼容对应环境的代码。<br>babel-core是作为babel的核心存在，babel的核心api都在这个模块里面<br>这里有个注意的地方，就是babel的版本的问题，运行的时候根据提示安装合适的版本就好了，这里不记得是babel的哪个工具需要7的版本了。<br>在webpack.base.conf.js文件中增加babel配置</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rules:[</span><br><span class="line">    &#123;</span><br><span class="line">        test: <span class="regexp">/\.js$/</span>, <span class="regexp">//</span>匹配.js结尾的文件</span><br><span class="line">        use: [<span class="string">&#x27;babel-loader&#x27;</span>],</span><br><span class="line">        exclude:<span class="regexp">/node_modules/</span> <span class="regexp">//</span>排除node_modules里面的js</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>新建.babelrc文件，.babelrc是babel全局配置文件</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;presets&quot;</span>:[</span><br><span class="line">        [<span class="string">&quot;env&quot;</span>,&#123;</span><br><span class="line">            <span class="attr">&quot;targets&quot;</span>: &#123;    </span><br><span class="line">                <span class="attr">&quot;browsers&quot;</span>: [<span class="string">&quot;&gt; 1%&quot;</span>, <span class="string">&quot;last 2 versions&quot;</span>, <span class="string">&quot;not ie &lt;=8&quot;</span>],</span><br><span class="line">                <span class="comment">//&quot;chrome&quot;: 52,</span></span><br><span class="line">                <span class="comment">//&quot;browsers&quot;: [&quot;last 2 versions&quot;, &quot;safari 7&quot;]</span></span><br><span class="line">            &#125;,       </span><br><span class="line">            <span class="attr">&quot;modules&quot;</span>: <span class="literal">false</span></span><br><span class="line">        &#125;]</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="下载file-loader"><a href="#下载file-loader" class="headerlink" title="下载file-loader"></a>下载file-loader</h4><p><code>npm i file-loader -D</code><br>继续追加配置</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">rules:[</span><br><span class="line">    &#123;</span><br><span class="line">        test: /\.(jpg|<span class="type">png</span>|<span class="type">svg</span>|<span class="type">gif</span>)$/,</span><br><span class="line">        use:[&#x27;file-loader&#x27;]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        test:/\.(woff|<span class="type">woff2</span>|<span class="type">eot</span>|<span class="type">ttf</span>|<span class="type">otf</span>)$/</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h4 id="下载css-loader，vue-style-loader，sass-loader，-node-sass，less，less-loader并配置css，scss，sass-less"><a href="#下载css-loader，vue-style-loader，sass-loader，-node-sass，less，less-loader并配置css，scss，sass-less" class="headerlink" title="下载css-loader，vue-style-loader，sass-loader， node-sass，less，less-loader并配置css，scss，sass,less"></a>下载css-loader，vue-style-loader，sass-loader， node-sass，less，less-loader并配置css，scss，sass,less</h4><p><code>npm i css-loader vue-style-loader sass-loader node-sass less-loader less -D</code></p>
+<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">rules:[</span><br><span class="line">    &#123;</span><br><span class="line">        test:/\.(sa|sc|c)ss$/,</span><br><span class="line">        use:[</span><br><span class="line">            &#123;</span><br><span class="line">                loader: <span class="symbol">&#x27;vue</span>-style-loader&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="symbol">&#x27;css</span>-loader&#x27;,</span><br><span class="line">            <span class="symbol">&#x27;sass</span>-loader&#x27;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        test:/\.less$/,</span><br><span class="line">        use:[</span><br><span class="line">            &#123;</span><br><span class="line">                loader: <span class="symbol">&#x27;vue</span>-style-loader&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="symbol">&#x27;css</span>-loader&#x27;,</span><br><span class="line">            <span class="symbol">&#x27;sass</span>-loader&#x27;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="5-处理html文件"><a href="#5-处理html文件" class="headerlink" title="5.处理html文件"></a>5.处理html文件</h3><p>下载html-webpack-plugin<br><code>npm i html-webpack-plugin -D</code></p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> HtmlWebpackPlugin = require(<span class="string">&#x27;html-webpack-plugin&#x27;</span>); <span class="comment">//在base配置文件头部引入</span></span><br><span class="line"><span class="keyword">new</span> <span class="type">HtmlWebpackPlugin</span>(&#123;</span><br><span class="line">    template: <span class="type">path</span>.resolve(__dirname, <span class="string">&#x27;../index.html&#x27;</span>)</span><br><span class="line">&#125;),</span><br></pre></td></tr></table></figure>
+<h3 id="6-解析模块的配置和配置别名"><a href="#6-解析模块的配置和配置别名" class="headerlink" title="6.解析模块的配置和配置别名"></a>6.解析模块的配置和配置别名</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">resolve</span>: &#123;</span><br><span class="line">    <span class="comment">// 能够使用户在引入模块时不带扩展</span></span><br><span class="line">    <span class="attribute">extensions</span>: [<span class="string">&#x27;.js&#x27;</span>, <span class="string">&#x27;.json&#x27;</span>, <span class="string">&#x27;.vue&#x27;</span>, <span class="string">&#x27;css&#x27;</span>],</span><br><span class="line">    <span class="comment">//别名</span></span><br><span class="line">    <span class="attribute">alias</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;vue$&#x27;</span>:<span class="string">&#x27;vue/dist/vue.esm.js&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;@&#x27;</span>: path.resolve(__dirname, <span class="string">&#x27;../src&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="7-配置webpack-dev-conf-js文件"><a href="#7-配置webpack-dev-conf-js文件" class="headerlink" title="7.配置webpack.dev.conf.js文件"></a>7.配置webpack.dev.conf.js文件</h3><p>下载 webpack-merge，用于合并配置<br><code>npm i webpack-merge -D</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> merge = <span class="built_in">require</span>(<span class="string">&#x27;webpack-merge&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> baseConfig = <span class="built_in">require</span>(<span class="string">&#x27;./webpack.base.conf&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">&#x27;webpack&#x27;</span>);</span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = merge(baseConfig, &#123;</span><br><span class="line">    devtool: <span class="string">&#x27;inline-source-map&#x27;</span>, <span class="comment">// 压缩方式</span></span><br><span class="line">    mode: <span class="string">&#x27;development&#x27;</span>,</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        hot: <span class="literal">true</span>, <span class="comment">// 热更新</span></span><br><span class="line">        open: <span class="literal">true</span>, <span class="comment">// 自动打开页面</span></span><br><span class="line">        contentBase: path.resolve(__dirname, <span class="string">&#x27;../src&#x27;</span>), <span class="comment">// 告诉服务从哪提供内容</span></span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.HotModuleReplacementPlugin(), <span class="comment">//开启热更新</span></span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="8-配置webpack-prod-conf-js"><a href="#8-配置webpack-prod-conf-js" class="headerlink" title="8.配置webpack.prod.conf.js"></a>8.配置webpack.prod.conf.js</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> merge = <span class="built_in">require</span>(<span class="string">&#x27;webpack-merge&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> baseConfig = <span class="built_in">require</span>(<span class="string">&#x27;./webpack.base.conf&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">&#x27;webpack&#x27;</span>);</span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = merge(baseConfig, &#123;</span><br><span class="line">    devtool: <span class="string">&#x27;source-map&#x27;</span>, <span class="comment">// 压缩方式</span></span><br><span class="line">    mode: <span class="string">&#x27;production&#x27;</span>,</span><br><span class="line">    plugins: [</span><br><span class="line"></span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="9-配置vue-loader"><a href="#9-配置vue-loader" class="headerlink" title="9.配置vue-loader"></a>9.配置vue-loader</h3><p>首先要下载vue，以及vue相关的模块<br><code>npm i vue vue-loader vue-template-compiler -D</code><br>继续完善webpack.base.cond.js</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var VueLoaderPlugin=require(<span class="string">&#x27;vue-loader/lib/plugin&#x27;</span>);</span><br><span class="line"><span class="regexp">//</span>省略部分代码...</span><br><span class="line">rules:[</span><br><span class="line">    &#123;</span><br><span class="line">        test: <span class="regexp">/\.vue$/</span>,</span><br><span class="line">        use: [<span class="string">&#x27;vue-loader&#x27;</span>],</span><br><span class="line">        exclude: <span class="regexp">/node_modules/</span></span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"><span class="regexp">//</span>省略部分代码...</span><br><span class="line">plugins:[</span><br><span class="line">    new VueLoaderPlugin(), <span class="regexp">//</span> 它的职责是将你定义过的其它规则复制并应用到 .vue 文件里相应语言的块</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>在src目录新建app.vue文件和main.js文件</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">//app.vue</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-variable">&#123;&#123;<span class="name">str</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml">  export default &#123;</span></span><br><span class="line"><span class="xml">    name: &#x27;App&#x27;,</span></span><br><span class="line"><span class="xml">    data () &#123;</span></span><br><span class="line"><span class="xml">      return &#123;</span></span><br><span class="line"><span class="xml">        str: &#x27;欢迎来到自定义webpack4+vue构建&#x27;</span></span><br><span class="line"><span class="xml">      &#125;</span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;scss&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">  div &#123;</span></span><br><span class="line"><span class="xml">    color: red;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//main.js</span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">&quot;#app&quot;</span>,</span><br><span class="line">    render: <span class="function"><span class="params">(h)</span> =&gt;</span> h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="10-配置命令"><a href="#10-配置命令" class="headerlink" title="10.配置命令"></a>10.配置命令</h3><p>打开package.json文件，并配置开发和打包命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> 省略代码。。。</span><br><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;webpack-dev-server  --progress --config build/webpack.dev.conf.js&quot;</span>,</span><br><span class="line">   <span class="string">&quot;build&quot;</span>: <span class="string">&quot;webpack --config build/webpack.prod.conf.js&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>npm run dev</code> 就可以启动项目了<br><img src="2.png"></p>
+<h2 id="继续优化…"><a href="#继续优化…" class="headerlink" title="继续优化…"></a>继续优化…</h2><h3 id="11-区分环境引入不同地址"><a href="#11-区分环境引入不同地址" class="headerlink" title="11. 区分环境引入不同地址"></a>11. 区分环境引入不同地址</h3><p>新建config文件夹并新建dev.env.js和prod.env.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//dev.env.js 开发环境配置</span></span><br><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    NODE_ENV: <span class="string">&quot;development&quot;</span>,</span><br><span class="line">    BASE_API: <span class="string">&quot;http://1456&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//prod.env.js 生产环境配置</span></span><br><span class="line"><span class="meta">&#x27;use strict&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    NODE_ENV: <span class="string">&quot;production&quot;</span>,    <span class="attr">BASE_API</span>: <span class="string">&quot;http://123.com&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="12-优化webpack配置"><a href="#12-优化webpack配置" class="headerlink" title="12.优化webpack配置"></a>12.优化webpack配置</h3><p>解决更改文件打包时dist文件没有清除，再次打包。<br>下载clean-webpack-plugin，并配置webpack.prod.conf.js文件<br><code>npm i clean-webpack-plugin -D</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span>webpack.prod.conf.js</span><br><span class="line"><span class="regexp">//</span> 引入clean-webpack-plugin</span><br><span class="line">var CleanWebpackPlugin = require(<span class="string">&#x27;clean-webpack-plugin&#x27;</span>);</span><br><span class="line"><span class="regexp">//</span> 省略代码。。。。</span><br><span class="line">plugins: [</span><br><span class="line">    new CleanWebPackPlugin();</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>根据不同环境提取css<br>下载mini-css-extract-plugin，并配置webpack.prod.conf.js文件<br><code>npm i mini-css-extract-plugin -D</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.prod.conf.js</span></span><br><span class="line"><span class="keyword">const</span> MiniCssExtractPlugin = <span class="built_in">require</span>(<span class="string">&#x27;mini-css-extract-plugin&#x27;</span>);</span><br><span class="line"><span class="keyword">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">        &#123;</span><br><span class="line">            test: <span class="regexp">/\.(c|sc|sa)ss$/</span>,</span><br><span class="line">            use: [</span><br><span class="line">                &#123;</span><br><span class="line">                loader: MiniCssExtractPlugin.loader,</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="string">&#x27;css-loader&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;sass-loader&#x27;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">        test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">            &#123;</span><br><span class="line">            loader: MiniCssExtractPlugin.loader,</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&#x27;css-loader&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;less-loader&#x27;</span></span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;,</span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> MiniCssExtractPlugin(&#123;</span><br><span class="line">        filename: <span class="string">&#x27;[name].[hash].css&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><font color="red">webpack.base.conf.js中删除使用vue-style-loader的代码，并在webpack.dev.conf.js中定义</font></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span>: &#123;</span><br><span class="line">    rules: [</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.(c|sc|sa)ss$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">&#x27;vue-style-loader&#x27;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">&#x27;css-loader&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;sass-loader&#x27;</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        test: <span class="regexp">/\.less$/</span>,</span><br><span class="line">        use: [</span><br><span class="line">          &#123;</span><br><span class="line">            loader: <span class="string">&#x27;vue-style-loader&#x27;</span>,</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">&#x27;css-loader&#x27;</span>,</span><br><span class="line">          <span class="string">&#x27;less-loader&#x27;</span></span><br><span class="line">         ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line"><span class="comment">//以上这段webpack.base.conf.js中的代码移到webpack.dev.conf.js中</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://link.juejin.im/?target=https://vue-loader.vuejs.org/zh/guide/extract-css.html%23webpack-4">这个配置vue-loader中有提到</a></p>
+<h4 id="第三方库单独打包"><a href="#第三方库单独打包" class="headerlink" title="第三方库单独打包"></a>第三方库单独打包</h4><p>把依赖的第三方库抽取出来单独打包，加快打包进度<br>下载autodll-webpack-plugin<br><code>npm i autodll-webpack-plugin -D</code></p>
+<p>在webpack.base.conf.js中配置</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.base.conf.js</span></span><br><span class="line"><span class="comment">//省略部分代码</span></span><br><span class="line"><span class="keyword">var</span> AutodllWebpackpackPlugin = <span class="built_in">require</span>(<span class="string">&#x27;autodll-webpack-plugin&#x27;</span>);</span><br><span class="line">plugins: [</span><br><span class="line">    <span class="keyword">new</span> AutodllWebpackpackPlugin (&#123;</span><br><span class="line">        inject: <span class="literal">true</span>,</span><br><span class="line">        <span class="keyword">debugger</span>: <span class="literal">true</span>,</span><br><span class="line">        filename: <span class="string">&#x27;[name].js&#x27;</span>,</span><br><span class="line">        path: <span class="string">&#x27;./dll&#x27;</span>,</span><br><span class="line">        entry: &#123;</span><br><span class="line">            vendor: [<span class="string">&#x27;vue&#x27;</span>]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tips: inject 为 true，插件会自动把打包出来的第三方库文件插入到 HTML。filename 是打包后文件的名称。path 是打包后的路径。entry 是入口，vendor 是你指定的名称，数组内容就是要打包的第三方库的名称，不要写全路径，Webpack 会自动去 node_modules 中找到的。</p>
+<h4 id="提取公共代码"><a href="#提取公共代码" class="headerlink" title="提取公共代码"></a>提取公共代码</h4><p>在 webpack.base.conf.js的 plugins 属性中添加如下插件对象<br><code>new webpack.optimize.SplitChunksPlugin()</code></p>
+<h4 id="打包时压缩js和css"><a href="#打包时压缩js和css" class="headerlink" title="打包时压缩js和css"></a>打包时压缩js和css</h4><p>下载optimize-css-assets-webpack-plugin和uglifyjs-webpack-plugin</p>
+<p><code>npm i uglifyjs-webpack-plugin uglifyjs-webpack-plugin optimize-css-assets-webpack-plugin -D</code></p>
+<p>在webpack.prod.conf.js中分别引入optimize-css-assets-webpack-plugin和uglifyjs-webpack-plugin并增加optimization</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//webpack.prod.conf.js</span></span><br><span class="line"><span class="built_in">var</span> OptimizeCSSAssetsPlugin = <span class="keyword">require</span>(<span class="string">&quot;optimize-css-assets-webpack-plugin&quot;</span>);</span><br><span class="line"><span class="built_in">var</span> UglifyJsPlugin = <span class="keyword">require</span>(<span class="string">&quot;uglifyjs-webpack-plugin&quot;</span>);</span><br><span class="line"><span class="comment">// 省略部分代码</span></span><br><span class="line">optimization: &#123;</span><br><span class="line">        minimizer: <span class="meta">[</span></span><br><span class="line">        <span class="comment">// 压缩JS</span></span><br><span class="line">        <span class="literal">new</span> UglifyJsPlugin(&#123;</span><br><span class="line">        uglifyOptions: &#123;</span><br><span class="line">            compress: &#123;</span><br><span class="line">            warnings: <span class="literal">false</span>, <span class="comment">// 去除警告</span></span><br><span class="line">            drop_debugger: <span class="literal">true</span>, <span class="comment">// 去除debugger</span></span><br><span class="line">            drop_console: <span class="literal">true</span> <span class="comment">// 去除console.log</span></span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">cache</span>: <span class="literal">true</span>, <span class="comment">// 开启缓存</span></span><br><span class="line">        parallel: <span class="literal">true</span>, <span class="comment">// 平行压缩</span></span><br><span class="line">        sourceMap: <span class="literal">false</span> <span class="comment">// set to true if you want JS source maps</span></span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="comment">// 压缩css</span></span><br><span class="line">        <span class="literal">new</span> OptimizeCSSAssetsPlugin(&#123;&#125;)</span><br><span class="line">    <span class="meta">]</span></span><br><span class="line">&#125;,</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="css自动加前缀"><a href="#css自动加前缀" class="headerlink" title="css自动加前缀"></a>css自动加前缀</h4><p>下载postcss-loader 和autoprefixer<br><code>npm i postcss-loader autoprefixer -D</code><br>分别在webpack.dev.conf.js和webpack.prod.conf.js的use中添加postcss-loader<br>在module中的rules中的use中追加：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span>: [</span><br><span class="line">    <span class="string">&#x27;postcss-loader&#x27;</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>在项目下增加postcss.config.js</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 配置cssz加前缀</span></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="built_in">require</span>(<span class="string">&#x27;autoprefixer&#x27;</span>)</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>差不多就这样了,对了，还有一点就是打包出来的html里面引用<code>/dll/vendor.js</code>需要手动改成<code>./dll/vendor.js</code>这个下次也要优化下，我记得vue-cli 2版本中有一个地方是可以配置的</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/b38ec8f3/" data-id="ckdqs3sfg000fmgm0by3oa7zz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-实现一个简单的深拷贝" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/25ca6631/" class="article-date">
+  <time datetime="2019-03-30T11:42:44.000Z" itemprop="datePublished">2019-03-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/25ca6631/">实现一个简单的深拷贝</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在js中经常需要用到变量的拷贝，比如<code>var a=1;var b=a;</code> 这个时候修改b的值，a不会改变<code>b=2;console.log(a); //1</code>,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">var</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; </span><br><span class="line"><span class="attribute">var</span> b=a;</span><br><span class="line"><span class="attribute">b</span>[<span class="number">0</span>]=<span class="number">66</span>;</span><br><span class="line"><span class="attribute">console</span>.log(a); //[<span class="number">66</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+<p>可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">var arr_copy = arr ;</span><br><span class="line">arr_copy = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">console.log(arr); <span class="comment">//[1,2,3,4]</span></span><br><span class="line">console.log(arr_copy);<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    name:<span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">var obj_copy = obj ;</span><br><span class="line">obj_copy = &#123;</span><br><span class="line">    name:<span class="string">&#x27;李四&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">console.log(obj.name);<span class="comment">//张三</span></span><br><span class="line">console.log(obj_copy.name);<span class="comment">//李四</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用递归进行深拷贝。"><a href="#使用递归进行深拷贝。" class="headerlink" title="使用递归进行深拷贝。"></a>使用递归进行深拷贝。</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> car = &#123;</span><br><span class="line">    name : <span class="string">&#x27;宝马&#x27;</span>,</span><br><span class="line">    color:<span class="string">&#x27;红色&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断是数组还是对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Object]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Object&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Array]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Array&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;nomal&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getType(obj)==<span class="string">&#x27;nomal&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj ;  <span class="comment">//如果是基本类型则直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newObj = getType(obj)==<span class="string">&#x27;Object&#x27;</span>?&#123;&#125;:[];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                newObj[key] = deepCopy(obj[key]); <span class="comment">//递归</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newCar = deepCopy(car) ;</span><br><span class="line">newInfo.name = <span class="string">&#x27;奔驰&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newCar); <span class="comment">//&#123;name:&#x27;奔驰&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(car);<span class="comment">//&#123;name:&#x27;宝马&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/25ca6631/" data-id="ckdqs3sfr000vmgm01sjfcabb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-1-2-3-map-parseInt-报错问解决办法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/1428c068/" class="article-date">
+  <time datetime="2019-03-30T03:41:08.000Z" itemprop="datePublished">2019-03-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/1428c068/">[&#34;1&#34;, &#34;2&#34;, &#34;3&#34;].map(parseInt)报错问题解决办法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>第一次使用 <code>[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(parseInt)</code>时，以为会得到[1,2,3]这个结果，结果很不幸得到的是[1,NaN,NaN]，为什么会这样呢，其实是因为map函数传递的是三个参数<code>value,index,arry</code>,而parseInt函数传递的是<code>value,radix</code>，<code>radix</code>不传时默认使用10，表示十进制，但是如果radix在2-36之外会返回NaN。<br>好了，既然已经知道了原因，那么应该怎么修改，才能得到正确的结果呢，<br>很简单，把map和parseIntDe完整参数写出来就可以了<code>[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map((value,index,array)=&gt;parseInt(value,10));</code> 给parseInt指定10进制，用es5的写法则是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;3&quot;</span>].map(<span class="function"><span class="keyword">function</span>(<span class="params">value,index,array</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">parseInt</span>(value,<span class="number">10</span>)</span><br><span class="line">&#125;);  <span class="comment">//返回 [1,2,3]</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/1428c068/" data-id="ckdqs3sf00001mgm0d8ks7mkw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-js判断一个变量是对象还是数组的实用方法记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/367b716d/" class="article-date">
+  <time datetime="2019-03-14T02:54:51.000Z" itemprop="datePublished">2019-03-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/367b716d/">js判断一个变量是对象还是数组的实用方法记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。<br><img src="1.jpg"><br>由图中可以看出，变量为null，数组，对象的abc使用typeof检测出来的都是object，没有办法进一步区分。</p>
+<h3 id="使用constructor检测"><a href="#使用constructor检测" class="headerlink" title="使用constructor检测"></a>使用constructor检测</h3><p><img src="2.jpg"></p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line"><span class="keyword">var</span> obj=<span class="comment">&#123;&#125;</span>;</span><br><span class="line">console.log(arr.<span class="keyword">constructor</span> === <span class="keyword">Array</span>) <span class="comment">//true</span></span><br><span class="line">console.log(obj.<span class="keyword">constructor</span> === <span class="keyword">Array</span>) <span class="comment">//false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="使用instanceof"><a href="#使用instanceof" class="headerlink" title="使用instanceof"></a>使用instanceof</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">   <span class="keyword">var</span> obj=&#123;&#125;;</span><br><span class="line">   <span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(obj <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">//false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>constructor和instanceof 在iframe下使用时会失效，每个iframe都有一套环境，都有一个window，不共享原型链。</p>
+<p><font color="red">下面的代码取自网络</font></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> iframe = <span class="built_in">document</span>.createElement(<span class="string">&#x27;iframe&#x27;</span>); <span class="comment">//创建iframe</span></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(iframe); <span class="comment">//添加到body中</span></span><br><span class="line">xArray = <span class="built_in">window</span>.frames[<span class="built_in">window</span>.frames.length<span class="number">-1</span>].Array;</span><br><span class="line"><span class="keyword">var</span> arr = <span class="keyword">new</span> xArray(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>); <span class="comment">// 声明数组[1,2,3]</span></span><br><span class="line">alert(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">// false</span></span><br><span class="line">alert(arr.constructor === <span class="built_in">Array</span>); <span class="comment">// false </span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>为什么会出现这样的情况呢？原因就是：在当前窗口引入框架，其实就是引入了window对象，当我们在遍历iframe框架里的变量时使用arr instanceof Array 或者arr.constructor === Array，要注意这个Array是当前window对象的Array，而不是构造出arr的iframe里的window，所以会返回false。</p>
+<h3 id="使用toString方法"><a href="#使用toString方法" class="headerlink" title="使用toString方法"></a>使用toString方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">var</span> arr=[<span class="number">1</span>,<span class="number">2</span>];</span><br><span class="line">   <span class="keyword">var</span> obj=&#123;&#125;;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(arr)); <span class="comment">// &quot;[object Array]&quot;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(obj)); <span class="comment">// &quot;[object Object]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Array-isArray"><a href="#使用Array-isArray" class="headerlink" title="使用Array.isArray()"></a>使用Array.isArray()</h3><p>ECMAScript5将Array.isArray()正式引入JavaScript，目的就是准确地检测一个值是否为数组。IE9+、 Firefox 4+、Safari 5+、Opera 10.5+和 Chrome都实现了这个方法。但是在IE8之前的版本是不支持的。</p>
+<p><font color="red">综合上述方法，自己封装一个函数</font></p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var arr = <span class="literal">[]</span>;</span><br><span class="line">var arr2 = &#123;&#125;;</span><br><span class="line"><span class="keyword">function</span> is<span class="constructor">ArrayFn(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (typeof <span class="module-access"><span class="module"><span class="identifier">Array</span>.</span></span>isArray<span class="operator"> === </span><span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">//先检测是否有isArray方法</span></span><br><span class="line">        return <span class="module-access"><span class="module"><span class="identifier">Array</span>.</span></span>is<span class="constructor">Array(<span class="params">value</span>)</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//不支持isArray方法，则使用toString方法</span></span><br><span class="line">        return <span class="module-access"><span class="module"><span class="identifier">Object</span>.</span></span>prototype.toString.call(value)<span class="operator"> === </span><span class="string">&quot;[object Array]&quot;</span>;</span><br><span class="line">        <span class="comment">//如果是对象则是&quot;[object Object]&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(is<span class="constructor">ArrayFn(<span class="params">arr</span>)</span>); <span class="comment">// true</span></span><br><span class="line">console.log(is<span class="constructor">ArrayFn(<span class="params">arr2</span>)</span>); <span class="comment">// false</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/367b716d/" data-id="ckdqs3sfc0009mgm05hk13smm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-用hexo-github搭建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/4443dac6/" class="article-date">
+  <time datetime="2019-02-27T07:33:57.000Z" itemprop="datePublished">2019-02-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/4443dac6/">用hexo+github搭建个人博客</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="用hexo-github-page快速搭建个人静态博客"><a href="#用hexo-github-page快速搭建个人静态博客" class="headerlink" title="用hexo+github page快速搭建个人静态博客"></a>用hexo+github page快速搭建个人静态博客</h2><h3 id="1-hexo环境搭建"><a href="#1-hexo环境搭建" class="headerlink" title="1.hexo环境搭建"></a>1.hexo环境搭建</h3><p>首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo <code>npm install -g hexo-cli</code> 可以使用 <code>hexo v</code> 来检查是否安装成功。<br>接下来使用hexo cli来创建项目：使用<code>hexo init</code> 就会在当前文件夹下创建了项目，当然也可以使用<code>hexo init 文件夹名称</code> 来创建文件夹的同时创建项目。接着运行 <code>npm install</code>安装依赖，注意，安装hexo的文件夹需要是空文件夹。</p>
+<h3 id="2-hexo的基本使用及常见的命令"><a href="#2-hexo的基本使用及常见的命令" class="headerlink" title="2.hexo的基本使用及常见的命令"></a>2.hexo的基本使用及常见的命令</h3><p><code>hexo s</code> 使用这个命令可以在本地跑起来，可以看到cmd窗口提示项目运行在 <code>http://localhost:4000</code>，打开浏览器输入提示的地址即可访问了，不过可以看到，默认的主题有点丑，我们可以换一个，在这里我们换next这个简洁的主题。我们可以直接百度搜索hexo next主题官网或者去hexo官网找next主题都可以，我们找到next的github，克隆下来，放到博客项目的themes目录下，接下来打开根目录的配置文件_config.yml文件找到 theme，把默认的该为next，然后命令行<code>hexo clean &amp;&amp; hexo s</code>刷新页面即可成功替换主题了。<br>快速创建文章命令为 <code>hexo new &quot;文章名字&quot;</code>  执行完这个命令后就会在sources下的_posts目录下创建名称为 刚刚创建的同名md文件，可以用编辑器直接打开编辑了。</p>
+<h4 id="这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面-hexo-new-page-quot-about-quot-这时-source里面多了个目录about，里面有个index-md，就可以正常访问了，内容就在那个index-md里添加"><a href="#这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面-hexo-new-page-quot-about-quot-这时-source里面多了个目录about，里面有个index-md，就可以正常访问了，内容就在那个index-md里添加" class="headerlink" title="这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面 hexo new page &quot;about&quot; 这时 source里面多了个目录about，里面有个index.md，就可以正常访问了，内容就在那个index.md里添加"></a>这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面 <code>hexo new page &quot;about&quot;</code> 这时 source里面多了个目录about，里面有个index.md，就可以正常访问了，内容就在那个index.md里添加</h4><h3 id="与github对接"><a href="#与github对接" class="headerlink" title="与github对接"></a>与github对接</h3><p>在github上新建一个名为xxx.github.io 的仓库，然后在hexo的_config.yml中的</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>: </span><br><span class="line">  <span class="attribute">type</span>: git </span><br><span class="line">  <span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:hongyu2016/hongyu2016.github.io.git </span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure>
+<p>填写相应的git地址，然后需要把本地项目与git仓库相关联起来，需要使用ssh来连接，git ssh连接请参考 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/superGG1990/p/6844952.html">配置git ssh</a> 。在本地仓库与远程仓库连接的过程中可能会出现分支不匹配等错误，需要具体问题然后再进行针对性解决。本地仓库与远程仓库关联上后就可以在本地进行发布了，<code>hexo d</code>为发布命令，会将项目发布到github page，发布成功后，会在本地生成的静态文件推送到到github，其他文件是不会推送的，这个时候会把原本在github上的readme文件删除，不要慌，在resoures下新建readme文件再次发布就好了，注意：千万不要使用github的git push发布，这样发布是没有效果的，github会在每次push时发编译失败的邮件给你，因为github page只支持静态文件，所以只能使用<code>hexo d</code>命令，另外在发布前最好先<code>hexo clean &amp;&amp; hexo g</code>先清除和重新生成静态文件发发布。发布成功后，输入xxx.github.io就可以正常访问博客了。</p>
+<h2 id="结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。"><a href="#结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。" class="headerlink" title="结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。"></a>结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/4443dac6/" data-id="ckdqs3sfw0018mgm00jv3bhxm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-部署在github-page的hexo博客绑定二级域名" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/a7642960/" class="article-date">
+  <time datetime="2019-02-26T11:45:45.000Z" itemprop="datePublished">2019-02-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/posts/a7642960/">部署在github page的hexo博客绑定二级域名</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前提：已经有了域名（这里以阿里云为例）以及能成功访问的github-page（这里以hexo部署的博客为例）。"><a href="#前提：已经有了域名（这里以阿里云为例）以及能成功访问的github-page（这里以hexo部署的博客为例）。" class="headerlink" title="前提：已经有了域名（这里以阿里云为例）以及能成功访问的github page（这里以hexo部署的博客为例）。"></a>前提：已经有了域名（这里以阿里云为例）以及能成功访问的github page（这里以hexo部署的博客为例）。</h2><h3 id="1-增加域名解析："><a href="#1-增加域名解析：" class="headerlink" title="1.增加域名解析："></a>1.增加域名解析：</h3><p><img src="/images/2019-2-26.png"><br>这里需要注意，记录类型需要选择CNAME，主机记录为除www和@外的字符，因为我要用blog作为二级域名，所以写blog。解析线路选默认就好了，一开始我选境外，结果不行。记录值为<code>***.github.io</code>(即你的github page地址)。到这里解析设置完成了。</p>
+<h3 id="2-增加域名解析："><a href="#2-增加域名解析：" class="headerlink" title="2.增加域名解析："></a>2.增加域名解析：</h3><p>在GitHub博客仓库的根目录中新建文件CNAME （没有后缀），里面填写 <code>blog.iyuge.cn</code> 注意，因为hexo在部署至github时会重新删除github的文件，所以我们必须在本地的source目录下新建CNAME文件，然后<code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d github</code>上就有CNAME文件了</p>
+<h3 id="结语：至此，给github-page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！"><a href="#结语：至此，给github-page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！" class="headerlink" title="结语：至此，给github page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！"></a>结语：至此，给github page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/a7642960/" data-id="ckdqs3sg2001mmgm0ezmv5ooy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/vue/js/">js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/element-ui/" rel="tag">element-ui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nexus/" rel="tag">nexus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react,</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/element-ui/" style="font-size: 15px;">element-ui</a> <a href="/tags/js/" style="font-size: 17.5px;">js</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/nodejs/" style="font-size: 12.5px;">nodejs</a> <a href="/tags/react/" style="font-size: 12.5px;">react,</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 15px;">技术</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/e1691e31/">运行yarn eject 后 yarn start 报错</a>
+          </li>
+        
+          <li>
+            <a href="/posts/204a2bf8/">在 create-react-app 中使用Ant Design中的坑</a>
+          </li>
+        
+          <li>
+            <a href="/posts/73a5b140/">windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库</a>
+          </li>
+        
+          <li>
+            <a href="/posts/c20fd3fa/">在重启阿里云ubantu后nginx、mysql、pm2等的重启</a>
+          </li>
+        
+          <li>
+            <a href="/posts/507fa396/">一个奇葩的表格统计需求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 刘宏羽<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

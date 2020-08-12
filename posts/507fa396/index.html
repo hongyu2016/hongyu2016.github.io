@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>一个奇葩的表格统计需求 | 羽歌天地博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="有个报表统计的需求，先上需求图：咋一看，好像挺简单啊，不就是一个表格吗？这么想那就大错特错了。这个需求实际上只有三行，也就是说需要统计“数量”，“项目造价金额”，“项目合同金额”这三个字段在不同状态下的值，也就是各列的“已报备”，“已中标”…. 等等。我们知道如果要实现这一的需求，必须要把“数量”，“项目造价金额”，“项目合同金额”这三个字段在各列中当成一个字段来处理，这样才会显示三行。比如ele">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个奇葩的表格统计需求">
+<meta property="og:url" content="https://blog.iyuge.cn/posts/507fa396/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="有个报表统计的需求，先上需求图：咋一看，好像挺简单啊，不就是一个表格吗？这么想那就大错特错了。这个需求实际上只有三行，也就是说需要统计“数量”，“项目造价金额”，“项目合同金额”这三个字段在不同状态下的值，也就是各列的“已报备”，“已中标”…. 等等。我们知道如果要实现这一的需求，必须要把“数量”，“项目造价金额”，“项目合同金额”这三个字段在各列中当成一个字段来处理，这样才会显示三行。比如ele">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/507fa396/1.jpg">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/507fa396/2.jpg">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/507fa396/3.jpg">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/507fa396/4.jpg">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/507fa396/5.jpg">
+<meta property="article:published_time" content="2019-06-17T07:41:51.000Z">
+<meta property="article:modified_time" content="2020-04-30T07:58:25.400Z">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.iyuge.cn/posts/507fa396/1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="羽歌天地博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">羽歌天地博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.iyuge.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-一个奇葩的表格统计需求" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/507fa396/" class="article-date">
+  <time datetime="2019-06-17T07:41:51.000Z" itemprop="datePublished">2019-06-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/vue/">vue</a>►<a class="article-category-link" href="/categories/vue/js/">js</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      一个奇葩的表格统计需求
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有个报表统计的需求，先上需求图：<br><img src="1.jpg"><br>咋一看，好像挺简单啊，不就是一个表格吗？<br>这么想那就大错特错了。这个需求实际上只有三行，也就是说需要统计“数量”，“项目造价金额”，“项目合同金额”这三个字段在不同状态下的值，也就是各列的“已报备”，“已中标”…. 等等。我们知道如果要实现这一的需求，必须要把“数量”，“项目造价金额”，“项目合同金额”这三个字段在各列中当成一个字段来处理，这样才会显示三行。比如element-ui的table的简单例子：<br><img src="2.jpg"><br><img src="3.jpg"><br>那后端就要返回这样的格式了<br><img src="4.jpg"><br><font color=red>坑就坑在我们这个后端返回的数据结构上，他说他只能按照状态查询结果返回给我！</font></p>
+<h3 id="来看看他返回的数据结构是什么："><a href="#来看看他返回的数据结构是什么：" class="headerlink" title="来看看他返回的数据结构是什么："></a>来看看他返回的数据结构是什么：</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;code&quot;</span>:<span class="string">&quot;200&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;message&quot;</span>:<span class="string">&quot;成功&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;responseBody&quot;</span>:&#123;</span><br><span class="line">        <span class="attr">&quot;code&quot;</span>:<span class="string">&quot;1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;data&quot;</span>:[</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;averageContractAmount&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countBuliding&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countContract&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countProject&quot;</span>:<span class="number">2</span>,</span><br><span class="line">                <span class="attr">&quot;dayTime&quot;</span>:<span class="literal">null</span>,</span><br><span class="line">                <span class="attr">&quot;projStatus&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;projStatusName&quot;</span>:<span class="string">&quot;草稿&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;totalContractAmount&quot;</span>:<span class="number">0.00</span>,</span><br><span class="line">                <span class="attr">&quot;totalProjectAmount&quot;</span>:<span class="number">17.94</span>,</span><br><span class="line">                <span class="attr">&quot;totalReturnAmount&quot;</span>:<span class="number">0.00</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;averageContractAmount&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countBuliding&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countContract&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countProject&quot;</span>:<span class="number">12</span>,</span><br><span class="line">                <span class="attr">&quot;dayTime&quot;</span>:<span class="literal">null</span>,</span><br><span class="line">                <span class="attr">&quot;projStatus&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                <span class="attr">&quot;projStatusName&quot;</span>:<span class="string">&quot;报备中&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;totalContractAmount&quot;</span>:<span class="number">0.00</span>,</span><br><span class="line">                <span class="attr">&quot;totalProjectAmount&quot;</span>:<span class="number">103.65</span>,</span><br><span class="line">                <span class="attr">&quot;totalReturnAmount&quot;</span>:<span class="number">0.00</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;averageContractAmount&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countBuliding&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countContract&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countProject&quot;</span>:<span class="number">17</span>,</span><br><span class="line">                <span class="attr">&quot;dayTime&quot;</span>:<span class="literal">null</span>,</span><br><span class="line">                <span class="attr">&quot;projStatus&quot;</span>:<span class="number">2</span>,</span><br><span class="line">                <span class="attr">&quot;projStatusName&quot;</span>:<span class="string">&quot;已报备&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;totalContractAmount&quot;</span>:<span class="number">0.00</span>,</span><br><span class="line">                <span class="attr">&quot;totalProjectAmount&quot;</span>:<span class="number">5732.99</span>,</span><br><span class="line">                <span class="attr">&quot;totalReturnAmount&quot;</span>:<span class="number">0.00</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;averageContractAmount&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countBuliding&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countContract&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countProject&quot;</span>:<span class="number">5</span>,</span><br><span class="line">                <span class="attr">&quot;dayTime&quot;</span>:<span class="literal">null</span>,</span><br><span class="line">                <span class="attr">&quot;projStatus&quot;</span>:<span class="number">4</span>,</span><br><span class="line">                <span class="attr">&quot;projStatusName&quot;</span>:<span class="string">&quot;已中标&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;totalContractAmount&quot;</span>:<span class="number">4478.88</span>,</span><br><span class="line">                <span class="attr">&quot;totalProjectAmount&quot;</span>:<span class="number">18.11</span>,</span><br><span class="line">                <span class="attr">&quot;totalReturnAmount&quot;</span>:<span class="number">0.00</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;averageContractAmount&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countBuliding&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countContract&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countProject&quot;</span>:<span class="number">6</span>,</span><br><span class="line">                <span class="attr">&quot;dayTime&quot;</span>:<span class="literal">null</span>,</span><br><span class="line">                <span class="attr">&quot;projStatus&quot;</span>:<span class="number">6</span>,</span><br><span class="line">                <span class="attr">&quot;projStatusName&quot;</span>:<span class="string">&quot;建设中&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;totalContractAmount&quot;</span>:<span class="number">14.10</span>,</span><br><span class="line">                <span class="attr">&quot;totalProjectAmount&quot;</span>:<span class="number">154.01</span>,</span><br><span class="line">                <span class="attr">&quot;totalReturnAmount&quot;</span>:<span class="number">0.00</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;averageContractAmount&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countBuliding&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countContract&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countProject&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                <span class="attr">&quot;dayTime&quot;</span>:<span class="literal">null</span>,</span><br><span class="line">                <span class="attr">&quot;projStatus&quot;</span>:<span class="number">7</span>,</span><br><span class="line">                <span class="attr">&quot;projStatusName&quot;</span>:<span class="string">&quot;已竣工&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;totalContractAmount&quot;</span>:<span class="number">1.00</span>,</span><br><span class="line">                <span class="attr">&quot;totalProjectAmount&quot;</span>:<span class="number">1.00</span>,</span><br><span class="line">                <span class="attr">&quot;totalReturnAmount&quot;</span>:<span class="number">0.00</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;averageContractAmount&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countBuliding&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countContract&quot;</span>:<span class="number">0</span>,</span><br><span class="line">                <span class="attr">&quot;countProject&quot;</span>:<span class="number">1</span>,</span><br><span class="line">                <span class="attr">&quot;dayTime&quot;</span>:<span class="literal">null</span>,</span><br><span class="line">                <span class="attr">&quot;projStatus&quot;</span>:<span class="number">10</span>,</span><br><span class="line">                <span class="attr">&quot;projStatusName&quot;</span>:<span class="string">&quot;已删除&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;totalContractAmount&quot;</span>:<span class="number">0.00</span>,</span><br><span class="line">                <span class="attr">&quot;totalProjectAmount&quot;</span>:<span class="number">0.12</span>,</span><br><span class="line">                <span class="attr">&quot;totalReturnAmount&quot;</span>:<span class="number">0.00</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;message&quot;</span>:<span class="string">&quot;操作成功&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>projStatus</code>就是上面提到的“报备中”，“已中标”等等列的状态值了，但是这样渲染出来的表格是10行，因为他数组没有处理，直接有多少个状态有值就返回多少条记录。实际上我前端这边需要的字段是这样的 </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; <span class="attr">typeName:</span> <span class="string">&#x27;数量&#x27;</span>, <span class="attr">projStatus:</span> <span class="number">1</span>, <span class="attr">total_1:</span> <span class="number">2</span>, <span class="attr">total_2:</span> <span class="number">2</span>, <span class="attr">total_3:</span> <span class="number">2</span>, <span class="attr">total_4:</span> <span class="number">2</span>, <span class="attr">total_5:</span> <span class="number">2</span>, <span class="attr">total_6:</span> <span class="number">2</span>, <span class="attr">total_7:</span> <span class="number">2</span>, <span class="attr">total_8:</span> <span class="number">2</span>, <span class="attr">total_9:</span> <span class="number">2</span>, <span class="attr">total_10:</span> <span class="number">2</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">typeName:</span> <span class="string">&#x27;项目造价金额（万）&#x27;</span>, <span class="attr">projStatus:</span> <span class="number">1</span>, <span class="attr">total_1:</span> <span class="number">2</span>, <span class="attr">total_2:</span> <span class="number">2</span>, <span class="attr">total_3:</span> <span class="number">2</span>, <span class="attr">total_4:</span> <span class="number">2</span>, <span class="attr">total_5:</span> <span class="number">2</span>, <span class="attr">total_6:</span> <span class="number">2</span>, <span class="attr">total_7:</span> <span class="number">2</span>, <span class="attr">total_8:</span> <span class="number">2</span>, <span class="attr">total_9:</span> <span class="number">2</span>, <span class="attr">total_10:</span> <span class="number">2</span> &#125;,</span><br><span class="line"></span><br><span class="line">    &#123; <span class="attr">typeName:</span> <span class="string">&#x27;项目合同金额（万）&#x27;</span>, <span class="attr">projStatus:</span> <span class="number">1</span>, <span class="attr">total_1:</span> <span class="number">2</span>, <span class="attr">total_2:</span> <span class="number">2</span>, <span class="attr">total_3:</span> <span class="number">2</span>, <span class="attr">total_4:</span> <span class="number">2</span>, <span class="attr">total_5:</span> <span class="number">2</span>, <span class="attr">total_6:</span> <span class="number">2</span>, <span class="attr">total_7:</span> <span class="number">2</span>, <span class="attr">total_8:</span> <span class="number">2</span>, <span class="attr">total_9:</span> <span class="number">2</span>, <span class="attr">total_10:</span> <span class="number">2</span> &#125; </span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>这就需要自己进行艰苦的数据处理了。。。<br>根据他字段返回的 <code>countProject //数量</code> <code>totalProjectAmount //项目造价</code> <code>totalContractAmount //项目合同</code>  这三个字段分类把数据重新组合成三个数组。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">deep<span class="constructor">DealArr(<span class="params">data</span>, <span class="params">num</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> countProject = <span class="literal">[]</span>;</span><br><span class="line">    <span class="keyword">let</span> totalProjectAmount = <span class="literal">[]</span>;</span><br><span class="line">    <span class="keyword">let</span> totalContractAmount = <span class="literal">[]</span>;</span><br><span class="line">    <span class="keyword">if</span> (num<span class="operator"> === </span><span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> _data = this.utils.copy(data);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="module-access"><span class="module"><span class="identifier">_data</span>.</span></span>length; i++) &#123;</span><br><span class="line">            <span class="keyword">let</span> ind = _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus</span><br><span class="line">            const dataObj = &#123;&#125;</span><br><span class="line">            dataObj.projStatus = _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus</span><br><span class="line">            dataObj<span class="literal">[&#x27;<span class="identifier">total_</span>&#x27; + <span class="identifier">ind</span>]</span> = _data<span class="literal">[<span class="identifier">i</span>]</span>.countProject</span><br><span class="line">            countProject.push(dataObj)</span><br><span class="line">        &#125;</span><br><span class="line">        countProject.splice(<span class="number">0</span>, <span class="number">0</span>, &#123; typeName: &#x27;数量&#x27; &#125;)</span><br><span class="line">        return countProject;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (num<span class="operator"> === </span><span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> _data = this.utils.copy(data);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="module-access"><span class="module"><span class="identifier">_data</span>.</span></span>length; i++) &#123;</span><br><span class="line">            <span class="keyword">let</span> ind = _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus</span><br><span class="line">            const dataObj = &#123;&#125;</span><br><span class="line">            dataObj.projStatus = _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus</span><br><span class="line">            dataObj<span class="literal">[&#x27;<span class="identifier">total_</span>&#x27; + <span class="identifier">ind</span>]</span> = _data<span class="literal">[<span class="identifier">i</span>]</span>.totalProjectAmount</span><br><span class="line">            totalProjectAmount.push(dataObj)</span><br><span class="line">        &#125;</span><br><span class="line">        totalProjectAmount.splice(<span class="number">0</span>, <span class="number">0</span>, &#123; typeName: &#x27;项目造价金额（万）&#x27; &#125;)</span><br><span class="line">        return totalProjectAmount;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> _data = this.utils.copy(data);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="module-access"><span class="module"><span class="identifier">_data</span>.</span></span>length; i++) &#123;</span><br><span class="line">            <span class="keyword">let</span> ind = _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus</span><br><span class="line">            const dataObj = &#123;&#125;</span><br><span class="line">            dataObj.projStatus = _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus</span><br><span class="line">            dataObj<span class="literal">[&#x27;<span class="identifier">total_</span>&#x27; + <span class="identifier">ind</span>]</span> = _data<span class="literal">[<span class="identifier">i</span>]</span>.totalContractAmount</span><br><span class="line">            totalContractAmount.push(dataObj)</span><br><span class="line">        &#125;</span><br><span class="line">        totalContractAmount.splice(<span class="number">0</span>, <span class="number">0</span>, &#123; typeName: &#x27;项目合同金额（万）&#x27; &#125;)</span><br><span class="line">        return totalContractAmount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 处理返回数组</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">deal<span class="constructor">Arry(<span class="params">data</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> _data = this.utils.copy(data);<span class="comment">//这个data 就是后端返回的初始结构的数据</span></span><br><span class="line">    <span class="keyword">let</span> countProject = <span class="literal">[]</span>; <span class="comment">//数量</span></span><br><span class="line">    <span class="keyword">let</span> totalProjectAmount = <span class="literal">[]</span>;<span class="comment">//项目造价</span></span><br><span class="line">    <span class="keyword">let</span> totalContractAmount = <span class="literal">[]</span>; <span class="comment">//项目合同</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//处理出来的结果是类似 [&#123; typeName: &#x27;数量&#x27;, projStatus: 1, total_1: 2, total_2: 2, total_3: 2, total_4: 2, total_5: 2, total_6: 2, total_7: 2, total_8: 2, total_9: 2, total_10: 2 &#125;]这种数组结构</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="module-access"><span class="module"><span class="identifier">_data</span>.</span></span>length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (_data<span class="literal">[<span class="identifier">i</span>]</span>.countProject<span class="operator"> || </span>_data<span class="literal">[<span class="identifier">i</span>]</span>.countProject<span class="operator"> === </span><span class="number">0</span>) &#123;</span><br><span class="line">            countProject.push(&#123;</span><br><span class="line">                projStatus: _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus,</span><br><span class="line">                countProject: _data<span class="literal">[<span class="identifier">i</span>]</span>.countProject</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (_data<span class="literal">[<span class="identifier">i</span>]</span>.totalProjectAmount<span class="operator"> || </span>_data<span class="literal">[<span class="identifier">i</span>]</span>.totalProjectAmount<span class="operator"> === </span><span class="number">0</span>) &#123;</span><br><span class="line">            totalProjectAmount.push(&#123;</span><br><span class="line">                projStatus: _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus,</span><br><span class="line">                totalProjectAmount:  _data<span class="literal">[<span class="identifier">i</span>]</span>.totalProjectAmount</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (_data<span class="literal">[<span class="identifier">i</span>]</span>.totalContractAmount<span class="operator"> || </span>_data<span class="literal">[<span class="identifier">i</span>]</span>.totalContractAmount<span class="operator"> === </span><span class="number">0</span>) &#123;</span><br><span class="line">            totalContractAmount.push(&#123;</span><br><span class="line">                projStatus: _data<span class="literal">[<span class="identifier">i</span>]</span>.projStatus,</span><br><span class="line">                totalContractAmount: _data<span class="literal">[<span class="identifier">i</span>]</span>.totalContractAmount</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//因为有三行，所以需要调用deepDealArr这个函数三次 得到各自三个数组</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> _countProject = this.deep<span class="constructor">DealArr(<span class="params">countProject</span>, 1)</span></span><br><span class="line">    <span class="keyword">let</span> _totalProjectAmount = this.deep<span class="constructor">DealArr(<span class="params">totalProjectAmount</span>, 2)</span></span><br><span class="line">    <span class="keyword">let</span> _totalContractAmount = this.deep<span class="constructor">DealArr(<span class="params">totalContractAmount</span>, 3)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//以下是为了把数组转成对象，然后把三行对象塞进数组中，这样表格就能出来了，</span></span><br><span class="line">    关键用到了<span class="module-access"><span class="module"><span class="identifier">Object</span>.</span></span>assign<span class="literal">()</span> 函数循环数组转成对象</span><br><span class="line">    <span class="keyword">let</span> _count = &#123;&#125;</span><br><span class="line">    <span class="keyword">let</span> _totalP = &#123;&#125;</span><br><span class="line">    <span class="keyword">let</span> _totalC = &#123;&#125;</span><br><span class="line">    <span class="module-access"><span class="module"><span class="identifier">_countProject</span>.</span></span>map(<span class="keyword">function</span> (e,item) &#123;                        </span><br><span class="line">        <span class="module-access"><span class="module"><span class="identifier">Object</span>.</span></span>assign(_count, e);</span><br><span class="line">    &#125;);       </span><br><span class="line">    <span class="module-access"><span class="module"><span class="identifier">_totalProjectAmount</span>.</span></span>map(<span class="keyword">function</span> (e,item) &#123;                        </span><br><span class="line">        <span class="module-access"><span class="module"><span class="identifier">Object</span>.</span></span>assign(_totalP, e);</span><br><span class="line">    &#125;);        </span><br><span class="line">    <span class="module-access"><span class="module"><span class="identifier">_totalContractAmount</span>.</span></span>map(<span class="keyword">function</span> (e,item) &#123;                        </span><br><span class="line">        <span class="module-access"><span class="module"><span class="identifier">Object</span>.</span></span>assign(_totalC, e);</span><br><span class="line">    &#125;);      </span><br><span class="line">    <span class="keyword">let</span> _newTable = <span class="literal">[</span></span><br><span class="line"><span class="literal">        <span class="identifier">_count</span>,</span></span><br><span class="line"><span class="literal">        <span class="identifier">_totalP</span>,</span></span><br><span class="line"><span class="literal">        <span class="identifier">_totalC</span></span></span><br><span class="line"><span class="literal">    ]</span></span><br><span class="line"></span><br><span class="line">    this.table.data = _newTable</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是模板文件：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-<span class="keyword">table</span> :data=&quot;table.data&quot; style=&quot;width: 100%; margin-top: 20px;&quot; :loading=&quot;tableLoading&quot;&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;typeName&quot; label=&quot;条目&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_1&quot; label=&quot;报备中&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_2&quot; label=&quot;已报备&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_3&quot; label=&quot;投标中&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt; </span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_4&quot; label=&quot;已中标&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_6&quot; label=&quot;在建中&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_7&quot; label=&quot;已竣工&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_9&quot; label=&quot;已关闭&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_8&quot; label=&quot;已过期&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span> prop=&quot;total_10&quot; label=&quot;已删除&quot;&gt;&lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;empty </span><br><span class="line">        v-<span class="keyword">if</span>=&quot;table.data.length == 0&quot;</span><br><span class="line">        slot=&quot;empty&quot;</span><br><span class="line">        style=&quot;height: 500px&quot;</span><br><span class="line">        tips=&quot;抱歉！暂时没有数据&quot; </span><br><span class="line">        smallTips=&quot;暂时还没有相关的数据可以展示&quot;</span><br><span class="line">        &gt;</span><br><span class="line">        &lt;img src=&quot;~/assets/svg/table-empty.svg&quot; slot=&quot;img&quot;/&gt;</span><br><span class="line">    &lt;/empty&gt;</span><br><span class="line">&lt;/el-<span class="keyword">table</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>用total_的后面的数字来对应列的状态值，这样就能一一对应上了，最后附上完成的效果图</p>
+<p><img src="5.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/507fa396/" data-id="ckdqs3sfk000lmgm0ezrf4iw4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/c20fd3fa/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          在重启阿里云ubantu后nginx、mysql、pm2等的重启
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/d86f9c95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">用Xshell登录阿里云服务器</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/vue/js/">js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/element-ui/" rel="tag">element-ui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nexus/" rel="tag">nexus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react,</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/element-ui/" style="font-size: 15px;">element-ui</a> <a href="/tags/js/" style="font-size: 17.5px;">js</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/nodejs/" style="font-size: 12.5px;">nodejs</a> <a href="/tags/react/" style="font-size: 12.5px;">react,</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 15px;">技术</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/e1691e31/">运行yarn eject 后 yarn start 报错</a>
+          </li>
+        
+          <li>
+            <a href="/posts/204a2bf8/">在 create-react-app 中使用Ant Design中的坑</a>
+          </li>
+        
+          <li>
+            <a href="/posts/73a5b140/">windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库</a>
+          </li>
+        
+          <li>
+            <a href="/posts/c20fd3fa/">在重启阿里云ubantu后nginx、mysql、pm2等的重启</a>
+          </li>
+        
+          <li>
+            <a href="/posts/507fa396/">一个奇葩的表格统计需求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 刘宏羽<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>element-ui 表格中的form的input动态验证规则 | 羽歌天地博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：123date2: [    &amp;#123; type: &amp;#x27;date&amp;#x27;, required: true, message: &amp;#x27;请选择时间&amp;#x27;, trigger: &amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="element-ui 表格中的form的input动态验证规则">
+<meta property="og:url" content="https://blog.iyuge.cn/posts/3156ccd5/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：123date2: [    &amp;#123; type: &amp;#x27;date&amp;#x27;, required: true, message: &amp;#x27;请选择时间&amp;#x27;, trigger: &amp;#x2">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/3156ccd5/4.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/3156ccd5/1.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/3156ccd5/2.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/3156ccd5/3.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/3156ccd5/5.png">
+<meta property="article:published_time" content="2019-04-27T13:23:46.000Z">
+<meta property="article:modified_time" content="2020-04-30T07:58:25.396Z">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="element-ui">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.iyuge.cn/posts/3156ccd5/4.png">
+  
+    <link rel="alternate" href="/atom.xml" title="羽歌天地博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">羽歌天地博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.iyuge.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-element-ui-表格中的form的input动态验证规则" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/3156ccd5/" class="article-date">
+  <time datetime="2019-04-27T13:23:46.000Z" itemprop="datePublished">2019-04-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      element-ui 表格中的form的input动态验证规则
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："><a href="#表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：" class="headerlink" title="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："></a>表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">date2:</span> [</span><br><span class="line">    &#123; <span class="attr">type:</span> <span class="string">&#x27;date&#x27;</span>, <span class="attr">required:</span> <span class="literal">true</span>, <span class="attr">message:</span> <span class="string">&#x27;请选择时间&#x27;</span>, <span class="attr">trigger:</span> <span class="string">&#x27;change&#x27;</span> &#125;</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>而我们项目中的是这样的:<br><img src="4.png"> 又不想自定义指令来做，还是看下element能不能做吧，于是就开始看文档，发现只能用自定义rules，但是自定义指令，写死的规则也不符合要求啊，因为表格的数据都是不固定的，<br>首先我们把表格的数据源字段移到我们的form中<br><img src="1.png"><br><img src="2.png"><br><img src="3.png"><br>然后自定义规则：<br><img src="5.png"><br>这里需要用到一些技巧，比如在模板中，</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:prop=<span class="string">&quot;`inputTaxTable.<span class="subst">$&#123;scope.$index&#125;</span>.thisApplyMoney`&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在需要校验的列中，<code>inputTaxTable.$&#123;scope.$index&#125;.thisApplyMoney</code> 查找当前行的数据源，</p>
+<p>以及查找“未报销金额”这行的数据来跟当前金额进行对比的时候，保证找到的当前行的数据。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//field字段中包含了该行表格的index</span></span><br><span class="line">    <span class="keyword">let</span> field=rule.field;<span class="comment">//规则名称</span></span><br><span class="line">    <span class="keyword">let</span> _fieldArr=<span class="literal">[]</span>;</span><br><span class="line">    _fieldArr=field.split(<span class="character">&#x27;.&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> _index=_fieldArr<span class="literal">[<span class="number">1</span>]</span>;<span class="comment">//得到表格的第n行</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>parse<span class="constructor">Float(<span class="params">value</span>)</span>&gt;<span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>parse<span class="constructor">Float(<span class="params">this</span>.<span class="params">ruleForm</span>.<span class="params">inputTaxTable</span>[<span class="params">_index</span>].<span class="params">notApplyMoney</span>)</span>)&#123;</span><br><span class="line">        return callback(<span class="keyword">new</span> <span class="constructor">Error(&#x27;不可大于未报销金额&#x27;)</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        callback<span class="literal">()</span>  <span class="comment">//这里一定要这样返回，否则validate函数只会执行一次</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/3156ccd5/" data-id="ckdqs3sfa0007mgm04y94427w" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/element-ui/" rel="tag">element-ui</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/845b95cc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          element-ui 上传组件函数自定义参数传递
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/301aa86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">怎么样在别的电脑同步更新发表hexo博客？</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/vue/js/">js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/element-ui/" rel="tag">element-ui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nexus/" rel="tag">nexus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react,</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/element-ui/" style="font-size: 15px;">element-ui</a> <a href="/tags/js/" style="font-size: 17.5px;">js</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/nodejs/" style="font-size: 12.5px;">nodejs</a> <a href="/tags/react/" style="font-size: 12.5px;">react,</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 15px;">技术</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/e1691e31/">运行yarn eject 后 yarn start 报错</a>
+          </li>
+        
+          <li>
+            <a href="/posts/204a2bf8/">在 create-react-app 中使用Ant Design中的坑</a>
+          </li>
+        
+          <li>
+            <a href="/posts/73a5b140/">windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库</a>
+          </li>
+        
+          <li>
+            <a href="/posts/c20fd3fa/">在重启阿里云ubantu后nginx、mysql、pm2等的重启</a>
+          </li>
+        
+          <li>
+            <a href="/posts/507fa396/">一个奇葩的表格统计需求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 刘宏羽<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>记录element-ui 二次封装table时formatter的使用问题 | 羽歌天地博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="二次封装element table表格中遇到的问题记录我们都知道element-ui 的table 中表格行的通过prop指定显示数据源中的字段，我们在进行二次封装时，如果数据都是很简单的字符串或者数字之类的，那就可以直接使用prop就行了，不需要做特殊的操作，但是如果是数组，那就得进行特殊的处理了。我们知道element 对于表格行还提供了一个格式化的函数：formatter，常规的用法没有什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录element-ui 二次封装table时formatter的使用问题">
+<meta property="og:url" content="https://blog.iyuge.cn/posts/7f247ba3/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="二次封装element table表格中遇到的问题记录我们都知道element-ui 的table 中表格行的通过prop指定显示数据源中的字段，我们在进行二次封装时，如果数据都是很简单的字符串或者数字之类的，那就可以直接使用prop就行了，不需要做特殊的操作，但是如果是数组，那就得进行特殊的处理了。我们知道element 对于表格行还提供了一个格式化的函数：formatter，常规的用法没有什么">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/7f247ba3/1.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/7f247ba3/2.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/7f247ba3/3.png">
+<meta property="article:published_time" content="2019-04-24T14:11:01.000Z">
+<meta property="article:modified_time" content="2020-04-30T07:58:25.404Z">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="element-ui">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.iyuge.cn/posts/7f247ba3/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="羽歌天地博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">羽歌天地博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.iyuge.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-记录element-ui-二次封装table时formatter的使用问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/7f247ba3/" class="article-date">
+  <time datetime="2019-04-24T14:11:01.000Z" itemprop="datePublished">2019-04-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      记录element-ui 二次封装table时formatter的使用问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="二次封装element-table表格中遇到的问题记录"><a href="#二次封装element-table表格中遇到的问题记录" class="headerlink" title="二次封装element table表格中遇到的问题记录"></a>二次封装element table表格中遇到的问题记录</h3><p>我们都知道element-ui 的table 中表格行的通过prop指定显示数据源中的字段，我们在进行二次封装时，如果数据都是很简单的字符串或者数字之类的，那就可以直接使用prop就行了，不需要做特殊的操作，但是如果是数组，那就得进行特殊的处理了。<br>我们知道element 对于表格行还提供了一个格式化的函数：formatter，常规的用法没有什么好说的了，格式化显示货币，时间等，这里要说的是当字段是数组的时候，而且要在当前列显示html元素的时候就有点蛋疼了，如果是不需要html元素，直接循环数组就行。<br>下面是element table的formatter的常规用法（来自element官网）：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">template</span>&gt;</span><br><span class="line">  &lt;el-<span class="keyword">table</span></span><br><span class="line">    :data=&quot;tableData&quot;</span><br><span class="line">    style=&quot;width: 100%&quot;</span><br><span class="line">    :<span class="keyword">default</span>-sort = &quot;&#123;prop: &#x27;date&#x27;, order: &#x27;descending&#x27;&#125;&quot;</span><br><span class="line">    &gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span></span><br><span class="line">      prop=&quot;date&quot;</span><br><span class="line">      label=&quot;日期&quot;</span><br><span class="line">      sortable</span><br><span class="line">      width=&quot;180&quot;&gt;</span><br><span class="line">    &lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span></span><br><span class="line">      prop=&quot;name&quot;</span><br><span class="line">      label=&quot;姓名&quot;</span><br><span class="line">      sortable</span><br><span class="line">      width=&quot;180&quot;&gt;</span><br><span class="line">    &lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">    &lt;el-<span class="keyword">table</span>-<span class="keyword">column</span></span><br><span class="line">      prop=&quot;address&quot;</span><br><span class="line">      label=&quot;地址&quot;</span><br><span class="line">      :formatter=&quot;formatter&quot;&gt;</span><br><span class="line">    &lt;/el-<span class="keyword">table</span>-<span class="keyword">column</span>&gt;</span><br><span class="line">  &lt;/el-<span class="keyword">table</span>&gt;</span><br><span class="line">&lt;/<span class="keyword">template</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  export <span class="keyword">default</span> &#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        tableData: [&#123;</span><br><span class="line">          <span class="type">date</span>: <span class="string">&#x27;2016-05-02&#x27;</span>,</span><br><span class="line">          <span class="type">name</span>: <span class="string">&#x27;王小虎&#x27;</span>,</span><br><span class="line">          address: <span class="string">&#x27;上海市普陀区金沙江路 1518 弄&#x27;</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">          <span class="type">date</span>: <span class="string">&#x27;2016-05-04&#x27;</span>,</span><br><span class="line">          <span class="type">name</span>: <span class="string">&#x27;王小虎&#x27;</span>,</span><br><span class="line">          address: <span class="string">&#x27;上海市普陀区金沙江路 1517 弄&#x27;</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">          <span class="type">date</span>: <span class="string">&#x27;2016-05-01&#x27;</span>,</span><br><span class="line">          <span class="type">name</span>: <span class="string">&#x27;王小虎&#x27;</span>,</span><br><span class="line">          address: <span class="string">&#x27;上海市普陀区金沙江路 1519 弄&#x27;</span></span><br><span class="line">        &#125;, &#123;</span><br><span class="line">          <span class="type">date</span>: <span class="string">&#x27;2016-05-03&#x27;</span>,</span><br><span class="line">          <span class="type">name</span>: <span class="string">&#x27;王小虎&#x27;</span>,</span><br><span class="line">          address: <span class="string">&#x27;上海市普陀区金沙江路 1516 弄&#x27;</span></span><br><span class="line">        &#125;]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      formatter(<span class="keyword">row</span>, <span class="keyword">column</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">row</span>.address;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面来说下我们项目的需求<br><img src="1.png"><br>如果不是二次封装也很容易解决，可以用template，但是我们这里说的是二次封装，这里只能用formatter函数了，父组件在调用时需要提供类似这样的数据：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tablelable:</span>[</span><br><span class="line">    &#123;<span class="attr">lable:</span><span class="string">&#x27;表格行1&#x27;</span>,<span class="attr">prop:</span><span class="string">&#x27;prop_1&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">lable:</span><span class="string">&#x27;时间&#x27;</span>,<span class="attr">prop:</span><span class="string">&#x27;time&#x27;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">lable:</span><span class="string">&#x27;附件&#x27;</span>,<span class="attr">prop:</span><span class="string">&#x27;files&#x27;</span>,</span><br><span class="line">    <span class="symbol">formatter:</span>(row,column,cellvalue,index)=&#123;</span><br><span class="line">            <span class="comment">//在这里进行格式化输出</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"><span class="comment">// 这里提供的数据源</span></span><br><span class="line"><span class="attr">tableData:</span>[</span><br><span class="line">    &#123;<span class="attr">prop_1:</span><span class="string">&#x27;***&#x27;</span>,<span class="attr">time:</span><span class="string">&#x27;2015-20-2&#x27;</span>,<span class="attr">files:</span>[<span class="attr">name:</span><span class="string">&#x27;12.jpg&#x27;</span>,<span class="attr">url:</span><span class="string">&#x27;&#x27;</span>]&#125;,</span><br><span class="line">    &#123;<span class="attr">prop_1:</span><span class="string">&#x27;***&#x27;</span>,<span class="attr">time:</span><span class="string">&#x27;2015-20-2&#x27;</span>,<span class="attr">files:</span>[<span class="attr">name:</span><span class="string">&#x27;12.jpg&#x27;</span>,<span class="attr">url:</span><span class="string">&#x27;&#x27;</span>]&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>下面贴出图片吧<br><img src="2.png"><br><img src="3.png"><br>这里的formatter必须要返回一个对象才能渲染出html，如果是返回一个字符串是没有用的，会原样输出字符串，比如’<a heref="">12.jpg</a>‘ 他不会渲染出可点击的a  而是把一整个当成字符串输出，没有渲染。<font color="red">还有一个需要注意的地方就是在这里返回的对象中的元素的属性要采用原生的写法，比如class要写成className，还有变量等也需要注意写法</font>。好了，记录下，以后再遇到就懂得处理了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/7f247ba3/" data-id="ckdqs3sg0001fmgm0cdhghrpe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/element-ui/" rel="tag">element-ui</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/301aa86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          怎么样在别的电脑同步更新发表hexo博客？
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/b38ec8f3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">webpack4从头构建一个简单的vue2项目</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/vue/js/">js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/element-ui/" rel="tag">element-ui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nexus/" rel="tag">nexus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react,</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/element-ui/" style="font-size: 15px;">element-ui</a> <a href="/tags/js/" style="font-size: 17.5px;">js</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/nodejs/" style="font-size: 12.5px;">nodejs</a> <a href="/tags/react/" style="font-size: 12.5px;">react,</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 15px;">技术</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/e1691e31/">运行yarn eject 后 yarn start 报错</a>
+          </li>
+        
+          <li>
+            <a href="/posts/204a2bf8/">在 create-react-app 中使用Ant Design中的坑</a>
+          </li>
+        
+          <li>
+            <a href="/posts/73a5b140/">windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库</a>
+          </li>
+        
+          <li>
+            <a href="/posts/c20fd3fa/">在重启阿里云ubantu后nginx、mysql、pm2等的重启</a>
+          </li>
+        
+          <li>
+            <a href="/posts/507fa396/">一个奇葩的表格统计需求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 刘宏羽<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

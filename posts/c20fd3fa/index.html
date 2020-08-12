@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>在重启阿里云ubantu后nginx、mysql、pm2等的重启 | 羽歌天地博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="由于对linux的不熟，很多命令都记不住，2018年也是花了几天时间才把服务器环境搭起来，部署了nodejs的水研村官网前后端、部署了“账目随身记”小程序后端，并且利用nginx做了小程序需要的ssl证书转发https，现在已经忘了具体的操作了，免费ssl证书准备过期了，准备又得重新折腾了，下次一定得记录下来。好了，在重启服务器之前得做点准备工作，得先找出nginx安装得目录，mysql安装得目录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在重启阿里云ubantu后nginx、mysql、pm2等的重启">
+<meta property="og:url" content="https://blog.iyuge.cn/posts/c20fd3fa/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="由于对linux的不熟，很多命令都记不住，2018年也是花了几天时间才把服务器环境搭起来，部署了nodejs的水研村官网前后端、部署了“账目随身记”小程序后端，并且利用nginx做了小程序需要的ssl证书转发https，现在已经忘了具体的操作了，免费ssl证书准备过期了，准备又得重新折腾了，下次一定得记录下来。好了，在重启服务器之前得做点准备工作，得先找出nginx安装得目录，mysql安装得目录">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/c20fd3fa/2.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/c20fd3fa/1.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/c20fd3fa/3.png">
+<meta property="article:published_time" content="2019-07-05T01:25:24.000Z">
+<meta property="article:modified_time" content="2020-04-30T07:58:25.404Z">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.iyuge.cn/posts/c20fd3fa/2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="羽歌天地博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.0.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">羽歌天地博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://blog.iyuge.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-在重启阿里云ubantu后nginx、mysql、pm2等的重启" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/posts/c20fd3fa/" class="article-date">
+  <time datetime="2019-07-05T01:25:24.000Z" itemprop="datePublished">2019-07-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/linux/">linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在重启阿里云ubantu后nginx、mysql、pm2等的重启
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于对linux的不熟，很多命令都记不住，2018年也是花了几天时间才把服务器环境搭起来，部署了nodejs的水研村官网前后端、部署了“账目随身记”小程序后端，并且利用nginx做了小程序需要的ssl证书转发https，现在已经忘了具体的操作了，免费ssl证书准备过期了，准备又得重新折腾了，下次一定得记录下来。<br>好了，在重启服务器之前得做点准备工作，得先找出nginx安装得目录，mysql安装得目录，到时候可以直接去到目录下直接执行例如./nginx这样来启动。我以为大多数linux安装目录都差不多，于是直接网上搜别人得，结果结果不是我想要的，后来我问了位前同事，用whereis nginx 来查找nginx的位置，然后出现了以下目录：<br><img src="2.png"><br>红色圈起来的才是我的nginx的安装目录，nginx就是可执行文件，另外，经过多次摸索和回忆，配置文件在蓝色圈起来的地方，<br>具体的位置是：<br><img src="1.png"><br><code>nginx -t</code>为查找nginx配置文件所在的目录。<br>然后默认的default配置文件我没用，我自己写了个small.conf配置文件，里面配置了syc.iyuge.cn 水研村官网前台的转发地址，以及小程序需要的account后端的https的ssl配置<br>具体代码如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span>;</span><br><span class="line">    <span class="attribute">server_name</span> small.iyuge.cn;</span><br><span class="line">    <span class="attribute">access_log</span> /var/www/log/small-access.log;</span><br><span class="line">    <span class="attribute">error_log</span>  /var/www/log/small-<span class="literal">error</span>.log;</span><br><span class="line">    <span class="attribute">ssl</span> <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>   /etc/nginx/cert/<span class="number">214999081890300</span>.pem; <span class="comment">#指定服务器证书路径 </span></span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /etc/nginx/cert/<span class="number">214999081890300</span>.key; <span class="comment">#指定私钥证书路径</span></span><br><span class="line">    <span class="attribute">ssl_session_timeout</span> <span class="number">5m</span>;</span><br><span class="line">    <span class="comment">#ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span></span><br><span class="line">    <span class="attribute">ssl_ciphers</span>  ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP; <span class="comment">#指定加密算法 </span></span><br><span class="line">    <span class="attribute">ssl_protocols</span> TLSv1 TLSv1.<span class="number">1</span> TLSv1.<span class="number">2</span>;<span class="comment">#指定SSL服务器端支持的协议版本 </span></span><br><span class="line">    <span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-NginX-Proxy <span class="literal">true</span>;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:3000/;</span><br><span class="line">        <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> syc.iyuge.cn; <span class="comment">#这是水研村前台官网的映射</span></span><br><span class="line">    </span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">       </span><br><span class="line">    <span class="attribute">root</span> /root/code/shuiyancun_vue;</span><br><span class="line">    <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>至于这个证书是怎么跟我的account关联起来的，这个我还真的忘了，我没记错的话，account和shuiyancun_back都有个nginx.conf文件,去看了下，account居然没有？只有shuiyancun_back才有。<br>想起来了，原来是需要在阿里云官网开放相应的端口后，外网才能访问的，而我是用pm2来启动项目的，也会有端口号，如图：<br><img src="3.png"><br><font color=#ff6a00>至于怎么制作ssl证书，等我两个月后证书过期了，再摸索一次记录下来吧</font><br>重启mginx的方法可以去到<code>/usr/sbin/nginx</code>目录，执行./nginx 启动。启动mysql的方式可以有两种：1.和nginx一样，但是要加用户名和密码，<code>./mysql  -u root -p</code> 然后输入密码就打开数据库了；2.直接 <code>mysql -u root -p</code> 输入密码。</p>
+<p>另外如果发现停止了PM2中某个项目的时候，还能运行，则说明这个程序已经以另外一种方式在运行了，我们需要查找正在运行的nodejs进程:<code>ps aux | grep node</code><br>发现有进程后，直接<code>kill 具体pid </code>就可以了</p>
+<p>最后就是项目的启动了，进到项目目录执行 <code>pm2 restart（或者start） pm2.json （因为有配置文件了）</code> 就可以启动项目了<br>注意：<font color=#ff6a00>不知道为什么pm2只能监控watch一个项目，如果是两个都watch，另一个项目无法跑起来，所以我的水研村后台就不watch了</font></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://blog.iyuge.cn/posts/c20fd3fa/" data-id="ckdqs3sfq000smgm02dnf9zii" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/posts/73a5b140/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/posts/507fa396/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">一个奇葩的表格统计需求</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vue/">vue</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/vue/js/">js</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/element-ui/" rel="tag">element-ui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/" rel="tag">js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nexus/" rel="tag">nexus</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react,</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vue/" rel="tag">vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/element-ui/" style="font-size: 15px;">element-ui</a> <a href="/tags/js/" style="font-size: 17.5px;">js</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/nexus/" style="font-size: 10px;">nexus</a> <a href="/tags/nodejs/" style="font-size: 12.5px;">nodejs</a> <a href="/tags/react/" style="font-size: 12.5px;">react,</a> <a href="/tags/vue/" style="font-size: 20px;">vue</a> <a href="/tags/webpack/" style="font-size: 10px;">webpack</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 15px;">技术</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/posts/e1691e31/">运行yarn eject 后 yarn start 报错</a>
+          </li>
+        
+          <li>
+            <a href="/posts/204a2bf8/">在 create-react-app 中使用Ant Design中的坑</a>
+          </li>
+        
+          <li>
+            <a href="/posts/73a5b140/">windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库</a>
+          </li>
+        
+          <li>
+            <a href="/posts/c20fd3fa/">在重启阿里云ubantu后nginx、mysql、pm2等的重启</a>
+          </li>
+        
+          <li>
+            <a href="/posts/507fa396/">一个奇葩的表格统计需求</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 刘宏羽<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
