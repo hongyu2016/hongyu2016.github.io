@@ -10,7 +10,7 @@ categories: 前端
 
 主要分为两部分：第一部分是nexus私有仓库的搭建，第二部分是vue-cli 3的组件搭建并发布到nexus本地仓库。
 ## nexus私有仓库的搭建
-
+<!-- more -->
 ### 环境搭建
 1. 首先需要在[<font style="color:red">官网</font>](https://www.sonatype.com/oss-thank-you-win64.zip?submissionGuid=2c6a43fc-9aa5-4acc-b995-87cb63b04d66)下载nexus windows版本（注意：需要翻墙，自备梯子）。
 2. 以管理员身份运行cmd（注意：必须是管理员运行且必须是cmd，win10的powershell都会报错），然后切换到`C:\node\nexus\nexus-3.18.0-01-win64\nexus-3.18.0-01\bin` 软件下载后的解压目录。

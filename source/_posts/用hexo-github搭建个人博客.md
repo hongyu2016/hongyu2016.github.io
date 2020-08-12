@@ -10,6 +10,7 @@ date: 2019-02-27 15:33:57
 ### 1.hexo环境搭建
 
 首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo ``npm install -g hexo-cli`` 可以使用 ``hexo v`` 来检查是否安装成功。
+<!-- more -->
 接下来使用hexo cli来创建项目：使用``hexo init`` 就会在当前文件夹下创建了项目，当然也可以使用``hexo init 文件夹名称`` 来创建文件夹的同时创建项目。接着运行 ``npm install``安装依赖，注意，安装hexo的文件夹需要是空文件夹。
 
 ### 2.hexo的基本使用及常见的命令

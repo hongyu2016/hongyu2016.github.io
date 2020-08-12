@@ -10,6 +10,7 @@ categories: linux
 
 1. `sudo apt-get install mysql-server` 安装mysql核心服务
 2. `sudo apt-get install mysql-server` 安装mysql客户端
+<!-- more -->
 
 安装完成后我们需要去mysql目录查看用户名和密码
 `sudo vim /etc/mysql/debain.cnf`

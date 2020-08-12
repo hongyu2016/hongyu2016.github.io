@@ -8,7 +8,7 @@ subtitle: 爱羽歌
 description: 记录技术点滴 
 keywords: vue js nodejs es6 webpack react 前端 mysql 小程序
 author: 刘宏羽
-language: zh-Hans
+language: zh-CN
 #language: en
 timezone:
 
@@ -83,14 +83,14 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: jekyll-theme-slate
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
   repository: git@github.com:hongyu2016/hongyu2016.github.io.git
-  branch: master
+  branch: gh-pages
 
 # 自动生成sitemap
 sitemap:

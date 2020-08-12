@@ -6,6 +6,7 @@ abbrlink: 60785
 date: 2019-05-13 18:21:10
 ---
 在ubantu18系统上，之前不知道哪里设置错了，结果用nodejs的npm install任何一个包都报错，报错信息如下：
+<!-- more -->
 ```
 npm ERR! code ENOTFOUND
 npm ERR! errno ENOTFOUND
