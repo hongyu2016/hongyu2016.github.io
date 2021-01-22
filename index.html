@@ -164,6 +164,96 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/4794f0e0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="刘宏羽">
+      <meta itemprop="description" content="记录技术点滴">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="羽歌天地博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/4794f0e0/" class="post-title-link" itemprop="url">钉钉工作台自定义组件设计规范及注意事项</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-22 10:17:02 / 修改时间：10:24:17" itemprop="dateCreated datePublished" datetime="2021-01-22T10:17:02+08:00">2021-01-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/4794f0e0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/4794f0e0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="钉钉标准组件的默认规范："><a href="#钉钉标准组件的默认规范：" class="headerlink" title="钉钉标准组件的默认规范："></a>钉钉标准组件的默认规范：</h3><p>满栏/非满栏：padding/margin: 0 32rpx;<br />圆角：12rpx<br />默认高度：100px-375px<br />从目前的众多项目的实践来看，组件的单位能使用rpx单位优先使用rpx单位（字体也可使用rpx）。<br /></p>
+<h3 id="自定义组件规范"><a href="#自定义组件规范" class="headerlink" title="自定义组件规范"></a>自定义组件规范</h3><p>1、目前发现组件间没有类似vue style那样的scope属性进行样式作用域隔离，所以目前最好的方式是通过不一样的类名来区分组件，如要写成.container-wrap-title .box，而不是 .box ，以免污染全局的css。以及进行样式的设计。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/4794f0e0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/9a00eab2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -368,7 +458,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-12 16:48:44" itemprop="dateModified" datetime="2020-11-12T16:48:44+08:00">2020-11-12</time>
+                <time title="修改时间：2020-11-23 11:31:30" itemprop="dateModified" datetime="2020-11-23T11:31:30+08:00">2020-11-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -456,10 +546,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-08-26 14:20:28 / 修改时间：14:33:11" itemprop="dateCreated datePublished" datetime="2020-08-26T14:20:28+08:00">2020-08-26</time>
+              <time title="创建时间：2020-08-26 14:20:28" itemprop="dateCreated datePublished" datetime="2020-08-26T14:20:28+08:00">2020-08-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-23 11:31:30" itemprop="dateModified" datetime="2020-11-23T11:31:30+08:00">2020-11-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -553,7 +649,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-12 12:53:26" itemprop="dateModified" datetime="2020-08-12T12:53:26+08:00">2020-08-12</time>
+                <time title="修改时间：2020-11-23 11:31:30" itemprop="dateModified" datetime="2020-11-23T11:31:30+08:00">2020-11-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -648,7 +744,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-12 12:54:47" itemprop="dateModified" datetime="2020-08-12T12:54:47+08:00">2020-08-12</time>
+                <time title="修改时间：2020-11-23 11:31:30" itemprop="dateModified" datetime="2020-11-23T11:31:30+08:00">2020-11-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -743,7 +839,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-12 12:57:21" itemprop="dateModified" datetime="2020-08-12T12:57:21+08:00">2020-08-12</time>
+                <time title="修改时间：2020-11-23 11:31:30" itemprop="dateModified" datetime="2020-11-23T11:31:30+08:00">2020-11-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -839,7 +935,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-12 12:54:53" itemprop="dateModified" datetime="2020-08-12T12:54:53+08:00">2020-08-12</time>
+                <time title="修改时间：2020-11-23 11:31:30" itemprop="dateModified" datetime="2020-11-23T11:31:30+08:00">2020-11-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -934,7 +1030,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-12 12:59:27" itemprop="dateModified" datetime="2020-08-12T12:59:27+08:00">2020-08-12</time>
+                <time title="修改时间：2020-11-23 11:31:30" itemprop="dateModified" datetime="2020-11-23T11:31:30+08:00">2020-11-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -979,101 +1075,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/507fa396/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/d86f9c95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="刘宏羽">
-      <meta itemprop="description" content="记录技术点滴">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="羽歌天地博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/d86f9c95/" class="post-title-link" itemprop="url">用Xshell登录阿里云服务器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-06-12 11:42:29" itemprop="dateCreated datePublished" datetime="2019-06-12T11:42:29+08:00">2019-06-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-12 12:59:33" itemprop="dateModified" datetime="2020-08-12T12:59:33+08:00">2020-08-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/posts/d86f9c95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/d86f9c95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>使用Xshell登录阿里云最需要注意的一个地方就是要使用阿里云服务器的公共ip，阿里云一个有两个ip，一个是公共的，一个是私有的，这个登录管理后台查看实例就可以看得到</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/d86f9c95/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1164,7 +1165,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
