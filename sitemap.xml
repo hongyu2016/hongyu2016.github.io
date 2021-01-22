@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.iyuge.cn/posts/9a00eab2/</loc>
+    
+    <lastmod>2021-01-22</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.iyuge.cn/posts/27736c59/</loc>
     
     <lastmod>2020-11-23</lastmod>
@@ -186,7 +193,7 @@
 
   <url>
     <loc>https://blog.iyuge.cn/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -194,77 +201,84 @@
   
   <url>
     <loc>https://blog.iyuge.cn/tags/js/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/element-ui/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/vue/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/linux/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/nodejs/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/webpack/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/nexus/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/react/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/tags/%E9%92%89%E9%92%89%E5%B0%8F%E7%A8%8B%E5%BA%8F/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.iyuge.cn/tags/koa2/</loc>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -273,35 +287,42 @@
   
   <url>
     <loc>https://blog.iyuge.cn/categories/%E5%89%8D%E7%AB%AF/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/categories/linux/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/categories/vue/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/categories/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.iyuge.cn/categories/vue/js/</loc>
-    <lastmod>2020-11-23</lastmod>
+    <lastmod>2021-01-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.iyuge.cn/categories/%E5%90%8E%E7%AB%AF/</loc>
+    <lastmod>2021-01-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>

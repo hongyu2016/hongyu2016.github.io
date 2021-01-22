@@ -480,4 +480,19 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
         <tag>钉钉小程序</tag>
       </tags>
   </entry>
+  <entry>
+    <title>koa2 中上传文件</title>
+    <url>/posts/9a00eab2/</url>
+    <content><![CDATA[<p>koa2 上传文件</p>
+<p>本来是使用 <code>koa-body</code> 这个包来接收上传文件的，这个包也可以读取get请求，本来以为直接用它来接收文件及其他请求，把<code>koa-bodyparser</code>去掉，但是后来发现<code>koa-body</code> 接收post请求时报415，不支持的媒体类型错误，然后一时也 找不出原因，就干脆不用这个包了，接收正常的请求还是使用<code>koa-bodyparser</code>，然后文件上传接收用<code>@koa/multer</code>。</p>
+<p><code>@koa/multer</code>不是一个中间件，因此不能像其他中间件一样直接在app.js中引入，使用的方式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 前端路由</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">&#x27;koa-router&#x27;</span>)();</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line">router.prefix(<span class="string">&#x27;/api&#x27;</span>); <span class="comment">//路由前缀</span></span><br><span class="line"><span class="keyword">const</span> multer = <span class="built_in">require</span>(<span class="string">&#x27;@koa/multer&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上传配置</span></span><br><span class="line"><span class="keyword">const</span> storage = multer.diskStorage(&#123;</span><br><span class="line">  destination: <span class="function"><span class="keyword">function</span> (<span class="params">req, file, cb</span>) </span>&#123;</span><br><span class="line">    cb(<span class="literal">null</span>, path.join(__dirname, <span class="string">&#x27;../../public/upload/&#x27;</span>));</span><br><span class="line">  &#125;,</span><br><span class="line">  filename: <span class="function"><span class="keyword">function</span> (<span class="params">req, file, cb</span>) </span>&#123;</span><br><span class="line">    cb(<span class="literal">null</span>, file.fieldname + <span class="string">&#x27;-&#x27;</span> + <span class="built_in">Date</span>.now() + <span class="string">&#x27;.png&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> upload = multer(&#123; <span class="attr">storage</span>: storage &#125;)</span><br><span class="line"><span class="comment">// 使用multer上传</span></span><br><span class="line">router.post(<span class="string">&#x27;/tv/upload_channel_poster&#x27;</span>, upload.single(<span class="string">&#x27;file&#x27;</span>), Tv.updateChannelPoster)</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>后端</category>
+      </categories>
+      <tags>
+        <tag>nodejs</tag>
+        <tag>koa2</tag>
+      </tags>
+  </entry>
 </search>
