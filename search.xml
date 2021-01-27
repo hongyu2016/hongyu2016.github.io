@@ -266,23 +266,6 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </tags>
   </entry>
   <entry>
-    <title>在 create-react-app 中使用Ant Design中的坑</title>
-    <url>/posts/204a2bf8/</url>
-    <content><![CDATA[<h2 id="Ant-Design-中的文档有错误，参数变了"><a href="#Ant-Design-中的文档有错误，参数变了" class="headerlink" title="Ant Design 中的文档有错误，参数变了"></a>Ant Design 中的文档有错误，参数变了</h2><p>这是原来的配置：</p>
-<a id="more"></a>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// craco.config.js</span></span><br><span class="line"><span class="keyword">const</span> CracoLessPlugin = <span class="built_in">require</span>(<span class="string">&#x27;craco-less&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    &#123;</span><br><span class="line">      plugin: CracoLessPlugin,</span><br><span class="line">      options: &#123;</span><br><span class="line">        lessLoaderOptions: &#123;</span><br><span class="line">          modifyVars: &#123; <span class="string">&#x27;@primary-color&#x27;</span>: <span class="string">&#x27;#1DA57A&#x27;</span> &#125;,</span><br><span class="line">          javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这是正确的配置：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// craco.config.js</span></span><br><span class="line"><span class="keyword">const</span> CracoLessPlugin = <span class="built_in">require</span>(<span class="string">&#x27;craco-less&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    &#123;</span><br><span class="line">      plugin: CracoLessPlugin,</span><br><span class="line">      options: &#123;</span><br><span class="line">        lessLoaderOptions: &#123;</span><br><span class="line">           lessOptions:&#123;</span><br><span class="line">                modifyVars: &#123; <span class="string">&#x27;@primary-color&#x27;</span>: <span class="string">&#x27;#1DA57A&#x27;</span> &#125;,</span><br><span class="line">                javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>react,</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一个奇葩的表格统计需求</title>
     <url>/posts/507fa396/</url>
     <content><![CDATA[<p>有个报表统计的需求，先上需求图：</p>
@@ -309,6 +292,23 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </tags>
   </entry>
   <entry>
+    <title>在 create-react-app 中使用Ant Design中的坑</title>
+    <url>/posts/204a2bf8/</url>
+    <content><![CDATA[<h2 id="Ant-Design-中的文档有错误，参数变了"><a href="#Ant-Design-中的文档有错误，参数变了" class="headerlink" title="Ant Design 中的文档有错误，参数变了"></a>Ant Design 中的文档有错误，参数变了</h2><p>这是原来的配置：</p>
+<a id="more"></a>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// craco.config.js</span></span><br><span class="line"><span class="keyword">const</span> CracoLessPlugin = <span class="built_in">require</span>(<span class="string">&#x27;craco-less&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    &#123;</span><br><span class="line">      plugin: CracoLessPlugin,</span><br><span class="line">      options: &#123;</span><br><span class="line">        lessLoaderOptions: &#123;</span><br><span class="line">          modifyVars: &#123; <span class="string">&#x27;@primary-color&#x27;</span>: <span class="string">&#x27;#1DA57A&#x27;</span> &#125;,</span><br><span class="line">          javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这是正确的配置：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// craco.config.js</span></span><br><span class="line"><span class="keyword">const</span> CracoLessPlugin = <span class="built_in">require</span>(<span class="string">&#x27;craco-less&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    &#123;</span><br><span class="line">      plugin: CracoLessPlugin,</span><br><span class="line">      options: &#123;</span><br><span class="line">        lessLoaderOptions: &#123;</span><br><span class="line">           lessOptions:&#123;</span><br><span class="line">                modifyVars: &#123; <span class="string">&#x27;@primary-color&#x27;</span>: <span class="string">&#x27;#1DA57A&#x27;</span> &#125;,</span><br><span class="line">                javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>react,</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在重启阿里云ubantu后nginx、mysql、pm2等的重启</title>
     <url>/posts/c20fd3fa/</url>
     <content><![CDATA[<p>由于对linux的不熟，很多命令都记不住，2018年也是花了几天时间才把服务器环境搭起来，部署了nodejs的水研村官网前后端、部署了“账目随身记”小程序后端，并且利用nginx做了小程序需要的ssl证书转发https，现在已经忘了具体的操作了，免费ssl证书准备过期了，准备又得重新折腾了，下次一定得记录下来。</p>
@@ -324,6 +324,25 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实现一个简单的深拷贝</title>
+    <url>/posts/25ca6631/</url>
+    <content><![CDATA[<p>在js中经常需要用到变量的拷贝，比如<code>var a=1;var b=a;</code> 这个时候修改b的值，a不会改变<code>b=2;console.log(a); //1</code>,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，</p>
+<a id="more"></a>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">var</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; </span><br><span class="line"><span class="attribute">var</span> b=a;</span><br><span class="line"><span class="attribute">b</span>[<span class="number">0</span>]=<span class="number">66</span>;</span><br><span class="line"><span class="attribute">console</span>.log(a); //[<span class="number">66</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+<p>可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">var arr_copy = arr ;</span><br><span class="line">arr_copy = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">console.log(arr); <span class="comment">//[1,2,3,4]</span></span><br><span class="line">console.log(arr_copy);<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    name:<span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">var obj_copy = obj ;</span><br><span class="line">obj_copy = &#123;</span><br><span class="line">    name:<span class="string">&#x27;李四&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">console.log(obj.name);<span class="comment">//张三</span></span><br><span class="line">console.log(obj_copy.name);<span class="comment">//李四</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用递归进行深拷贝。"><a href="#使用递归进行深拷贝。" class="headerlink" title="使用递归进行深拷贝。"></a>使用递归进行深拷贝。</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> car = &#123;</span><br><span class="line">    name : <span class="string">&#x27;宝马&#x27;</span>,</span><br><span class="line">    color:<span class="string">&#x27;红色&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断是数组还是对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Object]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Object&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Array]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Array&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;nomal&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getType(obj)==<span class="string">&#x27;nomal&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj ;  <span class="comment">//如果是基本类型则直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newObj = getType(obj)==<span class="string">&#x27;Object&#x27;</span>?&#123;&#125;:[];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                newObj[key] = deepCopy(obj[key]); <span class="comment">//递归</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newCar = deepCopy(car) ;</span><br><span class="line">newInfo.name = <span class="string">&#x27;奔驰&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newCar); <span class="comment">//&#123;name:&#x27;奔驰&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(car);<span class="comment">//&#123;name:&#x27;宝马&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
       </tags>
   </entry>
   <entry>
@@ -347,25 +366,6 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       <tags>
         <tag>小程序</tag>
         <tag>钉钉小程序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>实现一个简单的深拷贝</title>
-    <url>/posts/25ca6631/</url>
-    <content><![CDATA[<p>在js中经常需要用到变量的拷贝，比如<code>var a=1;var b=a;</code> 这个时候修改b的值，a不会改变<code>b=2;console.log(a); //1</code>,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，</p>
-<a id="more"></a>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">var</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; </span><br><span class="line"><span class="attribute">var</span> b=a;</span><br><span class="line"><span class="attribute">b</span>[<span class="number">0</span>]=<span class="number">66</span>;</span><br><span class="line"><span class="attribute">console</span>.log(a); //[<span class="number">66</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br></pre></td></tr></table></figure>
-<p>可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">var arr_copy = arr ;</span><br><span class="line">arr_copy = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">console.log(arr); <span class="comment">//[1,2,3,4]</span></span><br><span class="line">console.log(arr_copy);<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    name:<span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">var obj_copy = obj ;</span><br><span class="line">obj_copy = &#123;</span><br><span class="line">    name:<span class="string">&#x27;李四&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">console.log(obj.name);<span class="comment">//张三</span></span><br><span class="line">console.log(obj_copy.name);<span class="comment">//李四</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="使用递归进行深拷贝。"><a href="#使用递归进行深拷贝。" class="headerlink" title="使用递归进行深拷贝。"></a>使用递归进行深拷贝。</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> car = &#123;</span><br><span class="line">    name : <span class="string">&#x27;宝马&#x27;</span>,</span><br><span class="line">    color:<span class="string">&#x27;红色&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断是数组还是对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Object]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Object&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Array]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Array&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;nomal&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getType(obj)==<span class="string">&#x27;nomal&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj ;  <span class="comment">//如果是基本类型则直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newObj = getType(obj)==<span class="string">&#x27;Object&#x27;</span>?&#123;&#125;:[];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                newObj[key] = deepCopy(obj[key]); <span class="comment">//递归</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newCar = deepCopy(car) ;</span><br><span class="line">newInfo.name = <span class="string">&#x27;奔驰&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newCar); <span class="comment">//&#123;name:&#x27;奔驰&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(car);<span class="comment">//&#123;name:&#x27;宝马&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
-<p>这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）</p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>js</tag>
       </tags>
   </entry>
   <entry>
@@ -482,6 +482,20 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </tags>
   </entry>
   <entry>
+    <title>部署在github page的hexo博客绑定二级域名</title>
+    <url>/posts/a7642960/</url>
+    <content><![CDATA[<h2 id="前提：已经有了域名（这里以阿里云为例）以及能成功访问的github-page（这里以hexo部署的博客为例）。"><a href="#前提：已经有了域名（这里以阿里云为例）以及能成功访问的github-page（这里以hexo部署的博客为例）。" class="headerlink" title="前提：已经有了域名（这里以阿里云为例）以及能成功访问的github page（这里以hexo部署的博客为例）。"></a>前提：已经有了域名（这里以阿里云为例）以及能成功访问的github page（这里以hexo部署的博客为例）。</h2><h3 id="1-增加域名解析："><a href="#1-增加域名解析：" class="headerlink" title="1.增加域名解析："></a>1.增加域名解析：</h3><a id="more"></a>
+<p><img src="/images/2019-2-26.png"><br>这里需要注意，记录类型需要选择CNAME，主机记录为除www和@外的字符，因为我要用blog作为二级域名，所以写blog。解析线路选默认就好了，一开始我选境外，结果不行。记录值为<code>***.github.io</code>(即你的github page地址)。到这里解析设置完成了。</p>
+<h3 id="2-增加域名解析："><a href="#2-增加域名解析：" class="headerlink" title="2.增加域名解析："></a>2.增加域名解析：</h3><p>在GitHub博客仓库的根目录中新建文件CNAME （没有后缀），里面填写 <code>blog.iyuge.cn</code> 注意，因为hexo在部署至github时会重新删除github的文件，所以我们必须在本地的source目录下新建CNAME文件，然后<code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d github</code>上就有CNAME文件了</p>
+<h3 id="结语：至此，给github-page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！"><a href="#结语：至此，给github-page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！" class="headerlink" title="结语：至此，给github page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！"></a>结语：至此，给github page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！</h3>]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>钉钉工作台自定义组件设计规范及注意事项</title>
     <url>/posts/4794f0e0/</url>
     <content><![CDATA[<h3 id="钉钉标准组件的默认规范："><a href="#钉钉标准组件的默认规范：" class="headerlink" title="钉钉标准组件的默认规范："></a>钉钉标准组件的默认规范：</h3><p>满栏/非满栏：padding/margin: 0 32rpx;<br />圆角：12rpx<br />默认高度：100px-375px<br />从目前的众多项目的实践来看，组件的单位能使用rpx单位优先使用rpx单位（字体也可使用rpx）。<br /></p>
@@ -507,20 +521,6 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       <tags>
         <tag>小程序</tag>
         <tag>钉钉小程序</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>部署在github page的hexo博客绑定二级域名</title>
-    <url>/posts/a7642960/</url>
-    <content><![CDATA[<h2 id="前提：已经有了域名（这里以阿里云为例）以及能成功访问的github-page（这里以hexo部署的博客为例）。"><a href="#前提：已经有了域名（这里以阿里云为例）以及能成功访问的github-page（这里以hexo部署的博客为例）。" class="headerlink" title="前提：已经有了域名（这里以阿里云为例）以及能成功访问的github page（这里以hexo部署的博客为例）。"></a>前提：已经有了域名（这里以阿里云为例）以及能成功访问的github page（这里以hexo部署的博客为例）。</h2><h3 id="1-增加域名解析："><a href="#1-增加域名解析：" class="headerlink" title="1.增加域名解析："></a>1.增加域名解析：</h3><a id="more"></a>
-<p><img src="/images/2019-2-26.png"><br>这里需要注意，记录类型需要选择CNAME，主机记录为除www和@外的字符，因为我要用blog作为二级域名，所以写blog。解析线路选默认就好了，一开始我选境外，结果不行。记录值为<code>***.github.io</code>(即你的github page地址)。到这里解析设置完成了。</p>
-<h3 id="2-增加域名解析："><a href="#2-增加域名解析：" class="headerlink" title="2.增加域名解析："></a>2.增加域名解析：</h3><p>在GitHub博客仓库的根目录中新建文件CNAME （没有后缀），里面填写 <code>blog.iyuge.cn</code> 注意，因为hexo在部署至github时会重新删除github的文件，所以我们必须在本地的source目录下新建CNAME文件，然后<code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d github</code>上就有CNAME文件了</p>
-<h3 id="结语：至此，给github-page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！"><a href="#结语：至此，给github-page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！" class="headerlink" title="结语：至此，给github page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！"></a>结语：至此，给github page绑定二级域名就完成了，很简单，但是需要注意的是第一次有可能不成功需要重试几次，每次可能需要等一段时间才会生效！</h3>]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
       </tags>
   </entry>
 </search>
