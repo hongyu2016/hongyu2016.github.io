@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bitbug_favicon-3x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bitbug_favicon%20-16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iyuge.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="用hexo+github page快速搭建个人静态博客1.hexo环境搭建首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo npm install -g hexo-cli 可以使用 hexo v 来检查是否安装成功。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用hexo+github搭建个人博客">
+<meta property="og:url" content="https://blog.iyuge.cn/posts/4443dac6/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="用hexo+github page快速搭建个人静态博客1.hexo环境搭建首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo npm install -g hexo-cli 可以使用 hexo v 来检查是否安装成功。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-02-27T07:33:57.000Z">
+<meta property="article:modified_time" content="2021-04-22T01:56:08.242Z">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="技术">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.iyuge.cn/posts/4443dac6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>用hexo+github搭建个人博客 | 羽歌天地博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">羽歌天地博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">爱羽歌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/4443dac6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="刘宏羽">
+      <meta itemprop="description" content="记录技术点滴">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="羽歌天地博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用hexo+github搭建个人博客
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-27 15:33:57" itemprop="dateCreated datePublished" datetime="2019-02-27T15:33:57+08:00">2019-02-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-22 09:56:08" itemprop="dateModified" datetime="2021-04-22T09:56:08+08:00">2021-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/4443dac6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/4443dac6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="用hexo-github-page快速搭建个人静态博客"><a href="#用hexo-github-page快速搭建个人静态博客" class="headerlink" title="用hexo+github page快速搭建个人静态博客"></a>用hexo+github page快速搭建个人静态博客</h2><h3 id="1-hexo环境搭建"><a href="#1-hexo环境搭建" class="headerlink" title="1.hexo环境搭建"></a>1.hexo环境搭建</h3><p>首先需要电脑安装好了nodejs（具体安装步骤略过），还需要有github账号。打开cmd命令行，全局安装hexo <code>npm install -g hexo-cli</code> 可以使用 <code>hexo v</code> 来检查是否安装成功。</p>
+<a id="more"></a>
+<p>接下来使用hexo cli来创建项目：使用<code>hexo init</code> 就会在当前文件夹下创建了项目，当然也可以使用<code>hexo init 文件夹名称</code> 来创建文件夹的同时创建项目。接着运行 <code>npm install</code>安装依赖，注意，安装hexo的文件夹需要是空文件夹。</p>
+<h3 id="2-hexo的基本使用及常见的命令"><a href="#2-hexo的基本使用及常见的命令" class="headerlink" title="2.hexo的基本使用及常见的命令"></a>2.hexo的基本使用及常见的命令</h3><p><code>hexo s</code> 使用这个命令可以在本地跑起来，可以看到cmd窗口提示项目运行在 <code>http://localhost:4000</code>，打开浏览器输入提示的地址即可访问了，不过可以看到，默认的主题有点丑，我们可以换一个，在这里我们换next这个简洁的主题。我们可以直接百度搜索hexo next主题官网或者去hexo官网找next主题都可以，我们找到next的github，克隆下来，放到博客项目的themes目录下，接下来打开根目录的配置文件_config.yml文件找到 theme，把默认的该为next，然后命令行<code>hexo clean &amp;&amp; hexo s</code>刷新页面即可成功替换主题了。<br>快速创建文章命令为 <code>hexo new &quot;文章名字&quot;</code>  执行完这个命令后就会在sources下的_posts目录下创建名称为 刚刚创建的同名md文件，可以用编辑器直接打开编辑了。</p>
+<h4 id="这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面-hexo-new-page-quot-about-quot-这时-source里面多了个目录about，里面有个index-md，就可以正常访问了，内容就在那个index-md里添加"><a href="#这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面-hexo-new-page-quot-about-quot-这时-source里面多了个目录about，里面有个index-md，就可以正常访问了，内容就在那个index-md里添加" class="headerlink" title="这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面 hexo new page &quot;about&quot; 这时 source里面多了个目录about，里面有个index.md，就可以正常访问了，内容就在那个index.md里添加"></a>这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面 <code>hexo new page &quot;about&quot;</code> 这时 source里面多了个目录about，里面有个index.md，就可以正常访问了，内容就在那个index.md里添加</h4><h3 id="与github对接"><a href="#与github对接" class="headerlink" title="与github对接"></a>与github对接</h3><p>在github上新建一个名为xxx.github.io 的仓库，然后在hexo的_config.yml中的</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>: </span><br><span class="line">  <span class="attribute">type</span>: git </span><br><span class="line">  <span class="attribute">repository</span>: git<span class="variable">@github</span>.<span class="attribute">com</span>:hongyu2016/hongyu2016.github.io.git </span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure>
+<p>填写相应的git地址，然后需要把本地项目与git仓库相关联起来，需要使用ssh来连接，git ssh连接请参考 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/superGG1990/p/6844952.html">配置git ssh</a> 。在本地仓库与远程仓库连接的过程中可能会出现分支不匹配等错误，需要具体问题然后再进行针对性解决。本地仓库与远程仓库关联上后就可以在本地进行发布了，<code>hexo d</code>为发布命令，会将项目发布到github page，发布成功后，会在本地生成的静态文件推送到到github，其他文件是不会推送的，这个时候会把原本在github上的readme文件删除，不要慌，在resoures下新建readme文件再次发布就好了，注意：千万不要使用github的git push发布，这样发布是没有效果的，github会在每次push时发编译失败的邮件给你，因为github page只支持静态文件，所以只能使用<code>hexo d</code>命令，另外在发布前最好先<code>hexo clean &amp;&amp; hexo g</code>先清除和重新生成静态文件发发布。发布成功后，输入xxx.github.io就可以正常访问博客了。</p>
+<h2 id="结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。"><a href="#结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。" class="headerlink" title="结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。"></a>结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/a7642960/" rel="prev" title="部署在github page的hexo博客绑定二级域名">
+      <i class="fa fa-chevron-left"></i> 部署在github page的hexo博客绑定二级域名
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/367b716d/" rel="next" title="js判断一个变量是对象还是数组的实用方法记录">
+      js判断一个变量是对象还是数组的实用方法记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8hexo-github-page%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2"><span class="nav-number">1.</span> <span class="nav-text">用hexo+github page快速搭建个人静态博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-hexo%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">1.hexo环境搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-hexo%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%8F%8A%E5%B8%B8%E8%A7%81%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">2.hexo的基本使用及常见的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%99%E9%87%8C%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%EF%BC%9A%E5%9C%A8next%E4%B8%BB%E9%A2%98%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8B%E6%B7%BB%E5%8A%A0%E4%BA%86%E8%8F%9C%E5%8D%95%E5%90%8E%EF%BC%8C%E7%82%B9%E5%87%BB%E4%BA%86%E6%8F%90%E7%A4%BA%E6%89%BE%E4%B8%8D%E5%88%B0%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%B8%8D%E8%A6%81%E6%85%8C%EF%BC%8C%E6%98%AF%E5%9B%A0%E4%B8%BA%E9%BB%98%E8%AE%A4%E5%8F%AA%E7%94%9F%E4%BA%A7home%E5%92%8CArchive%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%9C%80%E8%A6%81%E8%87%AA%E5%B7%B1%E5%88%9B%E5%BB%BA%E7%9B%B8%E5%BA%94%E7%9A%84%E9%A1%B5%E9%9D%A2%EF%BC%8C%E6%AF%94%E5%A6%82about%E9%A1%B5%E9%9D%A2-hexo-new-page-quot-about-quot-%E8%BF%99%E6%97%B6-source%E9%87%8C%E9%9D%A2%E5%A4%9A%E4%BA%86%E4%B8%AA%E7%9B%AE%E5%BD%95about%EF%BC%8C%E9%87%8C%E9%9D%A2%E6%9C%89%E4%B8%AAindex-md%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%AD%A3%E5%B8%B8%E8%AE%BF%E9%97%AE%E4%BA%86%EF%BC%8C%E5%86%85%E5%AE%B9%E5%B0%B1%E5%9C%A8%E9%82%A3%E4%B8%AAindex-md%E9%87%8C%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.2.1.</span> <span class="nav-text">这里需要注意：在next主题的配置文件下添加了菜单后，点击了提示找不到页面，不要慌，是因为默认只生产home和Archive页面，需要自己创建相应的页面，比如about页面 hexo new page &quot;about&quot; 这时 source里面多了个目录about，里面有个index.md，就可以正常访问了，内容就在那个index.md里添加</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8Egithub%E5%AF%B9%E6%8E%A5"><span class="nav-number">1.3.</span> <span class="nav-text">与github对接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD%EF%BC%9A%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%E8%BF%98%E6%98%AF%E6%AF%94%E8%BE%83%E7%AE%80%E5%8D%95%E7%9A%84%EF%BC%8C%E4%B8%AA%E4%BA%BA%E8%A7%89%E5%BE%97%E5%9C%A8%E6%8E%A8%E9%80%81%E5%88%B0github%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%AF%94%E8%BE%83%E9%BA%BB%E7%83%A6%EF%BC%8C%E5%AE%B9%E6%98%93%E5%87%BA%E5%90%84%E7%A7%8D%E9%97%AE%E9%A2%98%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%9C%B0%E6%96%B9%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">结语：搭建hexo博客还是比较简单的，个人觉得在推送到github的过程中比较麻烦，容易出各种问题，这个地方需要注意。</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="刘宏羽"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">刘宏羽</p>
+  <div class="site-description" itemprop="description">记录技术点滴</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">桂ICP备17005232号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘宏羽</span>
+</div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="https://s9.cnzz.com/z_stat.php?id=1279653165&web_id=1279653165"></script>
+  </div>
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'RdFf66iAyuv2n4rbYv4s3w8p-gzGzoHsz',
+      appKey     : 'mPwSGAbK1UhFlXlHkBcMXccb',
+      placeholder: "欢迎您发表宝贵的留言。",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

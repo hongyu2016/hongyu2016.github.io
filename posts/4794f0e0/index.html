@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bitbug_favicon-3x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bitbug_favicon%20-16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iyuge.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="钉钉标准组件的默认规范：满栏&#x2F;非满栏：padding&#x2F;margin: 0 32rpx;圆角：12rpx默认高度：100px-375px从目前的众多项目的实践来看，组件的单位能使用rpx单位优先使用rpx单位（字体也可使用rpx）。 自定义组件规范1、目前发现组件间没有类似vue style那样的scope属性进行样式作用域隔离，所以目前最好的方式是通过不一样的类名来区分组件，如要写成.contai">
+<meta property="og:type" content="article">
+<meta property="og:title" content="钉钉工作台自定义组件设计规范及注意事项">
+<meta property="og:url" content="https://blog.iyuge.cn/posts/4794f0e0/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="钉钉标准组件的默认规范：满栏&#x2F;非满栏：padding&#x2F;margin: 0 32rpx;圆角：12rpx默认高度：100px-375px从目前的众多项目的实践来看，组件的单位能使用rpx单位优先使用rpx单位（字体也可使用rpx）。 自定义组件规范1、目前发现组件间没有类似vue style那样的scope属性进行样式作用域隔离，所以目前最好的方式是通过不一样的类名来区分组件，如要写成.contai">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/4794f0e0/1.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/4794f0e0/2.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/4794f0e0/3.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/4794f0e0/4.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/4794f0e0/5.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/4794f0e0/6.png">
+<meta property="article:published_time" content="2021-04-22T01:56:08.252Z">
+<meta property="article:modified_time" content="2021-04-22T01:56:08.252Z">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="小程序">
+<meta property="article:tag" content="钉钉小程序">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.iyuge.cn/posts/4794f0e0/1.png">
+
+<link rel="canonical" href="https://blog.iyuge.cn/posts/4794f0e0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>钉钉工作台自定义组件设计规范及注意事项 | 羽歌天地博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">羽歌天地博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">爱羽歌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/4794f0e0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="刘宏羽">
+      <meta itemprop="description" content="记录技术点滴">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="羽歌天地博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          钉钉工作台自定义组件设计规范及注意事项
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-22 09:56:08" itemprop="dateCreated datePublished" datetime="2021-04-22T09:56:08+08:00">2021-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/4794f0e0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/4794f0e0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="钉钉标准组件的默认规范："><a href="#钉钉标准组件的默认规范：" class="headerlink" title="钉钉标准组件的默认规范："></a>钉钉标准组件的默认规范：</h3><p>满栏/非满栏：padding/margin: 0 32rpx;<br />圆角：12rpx<br />默认高度：100px-375px<br />从目前的众多项目的实践来看，组件的单位能使用rpx单位优先使用rpx单位（字体也可使用rpx）。<br /></p>
+<h3 id="自定义组件规范"><a href="#自定义组件规范" class="headerlink" title="自定义组件规范"></a>自定义组件规范</h3><p>1、目前发现组件间没有类似vue style那样的scope属性进行样式作用域隔离，所以目前最好的方式是通过不一样的类名来区分组件，如要写成.container-wrap-title .box，而不是 .box ，以免污染全局的css。以及进行样式的设计。</p>
+<a id="more"></a>
+<p>如下图：<br /><img src="1.png"><br /><img src="2.png"><br /><br><br />2、不止是样式，js也是一样，比如，最好不要把变量声明在Component外，否则当在门户上使用到两个同样的组件时，变量就会被覆盖，无法保持独立性，所以应该把变量声明在Component内或者挂载在data里，如下图：<br /><img src="3.png"><br />3、之前的组件开发，对于通过配置来更改css中的font-size、各种color 等样式的，直接在axml里的style里写，比如：style=”color:;” 。这样做虽然能达到目的，但是会使得axml变的很难看，维护起来比较棘手；所以现在新开发的组件，涉及到通过配置来更改样式的，优先使用css中的 “var(变量,默认值)”。关于css中的变量的用法：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/--*">https://developer.mozilla.org/zh-CN/docs/Web/CSS/–*</a><br />在我们组件开发中的用法大概是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//js文件</span></span><br><span class="line"><span class="comment">// 组件初始化时，获取config.json的配置，设置cssVariable变量，以便在axml 根元素使用style赋值</span></span><br><span class="line">didMount() &#123;</span><br><span class="line">  getLifecycleSdk().didMount(<span class="built_in">this</span>.props.componentName);</span><br><span class="line">  <span class="keyword">let</span> &#123;</span><br><span class="line">    height,</span><br><span class="line">    titleColor,</span><br><span class="line">  &#125; = <span class="built_in">this</span>.props.componentProps;</span><br><span class="line">  <span class="keyword">let</span> cssStyle = <span class="string">`</span></span><br><span class="line"><span class="string">  --height: <span class="subst">$&#123;height&#125;</span>rpx;   </span></span><br><span class="line"><span class="string">  --title-color: <span class="subst">$&#123;titleColor&#125;</span>;    </span></span><br><span class="line"><span class="string">  `</span></span><br><span class="line">  <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">    cssVariable: cssStyle</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 组件其他业务逻辑</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// axml文件使用</span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;root-wrap&quot;</span> <span class="attr">style</span>=<span class="string">&quot;&#123;&#123;cssVariable&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">    // 其他子元素</span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// scss文件中使用</span><br><span class="line"><span class="selector-class">.root-wrap</span>&#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="built_in">var</span>(--height, <span class="number">150</span>rpx);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>1：组件的名称问题，对于其他外部开发者开发的组件，以组织名称开头，以免与目前主公司的其他组件冲突</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// config.json 中的 pluginComponentName 以组织名称开头，以免与目前主公司的其他组件冲突。</span></span><br><span class="line">  <span class="comment">// 比如 叮当 的，可以使用 dingdangComponet 或者 ddangComponet</span></span><br><span class="line">  <span class="attr">&quot;pluginComponentName&quot;</span>: <span class="string">&quot;dingdangBanner&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、对于不注册在门户设计器上的组件，即只有acss、axml、js、json四个文件，没有config.json文件；也就是只在其他组件中被引用的，对于这类组件需要特别注意：<br />这里的组件的开发就跟钉钉的小程序开发很像了，axml里读取props里的值不再像插件开发那样写componentProps.xxx，而是直接写xxx，而且在编辑器里props里写默认值是生效的，但是到了门户设计器，到了真实的手机环境的时候，这个默认值就会失效<br /><img src="4.png"><br />3、使用rpx等单位时需注意某些情况下的精度问题；比如画一个正圆时，宽高使用rpx，圆角设置50%；在手机上会出现有些圆不圆的情况，这是由于rpx转成rem，然后再在手机上转成px时会存在精度丢失（手机上有二倍屏，三倍屏），宽高使用px做单位就没这个问题。<br /></p>
+<h3 id="由于组件间没有像vue那样的样式-scope隔离，所以组件间需要用组件名作为顶级选择器，嵌套使用，且顶级选择器不能重复，防止组件间样式冲突。"><a href="#由于组件间没有像vue那样的样式-scope隔离，所以组件间需要用组件名作为顶级选择器，嵌套使用，且顶级选择器不能重复，防止组件间样式冲突。" class="headerlink" title="由于组件间没有像vue那样的样式 scope隔离，所以组件间需要用组件名作为顶级选择器，嵌套使用，且顶级选择器不能重复，防止组件间样式冲突。"></a>由于组件间没有像vue那样的样式 scope隔离，所以组件间需要用组件名作为顶级选择器，嵌套使用，且顶级选择器不能重复，防止组件间样式冲突。</h3><p>建议使用scss嵌套书写css，提高开发效率，也不容易遗漏顶级选择器，但是由于acss不支持scss，我们需要用工具来实现。<br />1、首先选择vscode来开发，安装Live Sass Compiler 插件<br />2、配置settings.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;liveSassCompile.settings.formats&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;format&quot;</span>: <span class="string">&quot;expanded&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;extensionName&quot;</span>: <span class="string">&quot;.acss&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;savePath&quot;</span>: <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;liveSassCompile.settings.generateMap&quot;</span>: <span class="literal">false</span>  <span class="comment">// 去掉map文件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3、点击vscode底部的watch按钮，监听文件变化，自动编译scss文件为acss文件<br /><img src="5.png"><br />4、完整组件至少包含6个文件。.sjs文件作为axml的辅助，详情可查看钉钉小程序开发文档<br /><img src="6.png"></p>
+<h3 id="关于组件新增、删除、修改config-json文件的主意事项"><a href="#关于组件新增、删除、修改config-json文件的主意事项" class="headerlink" title="关于组件新增、删除、修改config.json文件的主意事项"></a>关于组件新增、删除、修改config.json文件的主意事项</h3><p>1：删除配置项：参考钉钉插件开发文档的说法，config文件的配置避免删除配置项，否则有可能引起已经在使用中的客户门户报错<br />2：修改配置项：修改配置项的名称、不改变原来配置类型的情况下增加配置选项（如增加下拉选项），这都没有什么风险；但是最好不要修改配置项的类型，比如原来是下拉框，改成了输入框，有可能引起已经在使用中的客户门户报错<br />3：新增配置项：钉钉会把组件的配置面板的所有参数的值存储到数据库，但是对于新增配置项，不会自动更新新增配置项的默认值，也就是默认值为空。因此要使已经在使用中的客户门户也对新增的默认值生效的话，必须要重新拖入组件，重新发布门户。所以，对于新增配置项，要做好兼容处理。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"># 小程序</a>
+              <a href="/tags/%E9%92%89%E9%92%89%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"># 钉钉小程序</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/27f9f710/" rel="prev" title="Verdaccio 搭建私有npm仓库">
+      <i class="fa fa-chevron-left"></i> Verdaccio 搭建私有npm仓库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/4080e15/" rel="next" title="react 常用组件">
+      react 常用组件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%89%E9%92%89%E6%A0%87%E5%87%86%E7%BB%84%E4%BB%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E8%A7%84%E8%8C%83%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">钉钉标准组件的默认规范：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E8%A7%84%E8%8C%83"><span class="nav-number">2.</span> <span class="nav-text">自定义组件规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B1%E4%BA%8E%E7%BB%84%E4%BB%B6%E9%97%B4%E6%B2%A1%E6%9C%89%E5%83%8Fvue%E9%82%A3%E6%A0%B7%E7%9A%84%E6%A0%B7%E5%BC%8F-scope%E9%9A%94%E7%A6%BB%EF%BC%8C%E6%89%80%E4%BB%A5%E7%BB%84%E4%BB%B6%E9%97%B4%E9%9C%80%E8%A6%81%E7%94%A8%E7%BB%84%E4%BB%B6%E5%90%8D%E4%BD%9C%E4%B8%BA%E9%A1%B6%E7%BA%A7%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%8C%E5%B5%8C%E5%A5%97%E4%BD%BF%E7%94%A8%EF%BC%8C%E4%B8%94%E9%A1%B6%E7%BA%A7%E9%80%89%E6%8B%A9%E5%99%A8%E4%B8%8D%E8%83%BD%E9%87%8D%E5%A4%8D%EF%BC%8C%E9%98%B2%E6%AD%A2%E7%BB%84%E4%BB%B6%E9%97%B4%E6%A0%B7%E5%BC%8F%E5%86%B2%E7%AA%81%E3%80%82"><span class="nav-number">4.</span> <span class="nav-text">由于组件间没有像vue那样的样式 scope隔离，所以组件间需要用组件名作为顶级选择器，嵌套使用，且顶级选择器不能重复，防止组件间样式冲突。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%BB%84%E4%BB%B6%E6%96%B0%E5%A2%9E%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E4%BF%AE%E6%94%B9config-json%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%BB%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">5.</span> <span class="nav-text">关于组件新增、删除、修改config.json文件的主意事项</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="刘宏羽"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">刘宏羽</p>
+  <div class="site-description" itemprop="description">记录技术点滴</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">桂ICP备17005232号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘宏羽</span>
+</div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="https://s9.cnzz.com/z_stat.php?id=1279653165&web_id=1279653165"></script>
+  </div>
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'RdFf66iAyuv2n4rbYv4s3w8p-gzGzoHsz',
+      appKey     : 'mPwSGAbK1UhFlXlHkBcMXccb',
+      placeholder: "欢迎您发表宝贵的留言。",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

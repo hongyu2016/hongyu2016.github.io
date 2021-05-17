@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bitbug_favicon-3x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bitbug_favicon%20-16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.iyuge.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="主要分为两部分：第一部分是nexus私有仓库的搭建，第二部分是vue-cli 3的组件搭建并发布到nexus本地仓库。 nexus私有仓库的搭建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库">
+<meta property="og:url" content="https://blog.iyuge.cn/posts/73a5b140/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="主要分为两部分：第一部分是nexus私有仓库的搭建，第二部分是vue-cli 3的组件搭建并发布到nexus本地仓库。 nexus私有仓库的搭建">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/73a5b140/1.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/73a5b140/2.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/73a5b140/3.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/73a5b140/4.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/73a5b140/5.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/73a5b140/6.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/73a5b140/7.png">
+<meta property="og:image" content="https://blog.iyuge.cn/posts/73a5b140/8.png">
+<meta property="article:published_time" content="2019-08-13T02:21:42.000Z">
+<meta property="article:modified_time" content="2021-04-22T01:56:08.212Z">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="nexus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.iyuge.cn/posts/73a5b140/1.png">
+
+<link rel="canonical" href="https://blog.iyuge.cn/posts/73a5b140/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库 | 羽歌天地博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">羽歌天地博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">爱羽歌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/73a5b140/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="刘宏羽">
+      <meta itemprop="description" content="记录技术点滴">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="羽歌天地博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-13 10:21:42" itemprop="dateCreated datePublished" datetime="2019-08-13T10:21:42+08:00">2019-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-22 09:56:08" itemprop="dateModified" datetime="2021-04-22T09:56:08+08:00">2021-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/73a5b140/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/73a5b140/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>主要分为两部分：第一部分是nexus私有仓库的搭建，第二部分是vue-cli 3的组件搭建并发布到nexus本地仓库。</p>
+<h2 id="nexus私有仓库的搭建"><a href="#nexus私有仓库的搭建" class="headerlink" title="nexus私有仓库的搭建"></a>nexus私有仓库的搭建</h2><a id="more"></a>
+<h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><ol>
+<li>首先需要在<a target="_blank" rel="noopener" href="https://www.sonatype.com/oss-thank-you-win64.zip?submissionGuid=2c6a43fc-9aa5-4acc-b995-87cb63b04d66"><font style="color:red">官网</font></a>下载nexus windows版本（注意：需要翻墙，自备梯子）。</li>
+<li>以管理员身份运行cmd（注意：必须是管理员运行且必须是cmd，win10的powershell都会报错），然后切换到<code>C:\node\nexus\nexus-3.18.0-01-win64\nexus-3.18.0-01\bin</code> 软件下载后的解压目录。<br><font style="color:red">nexus启动前，最好修改下<code>C:\node\nexus\nexus-3.18.0-01-win64\nexus-3.18.0-01\bin\nexus.vmoptions</code>的配置</font>，防止出现内存不足的报错导致无法启动，我这里修改为<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-Xms600m</span></span><br><span class="line"><span class="deletion">-Xmx600m</span></span><br><span class="line"><span class="deletion">-XX:MaxDirectMemorySize=1G</span></span><br></pre></td></tr></table></figure>
+默认都是约2G</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nexus.exe /install #执行安装命令， 成功后会提示Installed<span class="built_in"> service </span><span class="string">&#x27;nexus</span></span><br><span class="line"><span class="string">nexus.exe /run #运行服务，首次运行需要等待1~2分钟</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>启动完毕后,进入 http://(本机IP):8081（最好是自定义电脑ip），点击右上角Sign In进行登录，默认账号 admin<br>默认密码存放在<code>C:\node\nexus\nexus-3.18.0-01-win64\sonatype-work\nexus3\**.password</code> 打开文件后复制密码串进行登录，<br>登录后会提示修改密码，修改完重新登录即可。然后<code>**.password</code>文件就会自动删除。</li>
+</ol>
+<h3 id="添加npm仓库"><a href="#添加npm仓库" class="headerlink" title="添加npm仓库"></a>添加npm仓库</h3><p>点击左侧菜单Repositories 查看仓库列表<br><img src="1.png"></p>
+<ul>
+<li>点击Create repository按钮创建仓库</li>
+<li>group表示分组 hosted表示本机私有 proxy表示远程代理（中央仓库）</li>
+<li>若registry配置为group（包括hosted和proxy）,首次会从hosted拉取，若无则从proxy拉取并缓存，下次则直接从缓存取</li>
+</ul>
+<ol>
+<li><p>添加npm(proxy)仓库：<br>选择npm(proxy)<br>输入<code>Name: npmjs.org</code><br><code>Remote storage: https://registry.npmjs.org</code><br>如图：<br><img src="2.png"></p>
+</li>
+<li><p>添加npm(hosted)仓库：<br>选择npm(hosted)<br>输入<code>Name：npm-hosted</code>用于存放自己发布的私有包<br>如图：<br><img src="3.png"></p>
+</li>
+<li><p>添加npm(group)仓库：<br>选择npm(group)<br>输入<code>Name: npm-group</code>，并在Member repositories里选择之前添加的两个移到右边<br>如图：<br><img src="4.png"></p>
+</li>
+</ol>
+<h3 id="配置与验证npm仓库"><a href="#配置与验证npm仓库" class="headerlink" title="配置与验证npm仓库"></a>配置与验证npm仓库</h3><p>添加发布角色用户及权限</p>
+<ol>
+<li>添加权限认证 将npm Beared Token Realm 添加至右边<br>如图：<br><img src="5.png"></li>
+<li>创建nx-deploy角色并赋予一个nx-repository-view—*的权限码<br><img src="6.png"></li>
+<li>创建deployer用户 同时设定角色为nx-deploy<br><img src="7.png"></li>
+</ol>
+<h3 id="变更依赖源"><a href="#变更依赖源" class="headerlink" title="变更依赖源"></a>变更依赖源</h3><p>安装nrm <code>npm i -g nrm</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="keyword">set</span> registry https://registry.npm.taobao.org <span class="comment">#设置为探宝源</span></span><br><span class="line">nrm <span class="keyword">add</span> <span class="keyword">private</span> <span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.38</span><span class="number">.64</span>:<span class="number">8081</span>/repository/npm-<span class="keyword">all</span>/ <span class="comment">#本机ip</span></span><br><span class="line">nrm <span class="keyword">use</span> <span class="keyword">private</span> <span class="comment">#使用私有源</span></span><br></pre></td></tr></table></figure>
+<h3 id="发布流程"><a href="#发布流程" class="headerlink" title="发布流程"></a>发布流程</h3><p>每次发布前记得在package.json中检查version 有没有修改，要确认比上一个版本号高</p>
+<h3 id="编译文件"><a href="#编译文件" class="headerlink" title="编译文件"></a>编译文件</h3><p><code>yarn lib</code>或者使用npm</p>
+<h3 id="登录npm"><a href="#登录npm" class="headerlink" title="登录npm"></a>登录npm</h3><p><code>npm login -registry http://192.168.38.64:8081/repository/npm-hosted/</code></p>
+<h3 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h3><p><code>npm publish -registry http://192.168.38.64:8081/repository/npm-hosted/</code><br>发布成功后在npm-hosted 能看到发布后的包<br><img src="8.png"></p>
+<h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line"><span class="string">&quot;组件库名称&quot;</span>: <span class="string">&quot;版本号&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> 组件库名称 <span class="keyword">from</span> <span class="string">&#x27;组件库名称&#x27;</span></span><br><span class="line">Vue.use(组件库名称)</span><br></pre></td></tr></table></figure>
+<h3 id="项目启动"><a href="#项目启动" class="headerlink" title="项目启动"></a>项目启动</h3><p><code>yarn serve</code>或者使用npm</p>
+<h3 id="组件库文件目录结构"><a href="#组件库文件目录结构" class="headerlink" title="组件库文件目录结构"></a>组件库文件目录结构</h3><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">├── examples                      <span class="comment"># 示例展示  </span></span><br><span class="line">│   ├── api                       <span class="comment"># 接口类  </span></span><br><span class="line">│   ├── assets                    <span class="comment"># 资源文件夹  </span></span><br><span class="line">│   ├── common                    <span class="comment"># 工具类  </span></span><br><span class="line">│   ├── components                <span class="comment"># 项目内部组件  </span></span><br><span class="line">│   ├── page                      <span class="comment"># 页面  </span></span><br><span class="line">│   ├── router                    <span class="comment"># 路由配置  </span></span><br><span class="line">│   ├── style                     <span class="comment"># 页面样式问题，主题等  </span></span><br><span class="line">│   ├── App.vue                   <span class="comment"># 入口页面  </span></span><br><span class="line">│   ├── main.js                   <span class="comment"># 入口文件 加载组件 初始化等  </span></span><br><span class="line">├── <span class="class"><span class="keyword">lib</span>                           <span class="comment"># 编译后输出的组件目录  </span></span></span><br><span class="line">├── packages                      <span class="comment"># 公共组件目录    </span></span><br><span class="line">│   ├── query-drop-box            <span class="comment"># demo组件  </span></span><br><span class="line">│   ├── simple-input              <span class="comment"># demo组件  </span></span><br><span class="line">│   ├── index.js                  <span class="comment"># 组件入口文件  </span></span><br><span class="line">├── public                        <span class="comment"># 静态资源  </span></span><br><span class="line">│   │── favicon.ico               <span class="comment"># favicon图标  </span></span><br><span class="line">│   └── index.html                <span class="comment"># html模板  </span></span><br><span class="line">├── .gitignore                    <span class="comment"># git 配置  </span></span><br><span class="line">├── .npmignore                    <span class="comment"># npm 配置  </span></span><br><span class="line">├── vue.config.js                 <span class="comment"># vue-cli 配置  </span></span><br><span class="line">├── babel.config.js               <span class="comment"># babel 配置  </span></span><br><span class="line">├── yarn.lock                     <span class="comment"># yarn依赖 配置  </span></span><br><span class="line">└── package.json                  <span class="comment"># package.json  </span></span><br></pre></td></tr></table></figure>
+<p>这里贴一下<code>vue.config.js</code>文件的配置：</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">const path = require(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line">function<span class="meta"> resolve(</span>dir) &#123;</span><br><span class="line">    <span class="meta">return</span> path.jo<span class="meta">in(</span>__dirname, dir)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    pages: &#123;</span><br><span class="line">        <span class="meta">index</span>: &#123;</span><br><span class="line">            entry: <span class="string">&#x27;examples/main.js&#x27;</span>,</span><br><span class="line">            template: <span class="string">&#x27;public/index.html&#x27;</span>,</span><br><span class="line">            <span class="meta">filename</span>: <span class="string">&#x27;index.html&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    productionSourceMap: false,</span><br><span class="line">    css: &#123;</span><br><span class="line">        extract: false,</span><br><span class="line">        modules: false,</span><br><span class="line">        sourceMap: false,</span><br><span class="line">        loaderOptions: &#123;&#125;</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    // 扩展 webpack 配置，使 packages 加入编译</span><br><span class="line">    chainWebpack: config =&gt; &#123;</span><br><span class="line">        config.module</span><br><span class="line">            .rule(<span class="string">&#x27;js&#x27;</span>)</span><br><span class="line">            .include</span><br><span class="line">            .<span class="meta">add</span>(<span class="string">&#x27;/packages/&#x27;</span>)</span><br><span class="line">            .<span class="meta">end</span>()</span><br><span class="line">            .use(<span class="string">&#x27;babel&#x27;</span>)</span><br><span class="line">            .loader(<span class="string">&#x27;babel-loader&#x27;</span>)</span><br><span class="line">            .tap(<span class="meta">options</span> =&gt; &#123;</span><br><span class="line">                // 修改它的选项...</span><br><span class="line">                <span class="meta">return</span> <span class="meta">options</span></span><br><span class="line">            &#125;)</span><br><span class="line">        config.resolve.alias</span><br><span class="line">            .<span class="meta">set</span>(<span class="string">&#x27;@&#x27;</span>,<span class="meta"> resolve(</span><span class="string">&#x27;examples&#x27;</span>))</span><br><span class="line">            .<span class="meta">set</span>(<span class="string">&#x27;src&#x27;</span>,<span class="meta"> resolve(</span><span class="string">&#x27;examples&#x27;</span>))</span><br><span class="line">            .<span class="meta">set</span>(<span class="string">&#x27;components&#x27;</span>,<span class="meta"> resolve(</span><span class="string">&#x27;examples/components&#x27;</span>))</span><br><span class="line">            .<span class="meta">set</span>(<span class="string">&#x27;examples&#x27;</span>,<span class="meta"> resolve(</span><span class="string">&#x27;examples&#x27;</span>))</span><br><span class="line">            .<span class="meta">set</span>(<span class="string">&#x27;common&#x27;</span>,<span class="meta"> resolve(</span><span class="string">&#x27;examples/common&#x27;</span>))</span><br><span class="line">            .<span class="meta">set</span>(<span class="string">&#x27;packages&#x27;</span>,<span class="meta"> resolve(</span><span class="string">&#x27;packages&#x27;</span>))</span><br><span class="line">            .<span class="meta">set</span>(<span class="string">&#x27;api&#x27;</span>,<span class="meta"> resolve(</span><span class="string">&#x27;examples/api&#x27;</span>))</span><br><span class="line">            <span class="comment">/* 添加分析工具*/</span></span><br><span class="line">        <span class="meta">if</span> (process.env.NODE_ENV === <span class="string">&#x27;production&#x27;</span>) &#123;</span><br><span class="line">            <span class="meta">if</span> (process.env.npm_config_report) &#123;</span><br><span class="line">                config</span><br><span class="line">                    .plug<span class="meta">in(</span><span class="string">&#x27;webpack-bundle-analyzer&#x27;</span>)</span><br><span class="line">                    .use(require(<span class="string">&#x27;webpack-bundle-analyzer&#x27;</span>).BundleAnalyzerPlugin)</span><br><span class="line">                    .<span class="meta">end</span>()</span><br><span class="line">                config.plugins.<span class="meta">delete</span>(<span class="string">&#x27;prefetch&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+              <a href="/tags/nexus/" rel="tag"># nexus</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/c20fd3fa/" rel="prev" title="在重启阿里云ubantu后nginx、mysql、pm2等的重启">
+      <i class="fa fa-chevron-left"></i> 在重启阿里云ubantu后nginx、mysql、pm2等的重启
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/204a2bf8/" rel="next" title="在 create-react-app 中使用Ant Design中的坑">
+      在 create-react-app 中使用Ant Design中的坑 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nexus%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%E7%9A%84%E6%90%AD%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">nexus私有仓库的搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">环境搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0npm%E4%BB%93%E5%BA%93"><span class="nav-number">1.2.</span> <span class="nav-text">添加npm仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8E%E9%AA%8C%E8%AF%81npm%E4%BB%93%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">配置与验证npm仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E6%9B%B4%E4%BE%9D%E8%B5%96%E6%BA%90"><span class="nav-number">1.4.</span> <span class="nav-text">变更依赖源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E6%B5%81%E7%A8%8B"><span class="nav-number">1.5.</span> <span class="nav-text">发布流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6"><span class="nav-number">1.6.</span> <span class="nav-text">编译文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95npm"><span class="nav-number">1.7.</span> <span class="nav-text">登录npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83"><span class="nav-number">1.8.</span> <span class="nav-text">发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">1.9.</span> <span class="nav-text">使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8"><span class="nav-number">1.10.</span> <span class="nav-text">项目启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%BA%93%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.11.</span> <span class="nav-text">组件库文件目录结构</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="刘宏羽"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">刘宏羽</p>
+  <div class="site-description" itemprop="description">记录技术点滴</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">桂ICP备17005232号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘宏羽</span>
+</div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="https://s9.cnzz.com/z_stat.php?id=1279653165&web_id=1279653165"></script>
+  </div>
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'RdFf66iAyuv2n4rbYv4s3w8p-gzGzoHsz',
+      appKey     : 'mPwSGAbK1UhFlXlHkBcMXccb',
+      placeholder: "欢迎您发表宝贵的留言。",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
