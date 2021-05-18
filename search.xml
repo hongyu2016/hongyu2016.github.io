@@ -144,25 +144,25 @@
     <content><![CDATA[<h1 id="react-常用组件-整理"><a href="#react-常用组件-整理" class="headerlink" title="react 常用组件 整理"></a>react 常用组件 整理</h1><table>
 <thead>
 <tr>
-<th>组件名称</th>
-<th>地址</th>
-<th>简介</th>
+<th align="left">组件名称</th>
+<th align="left">地址</th>
+<th align="left">简介</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>React-classnames</td>
-<td><a href="https://www.jianshu.com/p/23accf80a850">https://www.jianshu.com/p/23accf80a850</a></td>
-<td>动态添加多个类</td>
+<td align="left">React-classnames</td>
+<td align="left"><a href="https://www.jianshu.com/p/23accf80a850">https://www.jianshu.com/p/23accf80a850</a></td>
+<td align="left">动态添加多个类</td>
 </tr>
 <tr>
-<td>Immutable.js</td>
-<td><a href="https://www.w3cschool.cn/doc_immutable/">https://www.w3cschool.cn/doc_immutable/</a></td>
-<td>数据不可变</td>
+<td align="left">Immutable.js</td>
+<td align="left"><a href="https://www.w3cschool.cn/doc_immutable/">https://www.w3cschool.cn/doc_immutable/</a></td>
+<td align="left">数据不可变</td>
 </tr>
 <tr>
-<td>better-scroll</td>
-<td>封装例子 <a href="https://www.cnblogs.com/crazycode2/p/12589226.html">https://www.cnblogs.com/crazycode2/p/12589226.html</a></td>
-<td>滚动插件，可用于上拉加载、下拉刷新。主要移动端</td>
+<td align="left">better-scroll</td>
+<td align="left">封装例子 <a href="https://www.cnblogs.com/crazycode2/p/12589226.html">https://www.cnblogs.com/crazycode2/p/12589226.html</a></td>
+<td align="left">滚动插件，可用于上拉加载、下拉刷新。主要移动端</td>
 </tr>
 </tbody></table>
 ]]></content>
