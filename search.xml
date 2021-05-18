@@ -159,6 +159,11 @@
 <td><a href="https://www.w3cschool.cn/doc_immutable/">https://www.w3cschool.cn/doc_immutable/</a></td>
 <td>数据不可变</td>
 </tr>
+<tr>
+<td>better-scroll</td>
+<td>封装例子 <a href="https://www.cnblogs.com/crazycode2/p/12589226.html">https://www.cnblogs.com/crazycode2/p/12589226.html</a></td>
+<td>滚动插件，可用于上拉加载、下拉刷新。主要移动端</td>
+</tr>
 </tbody></table>
 ]]></content>
   </entry>
