@@ -164,6 +164,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/afa0b0b8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="刘宏羽">
+      <meta itemprop="description" content="记录技术点滴">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="羽歌天地博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/afa0b0b8/" class="post-title-link" itemprop="url">阿里云服务器配置简要步骤</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-07-14 18:04:44 / 修改时间：18:13:58" itemprop="dateCreated datePublished" datetime="2021-07-14T18:04:44+08:00">2021-07-14</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/afa0b0b8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/afa0b0b8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="阿里云服务器配置："><a href="#阿里云服务器配置：" class="headerlink" title="阿里云服务器配置："></a>阿里云服务器配置：</h2><h3 id="1：进入主机，配置ftp服务"><a href="#1：进入主机，配置ftp服务" class="headerlink" title="1：进入主机，配置ftp服务"></a>1：进入主机，配置ftp服务</h3><p>下载 FileZilla Server<br>安装，默认端口 14147，改为14140<br>设置项：<br>general settings<br>监听端口设置为14141。<br>passive mode settings。<br>需要添加用户 adduser，然后设置分享路径。</p>
+<p>ftp over tls settings<br>开启，证书生成放在安装目录下<br>默认的端口为990改为14140</p>
+<p>使用自定义端口：14140-14150<br>使用下面的ip：0.0.0.0/0</p>
+<h3 id="2：回到阿里云安全组管理"><a href="#2：回到阿里云安全组管理" class="headerlink" title="2：回到阿里云安全组管理"></a>2：回到阿里云安全组管理</h3><p>阿里云管理后台的安全组中需要开启14140-14150的入站规则</p>
+<h2 id="配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"><a href="#配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。" class="headerlink" title="配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"></a>配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/4080e15/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1019,102 +1095,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/73a5b140/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="刘宏羽">
-      <meta itemprop="description" content="记录技术点滴">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="羽歌天地博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/73a5b140/" class="post-title-link" itemprop="url">windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-08-13 10:21:42" itemprop="dateCreated datePublished" datetime="2019-08-13T10:21:42+08:00">2019-08-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-22 09:56:08" itemprop="dateModified" datetime="2021-04-22T09:56:08+08:00">2021-04-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/posts/73a5b140/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/73a5b140/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>主要分为两部分：第一部分是nexus私有仓库的搭建，第二部分是vue-cli 3的组件搭建并发布到nexus本地仓库。</p>
-<h2 id="nexus私有仓库的搭建"><a href="#nexus私有仓库的搭建" class="headerlink" title="nexus私有仓库的搭建"></a>nexus私有仓库的搭建</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/73a5b140/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1186,7 +1166,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

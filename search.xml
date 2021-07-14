@@ -580,4 +580,13 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
         <tag>钉钉小程序</tag>
       </tags>
   </entry>
+  <entry>
+    <title>阿里云服务器配置简要步骤</title>
+    <url>/posts/afa0b0b8/</url>
+    <content><![CDATA[<h2 id="阿里云服务器配置："><a href="#阿里云服务器配置：" class="headerlink" title="阿里云服务器配置："></a>阿里云服务器配置：</h2><h3 id="1：进入主机，配置ftp服务"><a href="#1：进入主机，配置ftp服务" class="headerlink" title="1：进入主机，配置ftp服务"></a>1：进入主机，配置ftp服务</h3><p>下载 FileZilla Server<br>安装，默认端口 14147，改为14140<br>设置项：<br>general settings<br>监听端口设置为14141。<br>passive mode settings。<br>需要添加用户 adduser，然后设置分享路径。</p>
+<p>ftp over tls settings<br>开启，证书生成放在安装目录下<br>默认的端口为990改为14140</p>
+<p>使用自定义端口：14140-14150<br>使用下面的ip：0.0.0.0/0</p>
+<h3 id="2：回到阿里云安全组管理"><a href="#2：回到阿里云安全组管理" class="headerlink" title="2：回到阿里云安全组管理"></a>2：回到阿里云安全组管理</h3><p>阿里云管理后台的安全组中需要开启14140-14150的入站规则</p>
+<h2 id="配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"><a href="#配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。" class="headerlink" title="配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"></a>配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。</h2>]]></content>
+  </entry>
 </search>
