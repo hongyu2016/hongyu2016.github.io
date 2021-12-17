@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>css3实现左右滚动跑马灯公告</title>
-    <url>/posts/90c577a3/</url>
-    <content><![CDATA[<h3 id="通常的做法"><a href="#通常的做法" class="headerlink" title="通常的做法"></a>通常的做法</h3><h4 id="1：js定时器"><a href="#1：js定时器" class="headerlink" title="1：js定时器"></a>1：js定时器</h4><p>由于这次做的是钉钉工作台自定义组件，钉钉不建议使用定时器，会影响性能</p>
-<h4 id="2：css3-动画实现"><a href="#2：css3-动画实现" class="headerlink" title="2：css3 动画实现"></a>2：css3 动画实现</h4><p>css3动画流畅不卡顿。需要解决3个问题：<br>1：循环滚动，且最后一条滚动完之后紧接着第一条出现<br>2：滚动速度可调<br>3：内容没有超过滚动区时，不需要滚动</p>
-<a id="more"></a>
-<p>要实现的效果图如下图所示：<br><img src="1.png"></p>
-<p>对于循环滚动，如果按照一般做法，是没有办法做到 最后一条滚动完之后紧接着第一条出现的，那么怎么办呢？再复制一个滚动列表就可以了，第一个列表开始滚动时，第二个列表延时滚动，滚动速度一样，这样当第一个列表滚动完以后，第二个列表就会紧接着出现了。<br>对于滚动的速度，因为滚动的宽度是不定的，是根据接口返回的内容决定的，但是 对于animation动画来说，宽度是一定的，改变整个动画的时间即可达到变速的效果，需要使用钉钉的查看元素的信息api去获取各个元素的宽度，动态设置速度。<br>下面是关键代码 </p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// js</span></span><br><span class="line">methods: &#123; </span><br><span class="line">    <span class="keyword">async</span> dealData() &#123;</span><br><span class="line">      <span class="keyword">let</span> _sysInfo = <span class="keyword">await</span> getSdk().getSystemInfo() || &#123;&#125;;</span><br><span class="line">      <span class="keyword">let</span> &#123; windowWidth &#125; = _sysInfo;</span><br><span class="line">      <span class="keyword">let</span> rpxToPxRatio = windowWidth / <span class="number">750</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">let</span> &#123; widthControl, marqueeLogic, marqueeSpeed &#125; = <span class="built_in">this</span>.props.componentProps;</span><br><span class="line">      <span class="comment">// 需要先将列表的最大宽度设置为屏幕的宽度</span></span><br><span class="line">      <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        listWidth: <span class="string">`--listMaxWidth: <span class="subst">$&#123;windowWidth&#125;</span>px;`</span></span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">const</span> query = my.createSelectorQuery();</span><br><span class="line"></span><br><span class="line">      query</span><br><span class="line">        .selectAll(<span class="string">`.marquee-notice .content`</span>)</span><br><span class="line">        .boundingClientRect()</span><br><span class="line">        .selectAll(<span class="string">`.marquee-notice .list-group .list`</span>)</span><br><span class="line">        .boundingClientRect()</span><br><span class="line">        .selectAll(<span class="string">`.marquee-notice .content-left`</span>)</span><br><span class="line">        .boundingClientRect()</span><br><span class="line">        .exec(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.error(res);</span><br><span class="line">          <span class="keyword">let</span> contentWidth = res[<span class="number">0</span>][<span class="number">0</span>].width;</span><br><span class="line">          <span class="keyword">let</span> _arr = res[<span class="number">1</span>];</span><br><span class="line">          <span class="keyword">let</span> _width = <span class="number">0</span>;</span><br><span class="line">          <span class="keyword">let</span> plusWidth = res[<span class="number">2</span>][<span class="number">0</span>].width; <span class="comment">// plusWidth表示每一行滚动的总距离</span></span><br><span class="line">          <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; _arr.length; i++) &#123;</span><br><span class="line">            _width += (_arr[i].width)</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">let</span> $_width = _width * <span class="number">2</span> - plusWidth &gt;= contentWidth ? _width * <span class="number">2</span> - plusWidth : contentWidth;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">let</span> speed = $_width &gt;= (contentWidth * <span class="number">2</span>) ? (<span class="number">0.0187</span>) : (<span class="number">0.0187</span> * <span class="number">2</span>); <span class="comment">// 如果总的列表宽度大于等于 content 宽度的两倍（因为是两个列表动画）则使用3 / 161速率，否则使用6 / 161 。速度不能百分比准确</span></span><br><span class="line">          <span class="keyword">let</span> groupStyle_1 = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">          <span class="keyword">let</span> groupStyle_2 = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">          <span class="built_in">console</span>.error(<span class="string">&#x27;list宽度和content宽度&#x27;</span>, _width, contentWidth)</span><br><span class="line">          <span class="keyword">if</span> (marqueeLogic === <span class="number">1</span> || marqueeLogic === <span class="number">2</span> &amp;&amp; (_width + <span class="number">10</span>) &gt; contentWidth) &#123;</span><br><span class="line">            <span class="comment">// 无论是否超过内容宽度，都滚动</span></span><br><span class="line">            groupStyle_1 = <span class="string">`</span></span><br><span class="line"><span class="string">              animation: run <span class="subst">$&#123;$_width * (speed / marqueeSpeed)&#125;</span>s linear 0s infinite;</span></span><br><span class="line"><span class="string">              --width:<span class="subst">$&#123;-(<span class="built_in">parseInt</span>($_width))&#125;</span>px;</span></span><br><span class="line"><span class="string">              --leftPosition: <span class="subst">$&#123;plusWidth&#125;</span>px;</span></span><br><span class="line"><span class="string">            `</span>;</span><br><span class="line">            groupStyle_2 = <span class="string">`</span></span><br><span class="line"><span class="string">              animation: run2 <span class="subst">$&#123;$_width * (speed <span class="regexp">/ marqueeSpeed)&#125;s linear $&#123;$_width * (speed /</span> marqueeSpeed) / <span class="number">2</span>&#125;</span>s infinite;</span></span><br><span class="line"><span class="string">              --width:<span class="subst">$&#123;-(<span class="built_in">parseInt</span>($_width))&#125;</span>px;</span></span><br><span class="line"><span class="string">              --leftPosition: <span class="subst">$&#123;plusWidth&#125;</span>px;          </span></span><br><span class="line"><span class="string">            `</span>;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 只有超过content宽度才滚动</span></span><br><span class="line">            groupStyle_1 = <span class="string">&#x27;transform: translateX(0);&#x27;</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">            groupStyle_1: groupStyle_1,</span><br><span class="line">            groupStyle_2: groupStyle_2,</span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="comment">// css 关键代码：</span></span><br><span class="line"><span class="selector-class">.list-group-2</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="comment">// animation: run2 linear 24s infinite;</span></span><br><span class="line">    <span class="comment">// animation-delay:12s; 因为变量是通过js查询的，存在异步，所以只能写行内样式</span></span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--leftPosition, <span class="number">375px</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第一行滚动文本</span></span><br><span class="line"><span class="keyword">@keyframes</span> run &#123;</span><br><span class="line"></span><br><span class="line">    0% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--leftPosition, <span class="number">375px</span>));</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    1% &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    99% &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    100% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--width, -<span class="number">600px</span>));</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二行滚动文本</span></span><br><span class="line"><span class="keyword">@keyframes</span> run2 &#123;</span><br><span class="line"></span><br><span class="line">    0% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--leftPosition, <span class="number">375px</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    1% &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    99% &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    100% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--width, -<span class="number">600px</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml">// axml</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span> <span class="attr">style</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">listWidth</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list-group&quot;</span>  <span class="attr">style</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">groupStyle_1</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">block</span> <span class="attr">a:for</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">list</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">a:key</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">i</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">a:for-index</span>=<span class="string">&quot;i&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list </span></span></span><span class="template-variable">&#123;&#123;<span class="name">componentProps.widthControl</span> === <span class="number">1</span> ? <span class="string">&#x27;max-width&#x27;</span> : <span class="string">&#x27;&#x27;</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleTapLink&quot;</span> <span class="attr">data-url</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">item.link</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list-text&quot;</span>&gt;</span></span><span class="template-variable">&#123;&#123;<span class="name">item.title</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">block</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list-group-2&quot;</span>  <span class="attr">style</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">groupStyle_2</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">block</span> <span class="attr">a:for</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">list</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">a:key</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">i</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">a:for-index</span>=<span class="string">&quot;i&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list </span></span></span><span class="template-variable">&#123;&#123;<span class="name">componentProps.widthControl</span> === <span class="number">1</span> ? <span class="string">&#x27;max-width&#x27;</span> : <span class="string">&#x27;&#x27;</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleTapLink&quot;</span> <span class="attr">data-url</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">item.link</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">style</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">componentProps.widthControl</span> === <span class="number">1</span> ? <span class="string">&#x27;max-width: var(--listMaxWidth, 4rem)&#x27;</span>:&#x27;&#x27;&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list-text&quot;</span>&gt;</span></span><span class="template-variable">&#123;&#123;<span class="name">item.title</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">block</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>小程序</tag>
-        <tag>钉钉小程序</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(parseInt)报错问题解决办法</title>
     <url>/posts/1428c068/</url>
     <content><![CDATA[<p>第一次使用 <code>[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;].map(parseInt)</code>时，以为会得到[1,2,3]这个结果，结果很不幸得到的是[1,NaN,NaN]，为什么会这样呢，其实是因为map函数传递的是三个参数<code>value,index,arry</code>,而parseInt函数传递的是<code>value,radix</code>，<code>radix</code>不传时默认使用10，表示十进制，但是如果radix在2-36之外会返回NaN。<br>好了，既然已经知道了原因，那么应该怎么修改，才能得到正确的结果呢，</p>
@@ -31,21 +12,6 @@
       </categories>
       <tags>
         <tag>js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>element-ui 上传组件函数自定义参数传递</title>
-    <url>/posts/845b95cc/</url>
-    <content><![CDATA[<p>有时候在表格中需要在每行中有上传需求时，需要定位到是哪一行上传的图片，然后才能组合数组发送到后端，这个时候默认的参数就无法满足我们的需求了，我们需要根据当前行的index来一一对应当前行的文件上传。比如要实现下面的效果：</p>
-<a id="more"></a>
-<p><img src="3.png"><br>要实现参数的自定义，我们需要在vue模板中修改函数调用的方式，通过类似：<code>((val)=&gt;&#123;func(val)&#125;)</code>的方式来调用相应的函数。<br><img src="1.png"><br>以及在文件编辑时要注意修改:file-list为表格中的字段，才能一一对应上<br><img src="2.png"></p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>element-ui</tag>
-        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -77,6 +43,61 @@
       </tags>
   </entry>
   <entry>
+    <title>css3实现左右滚动跑马灯公告</title>
+    <url>/posts/90c577a3/</url>
+    <content><![CDATA[<h3 id="通常的做法"><a href="#通常的做法" class="headerlink" title="通常的做法"></a>通常的做法</h3><h4 id="1：js定时器"><a href="#1：js定时器" class="headerlink" title="1：js定时器"></a>1：js定时器</h4><p>由于这次做的是钉钉工作台自定义组件，钉钉不建议使用定时器，会影响性能</p>
+<h4 id="2：css3-动画实现"><a href="#2：css3-动画实现" class="headerlink" title="2：css3 动画实现"></a>2：css3 动画实现</h4><p>css3动画流畅不卡顿。需要解决3个问题：<br>1：循环滚动，且最后一条滚动完之后紧接着第一条出现<br>2：滚动速度可调<br>3：内容没有超过滚动区时，不需要滚动</p>
+<a id="more"></a>
+<p>要实现的效果图如下图所示：<br><img src="1.png"></p>
+<p>对于循环滚动，如果按照一般做法，是没有办法做到 最后一条滚动完之后紧接着第一条出现的，那么怎么办呢？再复制一个滚动列表就可以了，第一个列表开始滚动时，第二个列表延时滚动，滚动速度一样，这样当第一个列表滚动完以后，第二个列表就会紧接着出现了。<br>对于滚动的速度，因为滚动的宽度是不定的，是根据接口返回的内容决定的，但是 对于animation动画来说，宽度是一定的，改变整个动画的时间即可达到变速的效果，需要使用钉钉的查看元素的信息api去获取各个元素的宽度，动态设置速度。<br>下面是关键代码 </p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// js</span></span><br><span class="line">methods: &#123; </span><br><span class="line">    <span class="keyword">async</span> dealData() &#123;</span><br><span class="line">      <span class="keyword">let</span> _sysInfo = <span class="keyword">await</span> getSdk().getSystemInfo() || &#123;&#125;;</span><br><span class="line">      <span class="keyword">let</span> &#123; windowWidth &#125; = _sysInfo;</span><br><span class="line">      <span class="keyword">let</span> rpxToPxRatio = windowWidth / <span class="number">750</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">let</span> &#123; widthControl, marqueeLogic, marqueeSpeed &#125; = <span class="built_in">this</span>.props.componentProps;</span><br><span class="line">      <span class="comment">// 需要先将列表的最大宽度设置为屏幕的宽度</span></span><br><span class="line">      <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">        listWidth: <span class="string">`--listMaxWidth: <span class="subst">$&#123;windowWidth&#125;</span>px;`</span></span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">const</span> query = my.createSelectorQuery();</span><br><span class="line"></span><br><span class="line">      query</span><br><span class="line">        .selectAll(<span class="string">`.marquee-notice .content`</span>)</span><br><span class="line">        .boundingClientRect()</span><br><span class="line">        .selectAll(<span class="string">`.marquee-notice .list-group .list`</span>)</span><br><span class="line">        .boundingClientRect()</span><br><span class="line">        .selectAll(<span class="string">`.marquee-notice .content-left`</span>)</span><br><span class="line">        .boundingClientRect()</span><br><span class="line">        .exec(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="built_in">console</span>.error(res);</span><br><span class="line">          <span class="keyword">let</span> contentWidth = res[<span class="number">0</span>][<span class="number">0</span>].width;</span><br><span class="line">          <span class="keyword">let</span> _arr = res[<span class="number">1</span>];</span><br><span class="line">          <span class="keyword">let</span> _width = <span class="number">0</span>;</span><br><span class="line">          <span class="keyword">let</span> plusWidth = res[<span class="number">2</span>][<span class="number">0</span>].width; <span class="comment">// plusWidth表示每一行滚动的总距离</span></span><br><span class="line">          <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; _arr.length; i++) &#123;</span><br><span class="line">            _width += (_arr[i].width)</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">let</span> $_width = _width * <span class="number">2</span> - plusWidth &gt;= contentWidth ? _width * <span class="number">2</span> - plusWidth : contentWidth;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">let</span> speed = $_width &gt;= (contentWidth * <span class="number">2</span>) ? (<span class="number">0.0187</span>) : (<span class="number">0.0187</span> * <span class="number">2</span>); <span class="comment">// 如果总的列表宽度大于等于 content 宽度的两倍（因为是两个列表动画）则使用3 / 161速率，否则使用6 / 161 。速度不能百分比准确</span></span><br><span class="line">          <span class="keyword">let</span> groupStyle_1 = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">          <span class="keyword">let</span> groupStyle_2 = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">          <span class="built_in">console</span>.error(<span class="string">&#x27;list宽度和content宽度&#x27;</span>, _width, contentWidth)</span><br><span class="line">          <span class="keyword">if</span> (marqueeLogic === <span class="number">1</span> || marqueeLogic === <span class="number">2</span> &amp;&amp; (_width + <span class="number">10</span>) &gt; contentWidth) &#123;</span><br><span class="line">            <span class="comment">// 无论是否超过内容宽度，都滚动</span></span><br><span class="line">            groupStyle_1 = <span class="string">`</span></span><br><span class="line"><span class="string">              animation: run <span class="subst">$&#123;$_width * (speed / marqueeSpeed)&#125;</span>s linear 0s infinite;</span></span><br><span class="line"><span class="string">              --width:<span class="subst">$&#123;-(<span class="built_in">parseInt</span>($_width))&#125;</span>px;</span></span><br><span class="line"><span class="string">              --leftPosition: <span class="subst">$&#123;plusWidth&#125;</span>px;</span></span><br><span class="line"><span class="string">            `</span>;</span><br><span class="line">            groupStyle_2 = <span class="string">`</span></span><br><span class="line"><span class="string">              animation: run2 <span class="subst">$&#123;$_width * (speed <span class="regexp">/ marqueeSpeed)&#125;s linear $&#123;$_width * (speed /</span> marqueeSpeed) / <span class="number">2</span>&#125;</span>s infinite;</span></span><br><span class="line"><span class="string">              --width:<span class="subst">$&#123;-(<span class="built_in">parseInt</span>($_width))&#125;</span>px;</span></span><br><span class="line"><span class="string">              --leftPosition: <span class="subst">$&#123;plusWidth&#125;</span>px;          </span></span><br><span class="line"><span class="string">            `</span>;</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 只有超过content宽度才滚动</span></span><br><span class="line">            groupStyle_1 = <span class="string">&#x27;transform: translateX(0);&#x27;</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="built_in">this</span>.setData(&#123;</span><br><span class="line">            groupStyle_1: groupStyle_1,</span><br><span class="line">            groupStyle_2: groupStyle_2,</span><br><span class="line">          &#125;)</span><br><span class="line"></span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="comment">// css 关键代码：</span></span><br><span class="line"><span class="selector-class">.list-group-2</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="comment">// animation: run2 linear 24s infinite;</span></span><br><span class="line">    <span class="comment">// animation-delay:12s; 因为变量是通过js查询的，存在异步，所以只能写行内样式</span></span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--leftPosition, <span class="number">375px</span>));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第一行滚动文本</span></span><br><span class="line"><span class="keyword">@keyframes</span> run &#123;</span><br><span class="line"></span><br><span class="line">    0% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--leftPosition, <span class="number">375px</span>));</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    1% &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    99% &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    100% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--width, -<span class="number">600px</span>));</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二行滚动文本</span></span><br><span class="line"><span class="keyword">@keyframes</span> run2 &#123;</span><br><span class="line"></span><br><span class="line">    0% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--leftPosition, <span class="number">375px</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    1% &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    99% &#123;</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    100% &#123;</span><br><span class="line">    <span class="attribute">transform</span>: translateX(var(--width, -<span class="number">600px</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight handlebars"><table><tr><td class="code"><pre><span class="line"><span class="xml">// axml</span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span> <span class="attr">style</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">listWidth</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list-group&quot;</span>  <span class="attr">style</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">groupStyle_1</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">block</span> <span class="attr">a:for</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">list</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">a:key</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">i</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">a:for-index</span>=<span class="string">&quot;i&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list </span></span></span><span class="template-variable">&#123;&#123;<span class="name">componentProps.widthControl</span> === <span class="number">1</span> ? <span class="string">&#x27;max-width&#x27;</span> : <span class="string">&#x27;&#x27;</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleTapLink&quot;</span> <span class="attr">data-url</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">item.link</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list-text&quot;</span>&gt;</span></span><span class="template-variable">&#123;&#123;<span class="name">item.title</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">block</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list-group-2&quot;</span>  <span class="attr">style</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">groupStyle_2</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">block</span> <span class="attr">a:for</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">list</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">a:key</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">i</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">a:for-index</span>=<span class="string">&quot;i&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list </span></span></span><span class="template-variable">&#123;&#123;<span class="name">componentProps.widthControl</span> === <span class="number">1</span> ? <span class="string">&#x27;max-width&#x27;</span> : <span class="string">&#x27;&#x27;</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">onTap</span>=<span class="string">&quot;handleTapLink&quot;</span> <span class="attr">data-url</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">item.link</span>&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span> <span class="attr">style</span>=<span class="string">&quot;</span></span></span><span class="template-variable">&#123;&#123;<span class="name">componentProps.widthControl</span> === <span class="number">1</span> ? <span class="string">&#x27;max-width: var(--listMaxWidth, 4rem)&#x27;</span>:&#x27;&#x27;&#125;&#125;</span><span class="xml"><span class="tag"><span class="string">&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;list-text&quot;</span>&gt;</span></span><span class="template-variable">&#123;&#123;<span class="name">item.title</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">block</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
+        <tag>钉钉小程序</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element-ui 上传组件函数自定义参数传递</title>
+    <url>/posts/845b95cc/</url>
+    <content><![CDATA[<p>有时候在表格中需要在每行中有上传需求时，需要定位到是哪一行上传的图片，然后才能组合数组发送到后端，这个时候默认的参数就无法满足我们的需求了，我们需要根据当前行的index来一一对应当前行的文件上传。比如要实现下面的效果：</p>
+<a id="more"></a>
+<p><img src="3.png"><br>要实现参数的自定义，我们需要在vue模板中修改函数调用的方式，通过类似：<code>((val)=&gt;&#123;func(val)&#125;)</code>的方式来调用相应的函数。<br><img src="1.png"><br>以及在文件编辑时要注意修改:file-list为表格中的字段，才能一一对应上<br><img src="2.png"></p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>element-ui</tag>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>element-ui 表格中的form的input动态验证规则</title>
+    <url>/posts/3156ccd5/</url>
+    <content><![CDATA[<h3 id="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："><a href="#表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：" class="headerlink" title="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："></a>表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：</h3><a id="more"></a>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="attr">date2:</span> [</span><br><span class="line">    &#123; <span class="attr">type:</span> <span class="string">&#x27;date&#x27;</span>, <span class="attr">required:</span> <span class="literal">true</span>, <span class="attr">message:</span> <span class="string">&#x27;请选择时间&#x27;</span>, <span class="attr">trigger:</span> <span class="string">&#x27;change&#x27;</span> &#125;</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<p>而我们项目中的是这样的:<br><img src="4.png"> 又不想自定义指令来做，还是看下element能不能做吧，于是就开始看文档，发现只能用自定义rules，但是自定义指令，写死的规则也不符合要求啊，因为表格的数据都是不固定的，<br>首先我们把表格的数据源字段移到我们的form中<br><img src="1.png"><br><img src="2.png"><br><img src="3.png"><br>然后自定义规则：<br><img src="5.png"><br>这里需要用到一些技巧，比如在模板中，</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">:prop=<span class="string">&quot;`inputTaxTable.<span class="subst">$&#123;scope.$index&#125;</span>.thisApplyMoney`&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在需要校验的列中，<code>inputTaxTable.$&#123;scope.$index&#125;.thisApplyMoney</code> 查找当前行的数据源，</p>
+<p>以及查找“未报销金额”这行的数据来跟当前金额进行对比的时候，保证找到的当前行的数据。</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"> <span class="comment">//field字段中包含了该行表格的index</span></span><br><span class="line">    <span class="keyword">let</span> field=rule.field;<span class="comment">//规则名称</span></span><br><span class="line">    <span class="keyword">let</span> _fieldArr=<span class="literal">[]</span>;</span><br><span class="line">    _fieldArr=field.split(<span class="character">&#x27;.&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> _index=_fieldArr<span class="literal">[<span class="number">1</span>]</span>;<span class="comment">//得到表格的第n行</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>parse<span class="constructor">Float(<span class="params">value</span>)</span>&gt;<span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>parse<span class="constructor">Float(<span class="params">this</span>.<span class="params">ruleForm</span>.<span class="params">inputTaxTable</span>[<span class="params">_index</span>].<span class="params">notApplyMoney</span>)</span>)&#123;</span><br><span class="line">        return callback(<span class="keyword">new</span> <span class="constructor">Error(&#x27;不可大于未报销金额&#x27;)</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        callback<span class="literal">()</span>  <span class="comment">//这里一定要这样返回，否则validate函数只会执行一次</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>element-ui</tag>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>js判断一个变量是对象还是数组的实用方法记录</title>
     <url>/posts/367b716d/</url>
     <content><![CDATA[<p>在实际开发中，经常需要检测一个变量的类型，是字符串、数字、布尔还是对象、数组？还是null、undefined？ 对于字符串和数字、布尔这种基本类型，用typeof()来检测就足够了，但是typeof用在数组和对象、null之间就不灵了。</p>
@@ -100,27 +121,6 @@
       </categories>
       <tags>
         <tag>js</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>element-ui 表格中的form的input动态验证规则</title>
-    <url>/posts/3156ccd5/</url>
-    <content><![CDATA[<h3 id="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："><a href="#表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：" class="headerlink" title="表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证："></a>表格中的input需要做某些校验，比如，“本次报销金额”要小于“未报销金额”，这就有点麻烦了，我们都知道，element的form的验证规则rules都是在初始化的时候就定好了的，比如时间验证：</h3><a id="more"></a>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="attr">date2:</span> [</span><br><span class="line">    &#123; <span class="attr">type:</span> <span class="string">&#x27;date&#x27;</span>, <span class="attr">required:</span> <span class="literal">true</span>, <span class="attr">message:</span> <span class="string">&#x27;请选择时间&#x27;</span>, <span class="attr">trigger:</span> <span class="string">&#x27;change&#x27;</span> &#125;</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
-<p>而我们项目中的是这样的:<br><img src="4.png"> 又不想自定义指令来做，还是看下element能不能做吧，于是就开始看文档，发现只能用自定义rules，但是自定义指令，写死的规则也不符合要求啊，因为表格的数据都是不固定的，<br>首先我们把表格的数据源字段移到我们的form中<br><img src="1.png"><br><img src="2.png"><br><img src="3.png"><br>然后自定义规则：<br><img src="5.png"><br>这里需要用到一些技巧，比如在模板中，</p>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">:prop=<span class="string">&quot;`inputTaxTable.<span class="subst">$&#123;scope.$index&#125;</span>.thisApplyMoney`&quot;</span></span><br></pre></td></tr></table></figure>
-<p>在需要校验的列中，<code>inputTaxTable.$&#123;scope.$index&#125;.thisApplyMoney</code> 查找当前行的数据源，</p>
-<p>以及查找“未报销金额”这行的数据来跟当前金额进行对比的时候，保证找到的当前行的数据。</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><span class="line"> <span class="comment">//field字段中包含了该行表格的index</span></span><br><span class="line">    <span class="keyword">let</span> field=rule.field;<span class="comment">//规则名称</span></span><br><span class="line">    <span class="keyword">let</span> _fieldArr=<span class="literal">[]</span>;</span><br><span class="line">    _fieldArr=field.split(<span class="character">&#x27;.&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> _index=_fieldArr<span class="literal">[<span class="number">1</span>]</span>;<span class="comment">//得到表格的第n行</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>parse<span class="constructor">Float(<span class="params">value</span>)</span>&gt;<span class="module-access"><span class="module"><span class="identifier">Number</span>.</span></span>parse<span class="constructor">Float(<span class="params">this</span>.<span class="params">ruleForm</span>.<span class="params">inputTaxTable</span>[<span class="params">_index</span>].<span class="params">notApplyMoney</span>)</span>)&#123;</span><br><span class="line">        return callback(<span class="keyword">new</span> <span class="constructor">Error(&#x27;不可大于未报销金额&#x27;)</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        callback<span class="literal">()</span>  <span class="comment">//这里一定要这样返回，否则validate函数只会执行一次</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>element-ui</tag>
-        <tag>vue</tag>
       </tags>
   </entry>
   <entry>
@@ -270,23 +270,6 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </tags>
   </entry>
   <entry>
-    <title>在 create-react-app 中使用Ant Design中的坑</title>
-    <url>/posts/204a2bf8/</url>
-    <content><![CDATA[<h2 id="Ant-Design-中的文档有错误，参数变了"><a href="#Ant-Design-中的文档有错误，参数变了" class="headerlink" title="Ant Design 中的文档有错误，参数变了"></a>Ant Design 中的文档有错误，参数变了</h2><p>这是原来的配置：</p>
-<a id="more"></a>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// craco.config.js</span></span><br><span class="line"><span class="keyword">const</span> CracoLessPlugin = <span class="built_in">require</span>(<span class="string">&#x27;craco-less&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    &#123;</span><br><span class="line">      plugin: CracoLessPlugin,</span><br><span class="line">      options: &#123;</span><br><span class="line">        lessLoaderOptions: &#123;</span><br><span class="line">          modifyVars: &#123; <span class="string">&#x27;@primary-color&#x27;</span>: <span class="string">&#x27;#1DA57A&#x27;</span> &#125;,</span><br><span class="line">          javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这是正确的配置：</p>
-<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// craco.config.js</span></span><br><span class="line"><span class="keyword">const</span> CracoLessPlugin = <span class="built_in">require</span>(<span class="string">&#x27;craco-less&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    &#123;</span><br><span class="line">      plugin: CracoLessPlugin,</span><br><span class="line">      options: &#123;</span><br><span class="line">        lessLoaderOptions: &#123;</span><br><span class="line">           lessOptions:&#123;</span><br><span class="line">                modifyVars: &#123; <span class="string">&#x27;@primary-color&#x27;</span>: <span class="string">&#x27;#1DA57A&#x27;</span> &#125;,</span><br><span class="line">                javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>react,</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>windows下使用nexus搭建私有仓库并使用vue-cli 3 搭建组件库</title>
     <url>/posts/73a5b140/</url>
     <content><![CDATA[<p>主要分为两部分：第一部分是nexus私有仓库的搭建，第二部分是vue-cli 3的组件搭建并发布到nexus本地仓库。</p>
@@ -366,22 +349,41 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </tags>
   </entry>
   <entry>
-    <title>实现一个简单的深拷贝</title>
-    <url>/posts/25ca6631/</url>
-    <content><![CDATA[<p>在js中经常需要用到变量的拷贝，比如<code>var a=1;var b=a;</code> 这个时候修改b的值，a不会改变<code>b=2;console.log(a); //1</code>,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，</p>
+    <title>修改npm和yarn的全局安装包位置和缓存位置</title>
+    <url>/posts/239611e0/</url>
+    <content><![CDATA[<p>最近发现C盘越来越小了，经过排查，C盘的用户文件夹很大，有30多G，实在是太大了。基本上都是应用产生的数据，其中npm目录就占了大概4、5G，实在是太大了，不能忍，于是就网上找解决方法 ，找到一个更改npm和yarn缓存目录的方法。</p>
 <a id="more"></a>
-<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">var</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; </span><br><span class="line"><span class="attribute">var</span> b=a;</span><br><span class="line"><span class="attribute">b</span>[<span class="number">0</span>]=<span class="number">66</span>;</span><br><span class="line"><span class="attribute">console</span>.log(a); //[<span class="number">66</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br></pre></td></tr></table></figure>
-<p>可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">var arr_copy = arr ;</span><br><span class="line">arr_copy = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">console.log(arr); <span class="comment">//[1,2,3,4]</span></span><br><span class="line">console.log(arr_copy);<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    name:<span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">var obj_copy = obj ;</span><br><span class="line">obj_copy = &#123;</span><br><span class="line">    name:<span class="string">&#x27;李四&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">console.log(obj.name);<span class="comment">//张三</span></span><br><span class="line">console.log(obj_copy.name);<span class="comment">//李四</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="npm-全局安装设置和缓存设置"><a href="#npm-全局安装设置和缓存设置" class="headerlink" title="npm 全局安装设置和缓存设置"></a>npm 全局安装设置和缓存设置</h3><p>查看当前npm包的全局安装路径：<br><code>npm prefix -g </code></p>
+<p>查看配置列表：<br><code>npm config ls </code></p>
+<p>修改npm的包的全局安装路径：<br><code>npm config set prefix &quot;D:\nodejs\npm_global&quot;</code></p>
+<p>修改npm的包的全局cache位置:<br><code>npm config set cache &quot;D:\nodejs\npm-cache&quot;</code></p>
+<h3 id="需要将-D-nodejs-npm-global-添加进系统环境变量中，这里文添加进用户变量中。"><a href="#需要将-D-nodejs-npm-global-添加进系统环境变量中，这里文添加进用户变量中。" class="headerlink" title="需要将 D:\nodejs\npm_global 添加进系统环境变量中，这里文添加进用户变量中。"></a>需要将 <code>D:\nodejs\npm_global</code> 添加进系统环境变量中，这里文添加进用户变量中。</h3><h3 id="yarn-的安装路径和缓存路径"><a href="#yarn-的安装路径和缓存路径" class="headerlink" title="yarn 的安装路径和缓存路径"></a>yarn 的安装路径和缓存路径</h3><p>查看 yarn 全局安装位置：<br><code>yarn global dir</code></p>
+<p>查看 yarn 全局cache位置:<br><code>yarn cache dir</code></p>
+<p>改变 yarn 全局安装位置<br><code>yarn config  set global-folder &quot;D:\nodejs\yarn\global&quot;</code></p>
+<p>改变 yarn 全局cache位置:<br><code>yarn config set cache-folder</code></p>
+<h3 id="注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。"><a href="#注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。" class="headerlink" title="注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。"></a>注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。</h3>]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在 create-react-app 中使用Ant Design中的坑</title>
+    <url>/posts/204a2bf8/</url>
+    <content><![CDATA[<h2 id="Ant-Design-中的文档有错误，参数变了"><a href="#Ant-Design-中的文档有错误，参数变了" class="headerlink" title="Ant Design 中的文档有错误，参数变了"></a>Ant Design 中的文档有错误，参数变了</h2><p>这是原来的配置：</p>
+<a id="more"></a>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// craco.config.js</span></span><br><span class="line"><span class="keyword">const</span> CracoLessPlugin = <span class="built_in">require</span>(<span class="string">&#x27;craco-less&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    &#123;</span><br><span class="line">      plugin: CracoLessPlugin,</span><br><span class="line">      options: &#123;</span><br><span class="line">        lessLoaderOptions: &#123;</span><br><span class="line">          modifyVars: &#123; <span class="string">&#x27;@primary-color&#x27;</span>: <span class="string">&#x27;#1DA57A&#x27;</span> &#125;,</span><br><span class="line">          javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用递归进行深拷贝。"><a href="#使用递归进行深拷贝。" class="headerlink" title="使用递归进行深拷贝。"></a>使用递归进行深拷贝。</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> car = &#123;</span><br><span class="line">    name : <span class="string">&#x27;宝马&#x27;</span>,</span><br><span class="line">    color:<span class="string">&#x27;红色&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断是数组还是对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Object]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Object&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Array]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Array&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;nomal&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getType(obj)==<span class="string">&#x27;nomal&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj ;  <span class="comment">//如果是基本类型则直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newObj = getType(obj)==<span class="string">&#x27;Object&#x27;</span>?&#123;&#125;:[];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                newObj[key] = deepCopy(obj[key]); <span class="comment">//递归</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newCar = deepCopy(car) ;</span><br><span class="line">newInfo.name = <span class="string">&#x27;奔驰&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newCar); <span class="comment">//&#123;name:&#x27;奔驰&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(car);<span class="comment">//&#123;name:&#x27;宝马&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
-<p>这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）</p>
+<p>这是正确的配置：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// craco.config.js</span></span><br><span class="line"><span class="keyword">const</span> CracoLessPlugin = <span class="built_in">require</span>(<span class="string">&#x27;craco-less&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.<span class="built_in">exports</span> = &#123;</span><br><span class="line">  plugins: [</span><br><span class="line">    &#123;</span><br><span class="line">      plugin: CracoLessPlugin,</span><br><span class="line">      options: &#123;</span><br><span class="line">        lessLoaderOptions: &#123;</span><br><span class="line">           lessOptions:&#123;</span><br><span class="line">                modifyVars: &#123; <span class="string">&#x27;@primary-color&#x27;</span>: <span class="string">&#x27;#1DA57A&#x27;</span> &#125;,</span><br><span class="line">                javascriptEnabled: <span class="literal">true</span>,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>前端</category>
       </categories>
       <tags>
-        <tag>js</tag>
+        <tag>react,</tag>
       </tags>
   </entry>
   <entry>
@@ -400,6 +402,25 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </categories>
       <tags>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>实现一个简单的深拷贝</title>
+    <url>/posts/25ca6631/</url>
+    <content><![CDATA[<p>在js中经常需要用到变量的拷贝，比如<code>var a=1;var b=a;</code> 这个时候修改b的值，a不会改变<code>b=2;console.log(a); //1</code>,但是需要注意，这种方式拷贝属于浅拷贝，只局限在简单类型的拷贝：string、number、boolean、null、undefiend。如果你用这种方式拷贝一个数组或者对象，那么就得注意了，</p>
+<a id="more"></a>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">var</span> a=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]; </span><br><span class="line"><span class="attribute">var</span> b=a;</span><br><span class="line"><span class="attribute">b</span>[<span class="number">0</span>]=<span class="number">66</span>;</span><br><span class="line"><span class="attribute">console</span>.log(a); //[<span class="number">66</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+<p>可以看到，b的值变了，a也变了，所以对于数组和对象不能用这种浅拷贝，因为拷贝的只是引用地址，实际上还是同一个，不过在有一种情况下，修改复制后的变量，被复制的变量不会跟着改变，那就是复制后，给复制变量重新定义值得时候，原来的变量不会受影响，因为此时已经给复制后的变量重新分配指针了，如下面所示：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">var arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">var arr_copy = arr ;</span><br><span class="line">arr_copy = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">console.log(arr); <span class="comment">//[1,2,3,4]</span></span><br><span class="line">console.log(arr_copy);<span class="comment">//[1,2,3,4,5]</span></span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">    name:<span class="string">&#x27;张三&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">var obj_copy = obj ;</span><br><span class="line">obj_copy = &#123;</span><br><span class="line">    name:<span class="string">&#x27;李四&#x27;</span>,</span><br><span class="line">    age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">console.log(obj.name);<span class="comment">//张三</span></span><br><span class="line">console.log(obj_copy.name);<span class="comment">//李四</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用递归进行深拷贝。"><a href="#使用递归进行深拷贝。" class="headerlink" title="使用递归进行深拷贝。"></a>使用递归进行深拷贝。</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> car = &#123;</span><br><span class="line">    name : <span class="string">&#x27;宝马&#x27;</span>,</span><br><span class="line">    color:<span class="string">&#x27;红色&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断是数组还是对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getType</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Object]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Object&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">Object</span>.prototype.toString.call(obj)==<span class="string">&#x27;[object Array]&#x27;</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;Array&#x27;</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;nomal&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepCopy</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getType(obj)==<span class="string">&#x27;nomal&#x27;</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> obj ;  <span class="comment">//如果是基本类型则直接返回</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> newObj = getType(obj)==<span class="string">&#x27;Object&#x27;</span>?&#123;&#125;:[];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obj.hasOwnProperty(key))&#123;</span><br><span class="line">                newObj[key] = deepCopy(obj[key]); <span class="comment">//递归</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> newObj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newCar = deepCopy(car) ;</span><br><span class="line">newInfo.name = <span class="string">&#x27;奔驰&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newCar); <span class="comment">//&#123;name:&#x27;奔驰&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(car);<span class="comment">//&#123;name:&#x27;宝马&#x27;,color:&#x27;红色&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这里用到.hasOwnProperty是为了避免在有继承时拷贝到继承自对象中的值（也就是a继承b时,使用.hasOwnProperty就是为了只拷贝a中的变量，过滤继承自b中的变量）</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>js</tag>
       </tags>
   </entry>
   <entry>
@@ -426,20 +447,6 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </tags>
   </entry>
   <entry>
-    <title>用Xshell登录阿里云服务器</title>
-    <url>/posts/d86f9c95/</url>
-    <content><![CDATA[<p>使用Xshell登录阿里云最需要注意的一个地方就是要使用阿里云服务器的公共ip，阿里云一个有两个ip，一个是公共的，一个是私有的，这个登录管理后台查看实例就可以看得到</p>
-<a id="more"></a>
-<p><img src="1.jpg"><br><img src="2.jpg"><br>最后会弹出是否接受密钥什么的，点确定就好，或者是弹出密码不对的，也重新输入密码即可。</p>
-]]></content>
-      <categories>
-        <category>linux</category>
-      </categories>
-      <tags>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>怎么样在别的电脑同步更新发表hexo博客？</title>
     <url>/posts/301aa86/</url>
     <content><![CDATA[<p>在git上放两个分支，一个master分支，用来存放hexo 生成public代码的（发布），另一个分支随便取名字吧比如hexo，就是放整个hexo源码的，到时候在别的电脑直接克隆hexo代码，然后写文章，发布，然后同步hexo分支代码。就可以了，很简单。</p>
@@ -453,6 +460,20 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </categories>
       <tags>
         <tag>技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用Xshell登录阿里云服务器</title>
+    <url>/posts/d86f9c95/</url>
+    <content><![CDATA[<p>使用Xshell登录阿里云最需要注意的一个地方就是要使用阿里云服务器的公共ip，阿里云一个有两个ip，一个是公共的，一个是私有的，这个登录管理后台查看实例就可以看得到</p>
+<a id="more"></a>
+<p><img src="1.jpg"><br><img src="2.jpg"><br>最后会弹出是否接受密钥什么的，点确定就好，或者是弹出密码不对的，也重新输入密码即可。</p>
+]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -474,20 +495,6 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </tags>
   </entry>
   <entry>
-    <title>运行yarn eject 后 yarn start 报错</title>
-    <url>/posts/e1691e31/</url>
-    <content><![CDATA[<p>运行 yarn eject 把webpack配置暴露出来后，运行yarn start后报错，<br>报错的内容大致是 找不到 react-scripts下的config/env.js文件，然后查了下，发现node_module下 react-scripts被清空了，package.json文件</p>
-<a id="more"></a>
-<p>下也没有这个记录了，找了很多资料都没有结果，然后索性就按照这个包，按照好后就报各种插件版本低，比如webpack，babel等，然后全部升级后，启动就没有报错了。</p>
-]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>react,</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>解决npm install安装任何包都报错的问题</title>
     <url>/posts/60785/</url>
     <content><![CDATA[<p>在ubantu18系统上，之前不知道哪里设置错了，结果用nodejs的npm install任何一个包都报错，报错信息如下：</p>
@@ -502,6 +509,21 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </categories>
       <tags>
         <tag>nodejs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>让支付宝 微信小程序等小程序 支持scss</title>
+    <url>/posts/fbf9056/</url>
+    <content><![CDATA[<p>原生的钉钉小程序是不支持scss的，支付宝小程序编辑器也不支持配置转译scss，我们使用vscode安装scss插件的方式，来将scss文件转译为acss文件</p>
+<a id="more"></a>
+<h2 id="安装插件-Live-Sass-Compiler"><a href="#安装插件-Live-Sass-Compiler" class="headerlink" title="安装插件 Live Sass Compiler"></a>安装插件 <code>Live Sass Compiler</code></h2><h2 id="配置vscode"><a href="#配置vscode" class="headerlink" title="配置vscode"></a>配置vscode</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;liveSassCompile.settings.formats&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;format&quot;</span>: <span class="string">&quot;expanded&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;extensionName&quot;</span>: <span class="string">&quot;.wxss&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;savePath&quot;</span>: <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;liveSassCompile.settings.generateMap&quot;</span>: <span class="literal">false</span>  <span class="comment">// 去掉map文件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="点击vscode-底部-watch-按钮-即可监听文件变动，动态编译文件"><a href="#点击vscode-底部-watch-按钮-即可监听文件变动，动态编译文件" class="headerlink" title="点击vscode 底部 watch 按钮,即可监听文件变动，动态编译文件"></a>点击vscode 底部 watch 按钮,即可监听文件变动，动态编译文件</h2><p><img src="1.png"></p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>小程序</tag>
       </tags>
   </entry>
   <entry>
@@ -524,18 +546,17 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       </tags>
   </entry>
   <entry>
-    <title>让支付宝 微信小程序等小程序 支持scss</title>
-    <url>/posts/fbf9056/</url>
-    <content><![CDATA[<p>原生的钉钉小程序是不支持scss的，支付宝小程序编辑器也不支持配置转译scss，我们使用vscode安装scss插件的方式，来将scss文件转译为acss文件</p>
+    <title>运行yarn eject 后 yarn start 报错</title>
+    <url>/posts/e1691e31/</url>
+    <content><![CDATA[<p>运行 yarn eject 把webpack配置暴露出来后，运行yarn start后报错，<br>报错的内容大致是 找不到 react-scripts下的config/env.js文件，然后查了下，发现node_module下 react-scripts被清空了，package.json文件</p>
 <a id="more"></a>
-<h2 id="安装插件-Live-Sass-Compiler"><a href="#安装插件-Live-Sass-Compiler" class="headerlink" title="安装插件 Live Sass Compiler"></a>安装插件 <code>Live Sass Compiler</code></h2><h2 id="配置vscode"><a href="#配置vscode" class="headerlink" title="配置vscode"></a>配置vscode</h2><figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;liveSassCompile.settings.formats&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;format&quot;</span>: <span class="string">&quot;expanded&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;extensionName&quot;</span>: <span class="string">&quot;.wxss&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;savePath&quot;</span>: <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;liveSassCompile.settings.generateMap&quot;</span>: <span class="literal">false</span>  <span class="comment">// 去掉map文件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="点击vscode-底部-watch-按钮-即可监听文件变动，动态编译文件"><a href="#点击vscode-底部-watch-按钮-即可监听文件变动，动态编译文件" class="headerlink" title="点击vscode 底部 watch 按钮,即可监听文件变动，动态编译文件"></a>点击vscode 底部 watch 按钮,即可监听文件变动，动态编译文件</h2><p><img src="1.png"></p>
+<p>下也没有这个记录了，找了很多资料都没有结果，然后索性就按照这个包，按照好后就报各种插件版本低，比如webpack，babel等，然后全部升级后，启动就没有报错了。</p>
 ]]></content>
       <categories>
         <category>前端</category>
       </categories>
       <tags>
-        <tag>小程序</tag>
+        <tag>react,</tag>
       </tags>
   </entry>
   <entry>
@@ -551,6 +572,15 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
       <tags>
         <tag>技术</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>阿里云服务器配置简要步骤</title>
+    <url>/posts/afa0b0b8/</url>
+    <content><![CDATA[<h2 id="阿里云服务器配置："><a href="#阿里云服务器配置：" class="headerlink" title="阿里云服务器配置："></a>阿里云服务器配置：</h2><h3 id="1：进入主机，配置ftp服务"><a href="#1：进入主机，配置ftp服务" class="headerlink" title="1：进入主机，配置ftp服务"></a>1：进入主机，配置ftp服务</h3><p>下载 FileZilla Server<br>安装，默认端口 14147，改为14140<br>设置项：<br>general settings<br>监听端口设置为14141。<br>passive mode settings。<br>需要添加用户 adduser，然后设置分享路径。</p>
+<p>ftp over tls settings<br>开启，证书生成放在安装目录下<br>默认的端口为990改为14140</p>
+<p>使用自定义端口：14140-14150<br>使用下面的ip：0.0.0.0/0</p>
+<h3 id="2：回到阿里云安全组管理"><a href="#2：回到阿里云安全组管理" class="headerlink" title="2：回到阿里云安全组管理"></a>2：回到阿里云安全组管理</h3><p>阿里云管理后台的安全组中需要开启14140-14150的入站规则</p>
+<h2 id="配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"><a href="#配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。" class="headerlink" title="配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"></a>配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。</h2>]]></content>
   </entry>
   <entry>
     <title>钉钉工作台自定义组件设计规范及注意事项</title>
@@ -579,14 +609,5 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
         <tag>小程序</tag>
         <tag>钉钉小程序</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>阿里云服务器配置简要步骤</title>
-    <url>/posts/afa0b0b8/</url>
-    <content><![CDATA[<h2 id="阿里云服务器配置："><a href="#阿里云服务器配置：" class="headerlink" title="阿里云服务器配置："></a>阿里云服务器配置：</h2><h3 id="1：进入主机，配置ftp服务"><a href="#1：进入主机，配置ftp服务" class="headerlink" title="1：进入主机，配置ftp服务"></a>1：进入主机，配置ftp服务</h3><p>下载 FileZilla Server<br>安装，默认端口 14147，改为14140<br>设置项：<br>general settings<br>监听端口设置为14141。<br>passive mode settings。<br>需要添加用户 adduser，然后设置分享路径。</p>
-<p>ftp over tls settings<br>开启，证书生成放在安装目录下<br>默认的端口为990改为14140</p>
-<p>使用自定义端口：14140-14150<br>使用下面的ip：0.0.0.0/0</p>
-<h3 id="2：回到阿里云安全组管理"><a href="#2：回到阿里云安全组管理" class="headerlink" title="2：回到阿里云安全组管理"></a>2：回到阿里云安全组管理</h3><p>阿里云管理后台的安全组中需要开启14140-14150的入站规则</p>
-<h2 id="配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"><a href="#配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。" class="headerlink" title="配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"></a>配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。</h2>]]></content>
   </entry>
 </search>

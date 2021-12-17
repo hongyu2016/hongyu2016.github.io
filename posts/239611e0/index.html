@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"blog.iyuge.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="阿里云服务器配置：1：进入主机，配置ftp服务下载 FileZilla Server安装，默认端口 14147，改为14140设置项：general settings监听端口设置为14141。passive mode settings。需要添加用户 adduser，然后设置分享路径。 ftp over tls settings开启，证书生成放在安装目录下默认的端口为990改为14140 使用自定义">
+  <meta name="description" content="最近发现C盘越来越小了，经过排查，C盘的用户文件夹很大，有30多G，实在是太大了。基本上都是应用产生的数据，其中npm目录就占了大概4、5G，实在是太大了，不能忍，于是就网上找解决方法 ，找到一个更改npm和yarn缓存目录的方法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="阿里云服务器配置简要步骤">
-<meta property="og:url" content="https://blog.iyuge.cn/posts/afa0b0b8/index.html">
+<meta property="og:title" content="修改npm和yarn的全局安装包位置和缓存位置">
+<meta property="og:url" content="https://blog.iyuge.cn/posts/239611e0/index.html">
 <meta property="og:site_name" content="羽歌天地博客">
-<meta property="og:description" content="阿里云服务器配置：1：进入主机，配置ftp服务下载 FileZilla Server安装，默认端口 14147，改为14140设置项：general settings监听端口设置为14141。passive mode settings。需要添加用户 adduser，然后设置分享路径。 ftp over tls settings开启，证书生成放在安装目录下默认的端口为990改为14140 使用自定义">
+<meta property="og:description" content="最近发现C盘越来越小了，经过排查，C盘的用户文件夹很大，有30多G，实在是太大了。基本上都是应用产生的数据，其中npm目录就占了大概4、5G，实在是太大了，不能忍，于是就网上找解决方法 ，找到一个更改npm和yarn缓存目录的方法。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-14T10:04:44.000Z">
-<meta property="article:modified_time" content="2021-07-14T10:13:58.706Z">
+<meta property="article:published_time" content="2021-12-17T02:21:46.000Z">
+<meta property="article:modified_time" content="2021-12-17T02:43:28.257Z">
 <meta property="article:author" content="刘宏羽">
-<meta property="article:tag" content="vue js nodejs es6 webpack react 前端 mysql 小程序">
+<meta property="article:tag" content="nodejs">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://blog.iyuge.cn/posts/afa0b0b8/">
+<link rel="canonical" href="https://blog.iyuge.cn/posts/239611e0/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>阿里云服务器配置简要步骤 | 羽歌天地博客</title>
+  <title>修改npm和yarn的全局安装包位置和缓存位置 | 羽歌天地博客</title>
   
 
 
@@ -167,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/afa0b0b8/">
+    <link itemprop="mainEntityOfPage" href="https://blog.iyuge.cn/posts/239611e0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/avatar.png">
@@ -180,7 +180,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          阿里云服务器配置简要步骤
+          修改npm和yarn的全局安装包位置和缓存位置
         </h1>
 
         <div class="post-meta">
@@ -191,7 +191,16 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-07-14 18:04:44 / 修改时间：18:13:58" itemprop="dateCreated datePublished" datetime="2021-07-14T18:04:44+08:00">2021-07-14</time>
+              <time title="创建时间：2021-12-17 10:21:46 / 修改时间：10:43:28" itemprop="dateCreated datePublished" datetime="2021-12-17T10:21:46+08:00">2021-12-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
             </span>
 
           
@@ -203,8 +212,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/posts/afa0b0b8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/afa0b0b8/" itemprop="commentCount"></span>
+    <a title="valine" href="/posts/239611e0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/239611e0/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -219,11 +228,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="阿里云服务器配置："><a href="#阿里云服务器配置：" class="headerlink" title="阿里云服务器配置："></a>阿里云服务器配置：</h2><h3 id="1：进入主机，配置ftp服务"><a href="#1：进入主机，配置ftp服务" class="headerlink" title="1：进入主机，配置ftp服务"></a>1：进入主机，配置ftp服务</h3><p>下载 FileZilla Server<br>安装，默认端口 14147，改为14140<br>设置项：<br>general settings<br>监听端口设置为14141。<br>passive mode settings。<br>需要添加用户 adduser，然后设置分享路径。</p>
-<p>ftp over tls settings<br>开启，证书生成放在安装目录下<br>默认的端口为990改为14140</p>
-<p>使用自定义端口：14140-14150<br>使用下面的ip：0.0.0.0/0</p>
-<h3 id="2：回到阿里云安全组管理"><a href="#2：回到阿里云安全组管理" class="headerlink" title="2：回到阿里云安全组管理"></a>2：回到阿里云安全组管理</h3><p>阿里云管理后台的安全组中需要开启14140-14150的入站规则</p>
-<h2 id="配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"><a href="#配置其他web服务时，需要设置防火墙的放行端口，比如-80-端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。" class="headerlink" title="配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。"></a>配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。</h2>
+        <p>最近发现C盘越来越小了，经过排查，C盘的用户文件夹很大，有30多G，实在是太大了。基本上都是应用产生的数据，其中npm目录就占了大概4、5G，实在是太大了，不能忍，于是就网上找解决方法 ，找到一个更改npm和yarn缓存目录的方法。</p>
+<a id="more"></a>
+<h3 id="npm-全局安装设置和缓存设置"><a href="#npm-全局安装设置和缓存设置" class="headerlink" title="npm 全局安装设置和缓存设置"></a>npm 全局安装设置和缓存设置</h3><p>查看当前npm包的全局安装路径：<br><code>npm prefix -g </code></p>
+<p>查看配置列表：<br><code>npm config ls </code></p>
+<p>修改npm的包的全局安装路径：<br><code>npm config set prefix &quot;D:\nodejs\npm_global&quot;</code></p>
+<p>修改npm的包的全局cache位置:<br><code>npm config set cache &quot;D:\nodejs\npm-cache&quot;</code></p>
+<h3 id="需要将-D-nodejs-npm-global-添加进系统环境变量中，这里文添加进用户变量中。"><a href="#需要将-D-nodejs-npm-global-添加进系统环境变量中，这里文添加进用户变量中。" class="headerlink" title="需要将 D:\nodejs\npm_global 添加进系统环境变量中，这里文添加进用户变量中。"></a>需要将 <code>D:\nodejs\npm_global</code> 添加进系统环境变量中，这里文添加进用户变量中。</h3><h3 id="yarn-的安装路径和缓存路径"><a href="#yarn-的安装路径和缓存路径" class="headerlink" title="yarn 的安装路径和缓存路径"></a>yarn 的安装路径和缓存路径</h3><p>查看 yarn 全局安装位置：<br><code>yarn global dir</code></p>
+<p>查看 yarn 全局cache位置:<br><code>yarn cache dir</code></p>
+<p>改变 yarn 全局安装位置<br><code>yarn config  set global-folder &quot;D:\nodejs\yarn\global&quot;</code></p>
+<p>改变 yarn 全局cache位置:<br><code>yarn config set cache-folder</code></p>
+<h3 id="注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。"><a href="#注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。" class="headerlink" title="注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。"></a>注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。</h3>
     </div>
 
     
@@ -231,6 +246,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          </div>
 
         
 
@@ -238,13 +256,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/4080e15/" rel="prev" title="react 常用组件">
-      <i class="fa fa-chevron-left"></i> react 常用组件
+    <a href="/posts/afa0b0b8/" rel="prev" title="阿里云服务器配置简要步骤">
+      <i class="fa fa-chevron-left"></i> 阿里云服务器配置简要步骤
     </a></div>
-      <div class="post-nav-item">
-    <a href="/posts/239611e0/" rel="next" title="修改npm和yarn的全局安装包位置和缓存位置">
-      修改npm和yarn的全局安装包位置和缓存位置 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -304,7 +319,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">阿里云服务器配置：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%9A%E8%BF%9B%E5%85%A5%E4%B8%BB%E6%9C%BA%EF%BC%8C%E9%85%8D%E7%BD%AEftp%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1：进入主机，配置ftp服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%EF%BC%9A%E5%9B%9E%E5%88%B0%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E5%85%A8%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">2：回到阿里云安全组管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%85%B6%E4%BB%96web%E6%9C%8D%E5%8A%A1%E6%97%B6%EF%BC%8C%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99%E7%9A%84%E6%94%BE%E8%A1%8C%E7%AB%AF%E5%8F%A3%EF%BC%8C%E6%AF%94%E5%A6%82-80-%E7%AB%AF%E5%8F%A3%EF%BC%8C443%E7%AB%AF%E5%8F%A3%EF%BC%8C%E5%85%B6%E4%BB%96web%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%E7%94%B1nginx%E7%BB%9F%E4%B8%80%E8%BD%AC%E5%8F%91%E5%88%B080%E6%88%96%E8%80%85443%E7%AB%AF%E5%8F%A3%E5%8D%B3%E5%8F%AF%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">配置其他web服务时，需要设置防火墙的放行端口，比如 80 端口，443端口，其他web项目启动的端口由nginx统一转发到80或者443端口即可。</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-%E5%85%A8%E5%B1%80%E5%AE%89%E8%A3%85%E8%AE%BE%E7%BD%AE%E5%92%8C%E7%BC%93%E5%AD%98%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">npm 全局安装设置和缓存设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E5%B0%86-D-nodejs-npm-global-%E6%B7%BB%E5%8A%A0%E8%BF%9B%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%AD%EF%BC%8C%E8%BF%99%E9%87%8C%E6%96%87%E6%B7%BB%E5%8A%A0%E8%BF%9B%E7%94%A8%E6%88%B7%E5%8F%98%E9%87%8F%E4%B8%AD%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">需要将 D:\nodejs\npm_global 添加进系统环境变量中，这里文添加进用户变量中。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-%E7%9A%84%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84%E5%92%8C%E7%BC%93%E5%AD%98%E8%B7%AF%E5%BE%84"><span class="nav-number">3.</span> <span class="nav-text">yarn 的安装路径和缓存路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%81%E4%BB%A5%E4%B8%8A%E5%91%BD%E4%BB%A4%E9%9C%80%E8%A6%81%E7%94%A8%E7%AE%A1%E7%90%86%E5%91%98%E8%BF%90%E8%A1%8Ccmd%EF%BC%8C%E6%89%A7%E8%A1%8C%E7%9B%B8%E5%BA%94%E7%9A%84%E5%91%BD%E4%BB%A4%EF%BC%8C%E5%90%A6%E5%88%99%E4%BC%9A%E6%8A%A5%E9%94%99%EF%BC%8C%E8%AE%A9%E4%BD%A0%E6%80%80%E7%96%91%E4%BA%BA%E7%94%9F%EF%BC%8C%E4%B8%94%E7%BD%91%E4%B8%8A%E6%9F%A5%E4%B8%8D%E5%88%B0%E7%9B%B8%E5%BA%94%E7%9A%84%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF%E3%80%82%E8%80%8C%E4%B8%94%E8%AE%BE%E7%BD%AE%E5%AE%8C%E8%BF%99%E4%BA%9B%E8%B7%AF%E5%BE%84%E5%90%8E%EF%BC%8C%E5%8D%B8%E8%BD%BDnodejs%E5%86%8D%E9%87%8D%E8%A3%85%EF%BC%8C%E4%B9%9F%E4%B8%8D%E4%BC%9A%E6%81%A2%E5%A4%8D%E9%BB%98%E8%AE%A4%EF%BC%8C%E4%BC%B0%E8%AE%A1%E5%8F%AA%E6%9C%89%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E6%89%8D%E8%83%BD%E6%81%A2%E5%A4%8D%E9%BB%98%E8%AE%A4%E4%BA%86%E3%80%82"><span class="nav-number">4.</span> <span class="nav-text">注意！以上命令需要用管理员运行cmd，执行相应的命令，否则会报错，让你怀疑人生，且网上查不到相应的报错信息。而且设置完这些路径后，卸载nodejs再重装，也不会恢复默认，估计只有重装系统才能恢复默认了。</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
