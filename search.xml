@@ -610,4 +610,18 @@ mysql_native_password这种系统root用户登录时才可以登录数据库的r
         <tag>钉钉小程序</tag>
       </tags>
   </entry>
+  <entry>
+    <title>vue cli4+lerna发布多组件到npm</title>
+    <url>/posts/3b9b1ab3/</url>
+    <content><![CDATA[<h1 id="vue-cli-工具"><a href="#vue-cli-工具" class="headerlink" title="vue cli 工具"></a>vue cli 工具</h1><p>使用vue create 创建一个应用，</p>
+<h1 id="lerna"><a href="#lerna" class="headerlink" title="lerna"></a>lerna</h1><ol>
+<li>全局安装<code>lerna</code>，<code>npm install lerna -g</code>，</li>
+<li>切换到刚刚创建的项目目录，执行<code>lerna init</code>，生成了packages 目录，这就是组件目录了，如图：<img src="1.png"><br>组件的package的文件内容为：<img src="2.png"></li>
+<li><code>lerna bootstrap</code> 执行每个包的依赖的安装</li>
+<li>根目录下的packages 文件：<img src="3.png"></li>
+<li>根目录下的lerna.json 文件：<img src="4.png"></li>
+</ol>
+<h1 id="编译、发布"><a href="#编译、发布" class="headerlink" title="编译、发布"></a>编译、发布</h1><p>执行 <code>npm run l-build</code> 编译组件，然后再执行<code>npm run l-publish</code>，发布道npm，这里需要注意，发布道npm前需要先提交到Git仓库</p>
+]]></content>
+  </entry>
 </search>
