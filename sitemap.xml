@@ -29,6 +29,15 @@
   </url>
   
   <url>
+    <loc>https://hongyu2016.github.io/categories/index.html</loc>
+    
+    <lastmod>2026-11-14</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hongyu2016.github.io/archives/index.html</loc>
     
     <lastmod>2026-11-14</lastmod>
@@ -39,15 +48,6 @@
   
   <url>
     <loc>https://hongyu2016.github.io/about/index.html</loc>
-    
-    <lastmod>2026-11-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hongyu2016.github.io/categories/index.html</loc>
     
     <lastmod>2026-11-14</lastmod>
     
@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://hongyu2016.github.io/posts/60785/</loc>
+    <loc>https://hongyu2016.github.io/posts/7f247ba3/</loc>
     
     <lastmod>2026-11-14</lastmod>
     
@@ -110,7 +110,7 @@
   </url>
   
   <url>
-    <loc>https://hongyu2016.github.io/posts/7f247ba3/</loc>
+    <loc>https://hongyu2016.github.io/posts/60785/</loc>
     
     <lastmod>2026-11-14</lastmod>
     
@@ -155,7 +155,7 @@
   </url>
   
   <url>
-    <loc>https://hongyu2016.github.io/posts/a2d2f901/</loc>
+    <loc>https://hongyu2016.github.io/posts/c20fd3fa/</loc>
     
     <lastmod>2026-11-14</lastmod>
     
@@ -164,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://hongyu2016.github.io/posts/c20fd3fa/</loc>
+    <loc>https://hongyu2016.github.io/posts/a2d2f901/</loc>
     
     <lastmod>2026-11-14</lastmod>
     
@@ -452,6 +452,13 @@
   </url>
   
   <url>
+    <loc>https://hongyu2016.github.io/tags/%E6%8A%80%E6%9C%AF/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hongyu2016.github.io/tags/react-native/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -460,13 +467,6 @@
   
   <url>
     <loc>https://hongyu2016.github.io/tags/android/</loc>
-    <lastmod>2026-11-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hongyu2016.github.io/tags/%E6%8A%80%E6%9C%AF/</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
