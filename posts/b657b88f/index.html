@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bitbug_favicon-3x32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bitbug_favicon%20-16x16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"hongyu2016.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="一、前言RAG（Retrieval-Augmented Generation，检索增强生成）是当前构建”私有知识库问答”系统的主流方案。它的核心思想很简单：先检索、再生成——把你的文档切片后向量化存入向量数据库，用户提问时先从向量库召回最相关的几个片段，连同问题一起喂给 LLM，让它基于”有据可查”的上下文给出答案。 这样做的好处有三个：  缓解幻觉：LLM 只基于你提供的上下文作答，答不出就说找">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 FastAPI + ChromaDB + Ollama + LangChain + Qwen 构建本地知识库">
+<meta property="og:url" content="https://hongyu2016.github.io/posts/b657b88f/index.html">
+<meta property="og:site_name" content="羽歌天地博客">
+<meta property="og:description" content="一、前言RAG（Retrieval-Augmented Generation，检索增强生成）是当前构建”私有知识库问答”系统的主流方案。它的核心思想很简单：先检索、再生成——把你的文档切片后向量化存入向量数据库，用户提问时先从向量库召回最相关的几个片段，连同问题一起喂给 LLM，让它基于”有据可查”的上下文给出答案。 这样做的好处有三个：  缓解幻觉：LLM 只基于你提供的上下文作答，答不出就说找">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hongyu2016.github.io/posts/b657b88f/1.png">
+<meta property="og:image" content="https://hongyu2016.github.io/posts/b657b88f/2.png">
+<meta property="og:image" content="https://hongyu2016.github.io/posts/b657b88f/4.png">
+<meta property="article:published_time" content="2026-11-14T09:35:26.000Z">
+<meta property="article:modified_time" content="2026-11-14T10:04:06.079Z">
+<meta property="article:author" content="刘宏羽">
+<meta property="article:tag" content="FastAPI">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="LangChain">
+<meta property="article:tag" content="Ollama">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hongyu2016.github.io/posts/b657b88f/1.png">
+
+<link rel="canonical" href="https://hongyu2016.github.io/posts/b657b88f/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>使用 FastAPI + ChromaDB + Ollama + LangChain + Qwen 构建本地知识库 | 羽歌天地博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">羽歌天地博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">爱羽歌</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hongyu2016.github.io/posts/b657b88f/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="刘宏羽">
+      <meta itemprop="description" content="记录技术点滴">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="羽歌天地博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 FastAPI + ChromaDB + Ollama + LangChain + Qwen 构建本地知识库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-11-14 17:35:26 / 修改时间：18:04:06" itemprop="dateCreated datePublished" datetime="2026-11-14T17:35:26+08:00">2026-11-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">后端</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/b657b88f/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/b657b88f/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>RAG（Retrieval-Augmented Generation，检索增强生成）是当前构建”私有知识库问答”系统的主流方案。它的核心思想很简单：<strong>先检索、再生成</strong>——把你的文档切片后向量化存入向量数据库，用户提问时先从向量库召回最相关的几个片段，连同问题一起喂给 LLM，让它基于”有据可查”的上下文给出答案。</p>
+<p>这样做的好处有三个：</p>
+<ul>
+<li><strong>缓解幻觉</strong>：LLM 只基于你提供的上下文作答，答不出就说找不到，不会瞎编。</li>
+<li><strong>知识新鲜</strong>：新增文档直接入库即可，不用重新 fine-tune 模型。</li>
+<li><strong>数据安全</strong>：跑在本地的 Ollama 上，文档和推理都不出你的机器。</li>
+</ul>
+<p>本文用一个我实际做过的项目为例，把整个链路拆开来。后端用 <strong>FastAPI</strong> 搭服务，<strong>ChromaDB</strong> 做向量存储，<strong>Ollama + Qwen2.5</strong> 做本地大模型，<strong>LangChain</strong> 串起各个组件；前端用 <strong>React + TypeScript + Vite</strong> 做一个简洁的聊天界面，支持 SSE 流式输出。</p>
+<span id="more"></span>
+
+<h2 id="二、整体架构"><a href="#二、整体架构" class="headerlink" title="二、整体架构"></a>二、整体架构</h2><p>先看一张架构图：</p>
+<p><img src="1.png"></p>
+<p>整个系统的数据流：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">用户提问 → 前端(fetch) → FastAPI后端</span><br><span class="line">                              │</span><br><span class="line">                              ▼</span><br><span class="line">                     ┌── 向量检索（ChromaDB + bge-m3 Embedding）</span><br><span class="line">                     │</span><br><span class="line">                     ▼</span><br><span class="line">               <span class="attribute">gap</span> 过滤（切掉不相关 chunk）</span><br><span class="line">                     │</span><br><span class="line">                     ▼</span><br><span class="line">          拼接 Prompt（上下文 + 问题 + 角色设定）</span><br><span class="line">                     │</span><br><span class="line">                     ▼</span><br><span class="line">          Ollama 本地大模型（qwen2<span class="selector-class">.5</span>:<span class="number">7</span>b）</span><br><span class="line">                     │</span><br><span class="line">                     ▼</span><br><span class="line">          SSE 流式推回前端（打字机效果）</span><br></pre></td></tr></table></figure>
+
+<p>入库侧是另一条链路：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">用户上传文档(tx<span class="regexp">/md/</span>pdf/docx)</span><br><span class="line">         │</span><br><span class="line">         ▼</span><br><span class="line">   MD5 去重校验 ── 已存在 → 跳过</span><br><span class="line">         │</span><br><span class="line">         ▼（不存在）</span><br><span class="line">   文档加载 + 切片（PDF 是扫描件？自动走 OCR 兜底）</span><br><span class="line">         │</span><br><span class="line">         ▼</span><br><span class="line">   附加 metadata（来源溯源、后续删除要用）</span><br><span class="line">         │</span><br><span class="line">         ▼</span><br><span class="line">   分批向量化 → 写入 ChromaDB</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、准备工作"><a href="#三、准备工作" class="headerlink" title="三、准备工作"></a>三、准备工作</h2><h3 id="3-1-安装-Ollama-并下载模型"><a href="#3-1-安装-Ollama-并下载模型" class="headerlink" title="3.1 安装 Ollama 并下载模型"></a>3.1 安装 Ollama 并下载模型</h3><p>到 <a target="_blank" rel="noopener" href="https://ollama.com/">https://ollama.com</a> 下载安装 Ollama，然后拉取我们要用到的两个模型：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ollama pull qwen2.5:7b     <span class="comment"># 对话大模型</span></span><br><span class="line">ollama pull bge-m3          <span class="comment"># Embedding 模型</span></span><br></pre></td></tr></table></figure>
+
+<p>启动后 Ollama 默认监听 <code>http://127.0.0.1:11434</code>。它兼容 OpenAI 的 API 格式，所以我们可以直接用 LangChain 的 <code>ChatOpenAI</code> / <code>OpenAIEmbeddings</code> 来对接，只要把 <code>base_url</code> 指过去就行。</p>
+<h3 id="3-2-后端环境变量"><a href="#3-2-后端环境变量" class="headerlink" title="3.2 后端环境变量"></a>3.2 后端环境变量</h3><p>项目根目录的 <code>.env</code> 文件（用 <code>pydantic-settings</code> 自动加载）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">APP_NAME=RAG知识库服务</span><br><span class="line">APP_VERSION=0.1.0</span><br><span class="line">APP_DESCRIPTION=RAG知识库服务，提供基于RAG的知识库查询和管理功能。</span><br><span class="line"></span><br><span class="line"># Ollama 本地模型（Ollama 的 API Key 随便填一个占位就行，它不校验）</span><br><span class="line">QWEN_API_KEY=ollama</span><br><span class="line">QWEN_BASE_URL=http://127.0.0.1:11434/v1</span><br><span class="line">QWEN_MODEL=qwen2.5:7b</span><br><span class="line">EMBEDDING_MODEL=bge-m3</span><br><span class="line"></span><br><span class="line"># 存储路径</span><br><span class="line">CHROMA_PERSIST_DIR=./data/chroma.db</span><br><span class="line">UPLOAD_DIR=./data/documents</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-依赖安装"><a href="#3-3-依赖安装" class="headerlink" title="3.3 依赖安装"></a>3.3 依赖安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>核心依赖有：<code>fastapi</code>、<code>uvicorn</code>、<code>chromadb</code>、<code>langchain</code>、<code>langchain-chroma</code>、<code>langchain-openai</code>、<code>langchain-community</code>、<code>pydantic-settings</code>。如果要支持扫描版 PDF 的 OCR，还得装 <code>pymupdf</code> 和 <code>rapidocr-onnxruntime</code>。</p>
+<h2 id="四、后端实现"><a href="#四、后端实现" class="headerlink" title="四、后端实现"></a>四、后端实现</h2><p>后端项目结构：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">fastapi-learning-project<span class="symbol">/</span></span><br><span class="line">├── app<span class="symbol">/</span></span><br><span class="line">│   ├── main.py              <span class="comment"># FastAPI 入口</span></span><br><span class="line">│   ├── config.py            <span class="comment"># pydantic-settings 读 .env</span></span><br><span class="line">│   ├── api<span class="symbol">/v1.py</span>            <span class="comment"># V1 版本的所有路由</span></span><br><span class="line">│   ├── services<span class="symbol">/</span></span><br><span class="line">│   │   ├── model_factory.py <span class="comment"># LLM / Embedding 客户端实例</span></span><br><span class="line">│   │   ├── vector_store.py  <span class="comment"># ChromaDB 封装（存、查、删、统计）</span></span><br><span class="line">│   │   ├── rag_service.py   <span class="comment"># RAG 问答逻辑（检索+gap过滤+LLM）</span></span><br><span class="line">│   │   └── upload_service.py<span class="comment"># 后台上传任务管理</span></span><br><span class="line">│   ├── utils<span class="symbol">/</span></span><br><span class="line">│   │   ├── document_loader.py <span class="comment"># 文档加载 + 切片 + OCR兜底</span></span><br><span class="line">│   │   ├── ocr.py            <span class="comment"># 扫描件 OCR 并行识别</span></span><br><span class="line">│   │   └── hash_utils.py     <span class="comment"># MD5 去重</span></span><br><span class="line">│   ├── core<span class="symbol">/</span>                 <span class="comment"># 统一异常 + 响应格式</span></span><br><span class="line">│   └── schemas<span class="symbol">/</span>              <span class="comment"># Pydantic 请求/响应模型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-文档加载、切片与-OCR-兜底"><a href="#4-1-文档加载、切片与-OCR-兜底" class="headerlink" title="4.1 文档加载、切片与 OCR 兜底"></a>4.1 文档加载、切片与 OCR 兜底</h3><p>这是入库链路的第一步。<code>document_loader.py</code> 按后缀选择对应的 LangChain Loader 和 TextSplitter：</p>
+<ul>
+<li><code>.txt</code> / <code>.md</code> → <code>TextLoader</code></li>
+<li><code>.pdf</code> → <code>PyPDFLoader</code></li>
+<li><code>.docx</code> → <code>Docx2txtLoader</code></li>
+</ul>
+<p>切片器方面，Markdown 用 <code>MarkdownTextSplitter</code>（按 <code>#</code> 标题层级切，效果更智能），其他用通用的 <code>RecursiveCharacterTextSplitter</code>，chunk_size 设 300，重叠 50 字。重叠的目的是避免一句话被硬切在 chunk 边界上导致语义断裂。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_text_splitter</span>(<span class="params">file_path: <span class="built_in">str</span></span>):</span><br><span class="line">    suffix = os.path.splitext(file_path)[<span class="number">1</span>].lower()</span><br><span class="line">    <span class="keyword">if</span> suffix == <span class="string">&quot;.md&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span> MarkdownTextSplitter(chunk_size=<span class="number">500</span>, chunk_overlap=<span class="number">50</span>)</span><br><span class="line">    <span class="keyword">return</span> RecursiveCharacterTextSplitter(</span><br><span class="line">        chunk_size=<span class="number">300</span>, chunk_overlap=<span class="number">50</span>, length_function=<span class="built_in">len</span></span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键点：扫描版 PDF 的 OCR 兜底。</strong> 现实中大量 PDF 是只有图片的扫描件，<code>PyPDFLoader</code> 读出来全是空字符串。项目里的做法是先做一次检测——<strong>平均每页能提取到的字符数低于 10，就判定为扫描件，自动降级到 OCR 流程</strong>。</p>
+<p>OCR 用的是 <code>rapidocr-onnxruntime</code>（完全离线，不用调百度/阿里的 API），配合 <code>pymupdf</code> 把每页渲染成 2x 分辨率的 PNG。大文件还开了 <code>ProcessPoolExecutor</code> 进程池并行识别，小文件（&lt; 10 页）直接串行避免进程池启动开销。如果进程池因为权限/容器限制挂了，还有断点续跑的兜底逻辑——从失败页开始串行识别，<strong>保证功能永远可用</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">is_scanned_pdf</span>(<span class="params">file_path: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    docs = PyPDFLoader(file_path).load()</span><br><span class="line">    total_chars = <span class="built_in">sum</span>(<span class="built_in">len</span>(d.page_content.strip()) <span class="keyword">for</span> d <span class="keyword">in</span> docs)</span><br><span class="line">    page_count = <span class="built_in">max</span>(<span class="built_in">len</span>(docs), <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> total_chars / page_count &lt; SCANNED_PDF_MIN_CHARS_PER_PAGE  <span class="comment"># 默认 10</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-向量化存储（ChromaDB）"><a href="#4-2-向量化存储（ChromaDB）" class="headerlink" title="4.2 向量化存储（ChromaDB）"></a>4.2 向量化存储（ChromaDB）</h3><p>LangChain 已经封装好了 Chroma 的对接，我们只需要配置好 <code>embedding_function</code> 和持久化目录即可。项目用 <code>langchain-chroma</code> 包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vector_db = Chroma(</span><br><span class="line">    persist_directory=settings.CHROMA_PERSIST_DIR,</span><br><span class="line">    embedding_function=get_embeddings(),  <span class="comment"># bge-m3，通过 Ollama 代理</span></span><br><span class="line">    collection_name=<span class="string">&quot;rag_knowledge&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>metadata 溯源是个容易忽略但非常重要的细节。</strong> 入库时给每个 chunk 都挂上这些 metadata：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>source_hash</code></td>
+<td>文件内容 MD5，去重用、后续删除也要用</td>
+</tr>
+<tr>
+<td><code>filename</code></td>
+<td>原始文件名，前端展示来源时用</td>
+</tr>
+<tr>
+<td><code>file_size</code></td>
+<td>文档大小，统计信息</td>
+</tr>
+<tr>
+<td><code>upload_time</code></td>
+<td>上传时间</td>
+</tr>
+<tr>
+<td><code>save_path</code></td>
+<td>磁盘路径，删除时顺便清物理文件</td>
+</tr>
+</tbody></table>
+<p>分片是<strong>分批写</strong>的（每批 20 条），写一批调一次 <code>progress_cb</code>，前端就能实时看到”向量化 120/500”这种进度条。</p>
+<p>删除就简单了：按 <code>source_hash</code> 查出来所有 chunk ID，批量 <code>vector_db.delete(ids=...)</code>，再从 metadata 里拿 <code>save_path</code> 删磁盘文件。</p>
+<h3 id="4-3-RAG-检索-Gap-过滤"><a href="#4-3-RAG-检索-Gap-过滤" class="headerlink" title="4.3 RAG 检索 + Gap 过滤"></a>4.3 RAG 检索 + Gap 过滤</h3><p>这是 RAG 质量的核心。用户提问后，先做向量相似度检索：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vector_db.similarity_search_with_score(question, k=<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>返回的 <code>score</code> 是 <strong>L2 距离</strong>，<strong>越小越相似</strong>。问题来了：直接把 top_k 都塞给 LLM 吗？实测下来，相关 chunk 和不相关 chunk 的分数之间<strong>通常有明显的跳变</strong>。比如返回 5 条，分数是 <code>[0.77, 0.79, 1.53, 1.56, 1.58]</code>——前两条明显是真相关，后面三条的距离一下跳到 1.5+，大概率是噪声。</p>
+<p>所以项目里写了一个 <code>_filter_by_gap</code> 函数：找最大跳变点，跳变幅度要超过当前最高分的 30% 才算有效，只保留跳变之前的 chunk。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_filter_by_gap</span>(<span class="params">results, min_gap_ratio: <span class="built_in">float</span> = <span class="number">0.3</span></span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(results) &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> results</span><br><span class="line">    scores = [s <span class="keyword">for</span> _, s <span class="keyword">in</span> results]</span><br><span class="line">    gaps = [scores[i + <span class="number">1</span>] - scores[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(scores) - <span class="number">1</span>)]</span><br><span class="line">    max_gap_idx = gaps.index(<span class="built_in">max</span>(gaps))</span><br><span class="line">    <span class="keyword">if</span> gaps[max_gap_idx] &gt; <span class="built_in">max</span>(scores) * min_gap_ratio:</span><br><span class="line">        <span class="keyword">return</span> results[: max_gap_idx + <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+
+<p>这个小技巧成本极低，但对减少 LLM 的”上下文污染”效果很明显。</p>
+<h3 id="4-4-Prompt-构造-LLM-调用"><a href="#4-4-Prompt-构造-LLM-调用" class="headerlink" title="4.4 Prompt 构造 + LLM 调用"></a>4.4 Prompt 构造 + LLM 调用</h3><p>检索出相关 chunk 后，拼一个简单但有效的 Prompt：</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">你是知识库问答助手，只根据下面【上下文】回答问题。</span></span><br><span class="line"><span class="language-xml">如果上下文没有提供相关信息，直接说找不到与该问题相关的内容，不要编造。</span></span><br><span class="line"><span class="language-xml">【上下文】</span></span><br><span class="line"><span class="language-xml"></span><span class="template-variable">&#123;这里是检索到的所有 chunk&#125;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">【问题】</span></span><br><span class="line"><span class="language-xml"></span><span class="template-variable">&#123;用户的问题&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>LLM 的 <code>temperature</code> 设成 0.3——知识库问答场景需要稳定、准确的输出，温度低一点好。</p>
+<h3 id="4-5-难点：SSE-流式问答"><a href="#4-5-难点：SSE-流式问答" class="headerlink" title="4.5 难点：SSE 流式问答"></a>4.5 难点：SSE 流式问答</h3><p>这是后端最”硬核”的部分。普通的 <code>llm.invoke()</code> 要等整段答案生成完才返回，体验差。项目用 <strong>LangChain 的 <code>astream</code> + FastAPI 的 <code>StreamingResponse</code></strong> 实现了边生成边推送。</p>
+<p>整体链路：</p>
+<ol>
+<li><code>rag_query_stream</code> 是一个 <code>async</code> 生成器（<code>async def ... yield</code>），每 <code>yield</code> 一次就是一个事件</li>
+<li>FastAPI 路由里把它包进 <code>StreamingResponse</code>，<code>media_type</code> 设成 <code>text/event-stream</code></li>
+<li>SSE 事件结构：先推 <code>source</code>（命中的来源列表，此时 LLM 还在生成，前端可以先展示）→ 然后是 N 个 <code>delta</code>（每次吐一小段文字）→ 最后 <code>done</code> 或 <code>error</code></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">rag_query_stream</span>(<span class="params">question: <span class="built_in">str</span>, top_k: <span class="built_in">int</span> = <span class="number">5</span></span>):</span><br><span class="line">    results = <span class="keyword">await</span> asyncio.to_thread(_search, question, top_k)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> results:</span><br><span class="line">        <span class="keyword">yield</span> &#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;delta&quot;</span>, <span class="string">&quot;data&quot;</span>: <span class="string">&quot;知识库中未找到与该问题相关的内容。&quot;</span>&#125;</span><br><span class="line">        <span class="keyword">yield</span> &#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;done&quot;</span>&#125;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    docs = [doc <span class="keyword">for</span> doc, _ <span class="keyword">in</span> results]</span><br><span class="line">    <span class="keyword">yield</span> &#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;source&quot;</span>, <span class="string">&quot;data&quot;</span>: _format_sources(docs)&#125;</span><br><span class="line">    prompt = _build_prompt(question, docs)</span><br><span class="line">    llm = get_chat_llm(temperature=<span class="number">0.3</span>)</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">for</span> chunk <span class="keyword">in</span> llm.astream(prompt):</span><br><span class="line">        text = chunk.content</span><br><span class="line">        <span class="keyword">if</span> text:</span><br><span class="line">            <span class="keyword">yield</span> &#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;delta&quot;</span>, <span class="string">&quot;data&quot;</span>: text&#125;</span><br><span class="line">    <span class="keyword">yield</span> &#123;<span class="string">&quot;type&quot;</span>: <span class="string">&quot;done&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里踩了好几个坑：</p>
+<p><strong>坑 1：检索是同步阻塞调用。</strong> Embedding 要请求 Ollama 的 HTTP 接口，在 async 函数里直接调会卡住事件循环。解决方式是 <code>asyncio.to_thread(_search, ...)</code>，把检索丢进线程池。</p>
+<p><strong>坑 2：StreamingResponse 的异常处理位置。</strong> 响应头一旦发出去，全局异常处理器就接不到后面抛的异常了——前端只会看到连接被硬断开。所以异常处理必须写在<strong>生成器内部</strong>（<code>try/except</code> 包住 <code>async for</code> 那个循环），出错时手动 yield 一个 <code>&#123;&quot;type&quot;: &quot;error&quot;, ...&#125;</code> 事件。</p>
+<p><strong>坑 3：Nginx/反向代理的缓冲。</strong> 如果前端通过 Nginx 反代后端，Nginx 默认会攒够一批数据才转发，流式就失效了。所以响应头必须加 <code>X-Accel-Buffering: no</code> 和 <code>Cache-Control: no-cache</code>。</p>
+<h3 id="4-6-文档上传：异步后台任务-进度查询"><a href="#4-6-文档上传：异步后台任务-进度查询" class="headerlink" title="4.6 文档上传：异步后台任务 + 进度查询"></a>4.6 文档上传：异步后台任务 + 进度查询</h3><p>上传是耗时操作（PDF OCR、向量化都要时间），不能让前端一直等。用 FastAPI 的 <code>BackgroundTasks</code> 做异步：上传接口立即返回 <code>task_id</code>，后台解析入库，前端轮询进度。</p>
+<p>路由流程：</p>
+<ol>
+<li>校验文件后缀（只允许 <code>.txt</code> <code>.md</code> <code>.pdf</code> <code>.docx</code>）</li>
+<li>读取文件内容 → 算 MD5 → 向量库查一下是否已存在（去重）</li>
+<li>保存到磁盘（文件名前面加 UUID 防重名）</li>
+<li><code>create_upload_task</code> 登记任务到内存字典</li>
+<li><code>background_tasks.add_task(run_upload_task, ...)</code> 丢进后台执行</li>
+<li>立即返回 <code>task_id</code></li>
+</ol>
+<p><code>run_upload_task</code> 里的每一步都调 <code>task.update(progress=...)</code> 更新进度——OCR 阶段报 <code>OCR 3/20</code>，向量化阶段报 <code>向量化 120/500</code>，前端轮询 <code>/doc/upload/status/&#123;task_id&#125;</code> 就能实时展示。</p>
+<p>任务状态存的是内存字典，单进程部署够用，重启后丢失但不影响向量库里已入库的数据。如果后续要做多进程/分布式，换成 Redis 就行。</p>
+<h3 id="4-7-统一异常与响应封装"><a href="#4-7-统一异常与响应封装" class="headerlink" title="4.7 统一异常与响应封装"></a>4.7 统一异常与响应封装</h3><p>项目自己实现了一套业务异常 + 全局异常处理器，所有接口返回统一的 <code>&#123;code, msg, data&#125;</code> 结构。前端 axios 拦截器里做一次解包（code === 200 时直接 <code>response.data = body.data</code>），业务代码里就不用每次都判断 code 了。</p>
+<h2 id="五、前端实现"><a href="#五、前端实现" class="headerlink" title="五、前端实现"></a>五、前端实现</h2><p>前端项目 <code>fastapi-rag-web</code>，技术栈：<strong>React 19 + TypeScript + Vite 8 + Ant Design 6</strong>。</p>
+<h3 id="5-1-项目结构"><a href="#5-1-项目结构" class="headerlink" title="5.1 项目结构"></a>5.1 项目结构</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fastapi-rag-web<span class="symbol">/</span></span><br><span class="line">├── src<span class="symbol">/</span></span><br><span class="line">│   ├── components<span class="symbol">/</span></span><br><span class="line">│   │   ├── ChatBox<span class="symbol">/</span>       <span class="comment"># 聊天框组件</span></span><br><span class="line">│   │   └── DocList<span class="symbol">/</span>       <span class="comment"># 文档列表组件</span></span><br><span class="line">│   ├── pages<span class="operator">/</span>rag<span class="symbol">/</span>         <span class="comment"># RAG 问答页面（路由入口）</span></span><br><span class="line">│   ├── services<span class="symbol">/api.ts</span>    <span class="comment"># 所有 API 封装（含 SSE 流式）</span></span><br><span class="line">│   ├── utils<span class="symbol">/format.ts</span></span><br><span class="line">│   ├── App.tsx</span><br><span class="line">│   └── main.tsx</span><br></pre></td></tr></table></figure>
+
+<p>页面长这样：</p>
+<p><img src="2.png"></p>
+<h3 id="5-2-重点：SSE-流式接口的前端实现"><a href="#5-2-重点：SSE-流式接口的前端实现" class="headerlink" title="5.2 重点：SSE 流式接口的前端实现"></a>5.2 重点：SSE 流式接口的前端实现</h3><p>后端用的是 <code>StreamingResponse</code> 返回 SSE，但前端 <strong><code>axios</code> 和 <code>EventSource</code> 都不好用</strong>：</p>
+<ul>
+<li><code>EventSource</code> 只能发 GET 请求，不能带 JSON body，而我们的接口是 POST</li>
+<li><code>axios</code> 要等整个响应体收完才 resolve，拿不到”边收边处理”的能力</li>
+</ul>
+<p>所以前端用<strong>原生 <code>fetch</code> + <code>ReadableStream</code></strong> 来手动读流。整个过程分三步：</p>
+<p><strong>第一步：发起 fetch，拿到 <code>response.body</code>（一个 ReadableStream）：</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">`<span class="subst">$&#123;BASE_URL&#125;</span>/rag/query/stream`</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">  <span class="attr">headers</span>: &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span> &#125;,</span><br><span class="line">  <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; question, <span class="attr">top_k</span>: <span class="number">5</span> &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> reader = res.<span class="property">body</span>!.<span class="title function_">getReader</span>()</span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">TextDecoder</span>(<span class="string">&#x27;utf-8&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>第二步：循环读取，注意中文是多字节：</strong></p>
+<p><code>reader.read()</code> 返回的是原始字节 <code>Uint8Array</code>。中文一个字可能跨两个 chunk，直接丢给 <code>JSON.parse</code> 会炸。所以用 <code>TextDecoder</code>，传 <code>stream: true</code> 让它自己把凑不成一个完整字符的剩余字节留到下次拼。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; done, value &#125; = <span class="keyword">await</span> reader.<span class="title function_">read</span>()</span><br><span class="line">  <span class="keyword">if</span> (done) <span class="keyword">break</span></span><br><span class="line">  buffer += decoder.<span class="title function_">decode</span>(value, &#123; <span class="attr">stream</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">  <span class="comment">// SSE 用 \n\n 分隔事件</span></span><br><span class="line">  <span class="keyword">const</span> blocks = buffer.<span class="title function_">split</span>(<span class="string">&#x27;\n\n&#x27;</span>)</span><br><span class="line">  buffer = blocks.<span class="title function_">pop</span>() ?? <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="comment">// ... 解析每条事件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>第三步：解析 SSE 事件，分发到对应回调：</strong></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> blocks) &#123;</span><br><span class="line">  <span class="keyword">const</span> dataLine = block.<span class="title function_">split</span>(<span class="string">&#x27;\n&#x27;</span>).<span class="title function_">find</span>(<span class="function"><span class="params">l</span> =&gt;</span> l.<span class="title function_">startsWith</span>(<span class="string">&#x27;data:&#x27;</span>))</span><br><span class="line">  <span class="keyword">if</span> (!dataLine) <span class="keyword">continue</span></span><br><span class="line">  <span class="keyword">const</span> event = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(dataLine.<span class="title function_">slice</span>(<span class="number">5</span>).<span class="title function_">trim</span>())</span><br><span class="line">  <span class="comment">// 分别回调 onSource / onDelta / onDone / onError</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前端界面效果如图（打字机效果，来源列表先出来，然后答案一个字一个字蹦出来）：</p>
+<p><img src="4.png"></p>
+<h3 id="5-3-界面其他功能"><a href="#5-3-界面其他功能" class="headerlink" title="5.3 界面其他功能"></a>5.3 界面其他功能</h3><ul>
+<li><strong>文档列表页</strong>：调 <code>/doc/stats</code> 显示文档总数、每个文档的 chunk 数、上传时间；支持删除（调 <code>/doc/delete</code>，顺便清磁盘文件）</li>
+<li><strong>上传功能</strong>：调 <code>/doc/upload</code> → 拿到 <code>task_id</code> → 轮询 <code>/doc/upload/status/&#123;task_id&#125;</code> → 根据 <code>status</code> 和 <code>progress</code> 更新 UI</li>
+<li><strong>Markdown 渲染</strong>：答案用 <code>react-markdown</code> + <code>remark-gfm</code> 渲染，支持表格、代码块等</li>
+</ul>
+<h2 id="六、核心难点-amp-避坑清单"><a href="#六、核心难点-amp-避坑清单" class="headerlink" title="六、核心难点 &amp; 避坑清单"></a>六、核心难点 &amp; 避坑清单</h2><p>把整个项目里最容易踩坑、最值得记住的点汇总一下：</p>
+<h3 id="1-Ollama-兼容-OpenAI-API，但要写对-base-url"><a href="#1-Ollama-兼容-OpenAI-API，但要写对-base-url" class="headerlink" title="1. Ollama 兼容 OpenAI API，但要写对 base_url"></a>1. Ollama 兼容 OpenAI API，但要写对 base_url</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ChatOpenAI(</span><br><span class="line">    model=<span class="string">&quot;qwen2.5:7b&quot;</span>,</span><br><span class="line">    openai_api_key=<span class="string">&quot;ollama&quot;</span>,           <span class="comment"># 随便填，Ollama 不校验</span></span><br><span class="line">    openai_api_base=<span class="string">&quot;http://127.0.0.1:11434/v1&quot;</span>,  <span class="comment"># 必须带 /v1</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><code>/v1</code> 不能丢，否则 LangChain 拼出来的请求 URL 是错的。</p>
+<h3 id="2-检索结果一定要做后处理"><a href="#2-检索结果一定要做后处理" class="headerlink" title="2. 检索结果一定要做后处理"></a>2. 检索结果一定要做后处理</h3><p>直接用 top_k 很容易把不相关的 chunk 塞给 LLM。<strong>gap 过滤</strong> 是成本极低的一种方式（只需比较分数差值），实测有效。更高级的做法可以引入 reranker（比如 bge-reranker）做二次排序，但 gap 过滤作为第一道关卡是必须的。</p>
+<h3 id="3-Async-里不要直接调同步阻塞代码"><a href="#3-Async-里不要直接调同步阻塞代码" class="headerlink" title="3. Async 里不要直接调同步阻塞代码"></a>3. Async 里不要直接调同步阻塞代码</h3><p>检索要请求 Embedding 接口，是同步阻塞的。在 async 函数里用 <code>asyncio.to_thread()</code> 丢进线程池，不要用 <code>asyncio.run_in_executor()</code>（已经被废弃）。</p>
+<h3 id="4-StreamingResponse-的异常处理位置很重要"><a href="#4-StreamingResponse-的异常处理位置很重要" class="headerlink" title="4. StreamingResponse 的异常处理位置很重要"></a>4. StreamingResponse 的异常处理位置很重要</h3><p>响应头一发出去，全局异常处理器就失效了。所以 <code>try/except</code> 必须写在生成器函数内部，出错时手动 yield 一个 error 事件。</p>
+<h3 id="5-扫描版-PDF-是-RAG-项目的重灾区"><a href="#5-扫描版-PDF-是-RAG-项目的重灾区" class="headerlink" title="5. 扫描版 PDF 是 RAG 项目的重灾区"></a>5. 扫描版 PDF 是 RAG 项目的重灾区</h3><p>不做 OCR 兜底的话，扫描件入库后检索永远召回不到，答不出任何问题。检测方式很简单——统计每页能提取到的字符数，低于某个阈值就走 OCR。OCR 本身也有坑：<code>rapidocr-onnxruntime</code> 在中文场景下效果好，而且完全离线；进程池在某些环境下可能不可用，要有串行兜底。</p>
+<h3 id="6-ChromaDB-的-metadata-是”隐形的核心”"><a href="#6-ChromaDB-的-metadata-是”隐形的核心”" class="headerlink" title="6. ChromaDB 的 metadata 是”隐形的核心”"></a>6. ChromaDB 的 metadata 是”隐形的核心”</h3><p>后续要去重、删除、统计，全靠 <code>source_hash</code> 和 <code>filename</code> 这几个 metadata。别偷懒，入库时一定要挂上。</p>
+<h3 id="7-前端-SSE-流式不要用-axios"><a href="#7-前端-SSE-流式不要用-axios" class="headerlink" title="7. 前端 SSE 流式不要用 axios"></a>7. 前端 SSE 流式不要用 axios</h3><p>记住一句话：<strong>axios 等整包，fetch 才能读流</strong>。自己封装一个 <code>ragQueryStream(question, &#123; onSource, onDelta, onDone, onError &#125;)</code> 函数，业务组件只负责把回调传进去。</p>
+<h2 id="七、快速启动"><a href="#七、快速启动" class="headerlink" title="七、快速启动"></a>七、快速启动</h2><h3 id="后端"><a href="#后端" class="headerlink" title="后端"></a>后端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> fastapi-learning-project</span><br><span class="line">python -m venv .venv</span><br><span class="line">.\.venv\Scripts\Activate.ps1        <span class="comment"># Windows</span></span><br><span class="line"><span class="built_in">source</span> .venv/bin/activate           <span class="comment"># macOS/Linux</span></span><br><span class="line">pip install -r requirements.txt</span><br><span class="line"><span class="built_in">cp</span> .env.example .<span class="built_in">env</span>                <span class="comment"># 改成你的 Ollama 地址</span></span><br><span class="line">uvicorn app.main:app --reload</span><br></pre></td></tr></table></figure>
+
+<p>启动后：</p>
+<ul>
+<li>Swagger UI：<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/docs">http://127.0.0.1:8000/docs</a></li>
+<li>健康检查：<a target="_blank" rel="noopener" href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a></li>
+</ul>
+<p>接口一览：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>路径</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td><code>/</code></td>
+<td>服务健康检查</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/doc/upload</code></td>
+<td>上传文档（异步）</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/doc/upload/status/&#123;task_id&#125;</code></td>
+<td>查询上传进度</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/doc/stats</code></td>
+<td>知识库统计</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/doc/delete</code></td>
+<td>删除文档</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/rag/query</code></td>
+<td>RAG 问答（一次性返回）</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/rag/query/stream</code></td>
+<td>RAG 问答（SSE 流式）</td>
+</tr>
+</tbody></table>
+<h3 id="前端"><a href="#前端" class="headerlink" title="前端"></a>前端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> fastapi-rag-web</span><br><span class="line">npm install</span><br><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<p>开发服务器默认在 <a href="http://localhost:5173。">http://localhost:5173。</a></p>
+<h2 id="八、总结"><a href="#八、总结" class="headerlink" title="八、总结"></a>八、总结</h2><p>做了这个项目之后，我对 RAG 整个链路有了非常扎实的理解。最核心的收获：</p>
+<ol>
+<li><strong>RAG 的效果 = 检索质量 × 切片质量 × Prompt 质量</strong>。模型本身的能力反而是最不重要的那个环节——一个好的检索 + 好的切片 + 好的 Prompt，即使用 7B 的小模型也能出像样的效果。</li>
+<li><strong>工程细节决定体验</strong>。流式输出、OCR 兜底、进度查询、去重、gap 过滤……这些是让 demo 变成”能用”的关键。</li>
+<li><strong>LangChain 帮你省了很多胶水代码，但核心逻辑还是要自己写</strong>。检索后怎么处理 chunk、Prompt 怎么拼、OCR 失败了怎么办、流式异常怎么处理，LangChain 不替你做这些。</li>
+</ol>
+<p>两个项目的代码都开源了，直接拿去改就能跑：</p>
+<ul>
+<li>后端：<code>fastapi-learning-project</code>（Gitee）</li>
+<li>前端：<code>fastapi-rag-web</code>（Gitee）</li>
+</ul>
+<p>祝大家都能搭出自己的本地知识库。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FastAPI/" rel="tag"># FastAPI</a>
+              <a href="/tags/RAG/" rel="tag"># RAG</a>
+              <a href="/tags/LangChain/" rel="tag"># LangChain</a>
+              <a href="/tags/Ollama/" rel="tag"># Ollama</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/4794f0e0/" rel="prev" title="钉钉工作台自定义组件设计规范及注意事项">
+      <i class="fa fa-chevron-left"></i> 钉钉工作台自定义组件设计规范及注意事项
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">二、整体架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">三、准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AE%89%E8%A3%85-Ollama-%E5%B9%B6%E4%B8%8B%E8%BD%BD%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 安装 Ollama 并下载模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%90%8E%E7%AB%AF%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 后端环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 依赖安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%90%8E%E7%AB%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">四、后端实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%96%87%E6%A1%A3%E5%8A%A0%E8%BD%BD%E3%80%81%E5%88%87%E7%89%87%E4%B8%8E-OCR-%E5%85%9C%E5%BA%95"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 文档加载、切片与 OCR 兜底</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%90%91%E9%87%8F%E5%8C%96%E5%AD%98%E5%82%A8%EF%BC%88ChromaDB%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 向量化存储（ChromaDB）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-RAG-%E6%A3%80%E7%B4%A2-Gap-%E8%BF%87%E6%BB%A4"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 RAG 检索 + Gap 过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Prompt-%E6%9E%84%E9%80%A0-LLM-%E8%B0%83%E7%94%A8"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Prompt 构造 + LLM 调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E9%9A%BE%E7%82%B9%EF%BC%9ASSE-%E6%B5%81%E5%BC%8F%E9%97%AE%E7%AD%94"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 难点：SSE 流式问答</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E6%96%87%E6%A1%A3%E4%B8%8A%E4%BC%A0%EF%BC%9A%E5%BC%82%E6%AD%A5%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1-%E8%BF%9B%E5%BA%A6%E6%9F%A5%E8%AF%A2"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 文档上传：异步后台任务 + 进度查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E4%B8%8E%E5%93%8D%E5%BA%94%E5%B0%81%E8%A3%85"><span class="nav-number">4.7.</span> <span class="nav-text">4.7 统一异常与响应封装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%89%8D%E7%AB%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">五、前端实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E9%87%8D%E7%82%B9%EF%BC%9ASSE-%E6%B5%81%E5%BC%8F%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%89%8D%E7%AB%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 重点：SSE 流式接口的前端实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E7%95%8C%E9%9D%A2%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 界面其他功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%A0%B8%E5%BF%83%E9%9A%BE%E7%82%B9-amp-%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="nav-number">6.</span> <span class="nav-text">六、核心难点 &amp; 避坑清单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Ollama-%E5%85%BC%E5%AE%B9-OpenAI-API%EF%BC%8C%E4%BD%86%E8%A6%81%E5%86%99%E5%AF%B9-base-url"><span class="nav-number">6.1.</span> <span class="nav-text">1. Ollama 兼容 OpenAI API，但要写对 base_url</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%A3%80%E7%B4%A2%E7%BB%93%E6%9E%9C%E4%B8%80%E5%AE%9A%E8%A6%81%E5%81%9A%E5%90%8E%E5%A4%84%E7%90%86"><span class="nav-number">6.2.</span> <span class="nav-text">2. 检索结果一定要做后处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Async-%E9%87%8C%E4%B8%8D%E8%A6%81%E7%9B%B4%E6%8E%A5%E8%B0%83%E5%90%8C%E6%AD%A5%E9%98%BB%E5%A1%9E%E4%BB%A3%E7%A0%81"><span class="nav-number">6.3.</span> <span class="nav-text">3. Async 里不要直接调同步阻塞代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-StreamingResponse-%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E4%BD%8D%E7%BD%AE%E5%BE%88%E9%87%8D%E8%A6%81"><span class="nav-number">6.4.</span> <span class="nav-text">4. StreamingResponse 的异常处理位置很重要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%89%AB%E6%8F%8F%E7%89%88-PDF-%E6%98%AF-RAG-%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%87%8D%E7%81%BE%E5%8C%BA"><span class="nav-number">6.5.</span> <span class="nav-text">5. 扫描版 PDF 是 RAG 项目的重灾区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-ChromaDB-%E7%9A%84-metadata-%E6%98%AF%E2%80%9D%E9%9A%90%E5%BD%A2%E7%9A%84%E6%A0%B8%E5%BF%83%E2%80%9D"><span class="nav-number">6.6.</span> <span class="nav-text">6. ChromaDB 的 metadata 是”隐形的核心”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E5%89%8D%E7%AB%AF-SSE-%E6%B5%81%E5%BC%8F%E4%B8%8D%E8%A6%81%E7%94%A8-axios"><span class="nav-number">6.7.</span> <span class="nav-text">7. 前端 SSE 流式不要用 axios</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8"><span class="nav-number">7.</span> <span class="nav-text">七、快速启动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%AB%AF"><span class="nav-number">7.1.</span> <span class="nav-text">后端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF"><span class="nav-number">7.2.</span> <span class="nav-text">前端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">八、总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="刘宏羽"
+      src="/uploads/avatar.png">
+  <p class="site-author-name" itemprop="name">刘宏羽</p>
+  <div class="site-description" itemprop="description">记录技术点滴</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="http://www.beian.miit.gov.cn/" rel="noopener" target="_blank">桂ICP备17005232号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">刘宏羽</span>
+</div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="https://s9.cnzz.com/z_stat.php?id=1279653165&web_id=1279653165"></script>
+  </div>
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'RdFf66iAyuv2n4rbYv4s3w8p-gzGzoHsz',
+      appKey     : 'mPwSGAbK1UhFlXlHkBcMXccb',
+      placeholder: "欢迎您发表宝贵的留言。",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
