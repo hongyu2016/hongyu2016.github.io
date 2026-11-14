@@ -3,7 +3,7 @@ hexo 博客
 
 ## 启动命令
 - 如果全局安装了hexo，直接在博客根目录下执行hexo server
-- 如果没有全局安装hexo，需要在博客根目录下执行yarn hexo server
+- 如果没有全局安装hexo，需要在博客根目录下执行yarn hexo server，下面其他命令同理。
 
 ## 部署命令
 - 如果全局安装了hexo，直接在博客根目录下执行hexo deploy
