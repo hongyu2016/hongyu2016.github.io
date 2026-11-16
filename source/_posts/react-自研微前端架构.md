@@ -13,6 +13,11 @@ categories:
 
 # 自研微前端架构：一套基座如何承载 N 个独立应用
 
+<div style="border-left:4px solid #2f6bff;background:rgba(47,107,255,.10);padding:14px 18px;border-radius:8px;margin:18px 0;line-height:2;font-size:15px;">
+<strong>在线演示</strong>　<a href="http://129.159.171.185/" target="_blank" rel="noopener">http://129.159.171.185/</a>　账号 <code>admin</code>　密码 <code>admin123</code><br>
+<strong>全套源码</strong>　<a href="https://gitee.com/micro-frontend-app" target="_blank" rel="noopener">gitee.com/micro-frontend-app</a>　后端 1 仓 + 前端 11 仓（明细见文末）
+</div>
+
 > 这不是一篇介绍 qiankun 用法的文章，而是从零实现一套微前端方案的完整复盘：产物怎么设计、依赖怎么共享、路由归谁管、样式怎么隔离、部署怎么收敛。
 > 项目本身是一个可运行的演示站（React 19 + Webpack 5 + FastAPI），但文末会说明——**这套架构与框架无关，Vue 3 可以照着复刻**。
 
@@ -433,7 +438,9 @@ Vue 3 甚至有两个额外便利：
 
 ---
 
-## 附：源码仓库
+## 附：在线演示与源码仓库
+
+**在线演示**：<http://129.159.171.185/> —— 登录账号 `admin`，密码 `admin123`。进去先看首页和「架构介绍」两页，那是这套方案的浓缩版；侧边栏 6 个应用共 21 个菜单页都可以点开。
 
 后端一个仓，前端按「基座 / 内核 / 微应用」拆成十一个仓，每个仓独立构建、独立发布。基座不依赖任何业务仓——这也是「新增应用零改基座」能被验证的前提：把业务仓删掉，基座照样能跑，只是菜单里少一项。
 
@@ -464,5 +471,5 @@ Vue 3 甚至有两个额外便利：
 | [sys-role-web](https://gitee.com/micro-frontend-app/sys-role-web) | 角色管理：角色列表、成员管理 |
 | [sys-ui-web](https://gitee.com/micro-frontend-app/sys-ui-web) | 组件中心：组件库演示场 |
 
-> 演示站可以直接打开看效果，源码在 Gitee 上按上面的地址分组浏览即可。如果只关心「微前端契约」这一层，建议先看两个文件：`yugecore-web` 的 `src/loader.ts`（脚本加载 + 全局对象校验）和 `runtime-web` 的 `src/platform/AppHost.tsx`（拿到模块后怎么挂进 React 树），看完就能明白整条加载链路。
+> 演示站 <http://129.159.171.185/> 可以直接打开看效果，源码在 Gitee 上按上面的地址分组浏览即可。如果只关心「微前端契约」这一层，建议先看两个文件：`yugecore-web` 的 `src/loader.ts`（脚本加载 + 全局对象校验）和 `runtime-web` 的 `src/platform/AppHost.tsx`（拿到模块后怎么挂进 React 树），看完就能明白整条加载链路。
 
