@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://hongyu2016.github.io/posts/1085922d/artifacts-contract.svg">
 <meta property="og:image" content="https://hongyu2016.github.io/posts/1085922d/react-vue-compare.svg">
 <meta property="article:published_time" content="2026-11-16T12:43:40.000Z">
-<meta property="article:modified_time" content="2026-11-16T13:33:45.323Z">
+<meta property="article:modified_time" content="2026-11-16T13:44:35.324Z">
 <meta property="article:author" content="刘宏羽">
 <meta property="article:tag" content="webpack">
 <meta property="article:tag" content="react">
@@ -201,7 +201,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2026-11-16 20:43:40 / 修改时间：21:33:45" itemprop="dateCreated datePublished" datetime="2026-11-16T20:43:40+08:00">2026-11-16</time>
+              <time title="创建时间：2026-11-16 20:43:40 / 修改时间：21:44:35" itemprop="dateCreated datePublished" datetime="2026-11-16T20:43:40+08:00">2026-11-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -521,6 +521,86 @@
 </tr>
 </tbody></table>
 <p>整个前端 6 个应用 × 三端 = 13 个产物目录，一次全量构建约 90 秒，站点体积 48MB。</p>
+<hr>
+<h2 id="附：源码仓库"><a href="#附：源码仓库" class="headerlink" title="附：源码仓库"></a>附：源码仓库</h2><p>后端一个仓，前端按「基座 / 内核 / 微应用」拆成十一个仓，每个仓独立构建、独立发布。基座不依赖任何业务仓——这也是「新增应用零改基座」能被验证的前提：把业务仓删掉，基座照样能跑，只是菜单里少一项。</p>
+<p><strong>后端</strong></p>
+<table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/micro-backend">micro-backend</a></td>
+<td>FastAPI + MySQL，只存元数据：应用清单、菜单、权限、图表配置</td>
+</tr>
+</tbody></table>
+<p><strong>基座与内核</strong></p>
+<table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/runtime-web">runtime-web</a></td>
+<td>基座壳：布局、路由、加载产物、错误边界</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/yugecore-web">yugecore-web</a></td>
+<td>内核四件套：loader / registry / request / event</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/yui-web">yui-web</a></td>
+<td>组件库，antd 6 薄封装，统一收口主题</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/yugecharts-web">yugecharts-web</a></td>
+<td>图表封装：bar / line / pie，基于 echarts</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/ypack-web">ypack-web</a></td>
+<td>构建工具链：webpack 配置工厂、dev server、nginx 部署脚本</td>
+</tr>
+</tbody></table>
+<p><strong>微应用</strong></p>
+<table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/di-engine-web">di-engine-web</a></td>
+<td>数据中台：图表管理、图表设计器、数据看板</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/sys-admin-web">sys-admin-web</a></td>
+<td>平台运维：应用注册表</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/sys-auth-web">sys-auth-web</a></td>
+<td>统一认证：个人资料、登录日志</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/sys-right-web">sys-right-web</a></td>
+<td>权限中心：功能权限、资源权限</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/sys-role-web">sys-role-web</a></td>
+<td>角色管理：角色列表、成员管理</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/micro-frontend-app/sys-ui-web">sys-ui-web</a></td>
+<td>组件中心：组件库演示场</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>演示站可以直接打开看效果，源码在 Gitee 上按上面的地址分组浏览即可。如果只关心「微前端契约」这一层，建议先看两个文件：<code>yugecore-web</code> 的 <code>src/loader.ts</code>（脚本加载 + 全局对象校验）和 <code>runtime-web</code> 的 <code>src/platform/AppHost.tsx</code>（拿到模块后怎么挂进 React 树），看完就能明白整条加载链路。</p>
+</blockquote>
 
     </div>
 
@@ -605,7 +685,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E7%A0%94%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E5%A5%97%E5%9F%BA%E5%BA%A7%E5%A6%82%E4%BD%95%E6%89%BF%E8%BD%BD-N-%E4%B8%AA%E7%8B%AC%E7%AB%8B%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">自研微前端架构：一套基座如何承载 N 个独立应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">一、要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E7%9B%B4%E6%8E%A5%E7%94%A8%E7%8E%B0%E6%88%90%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">二、为什么没直接用现成方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">三、整体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%AD%E4%B8%AA%E5%BF%85%E9%A1%BB%E5%81%9A%E5%AF%B9%E7%9A%84%E5%86%B3%E7%AD%96"><span class="nav-number">1.4.</span> <span class="nav-text">四、六个必须做对的决策</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E4%BA%A7%E7%89%A9%E5%BD%A2%E6%80%81%EF%BC%9AUMD-%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 产物形态：UMD + 全局对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BE%9D%E8%B5%96%E5%85%B1%E4%BA%AB%EF%BC%9Aexternals-%E5%A4%96%E7%BD%AE%EF%BC%8C%E5%9F%BA%E5%BA%A7%E6%B3%A8%E5%85%A5"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 依赖共享：externals 外置，基座注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E8%B7%AF%E7%94%B1%E5%BD%92%E5%B1%9E%EF%BC%9A%E5%9F%BA%E5%BA%A7%E7%8B%AC%E5%8D%A0-History"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 路由归属：基座独占 History</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E6%A0%B7%E5%BC%8F%E9%9A%94%E7%A6%BB%EF%BC%9A%E6%9E%84%E5%BB%BA%E6%9C%9F%E5%8A%A0%E5%89%8D%E7%BC%80"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 样式隔离：构建期加前缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E4%B8%89%E7%AB%AF%E5%90%8C%E6%BA%90%EF%BC%9A%E7%94%A8-end-%E5%88%87%E5%88%86"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 三端同源：用 end 切分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E6%B8%85%E5%8D%95%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%88%86%E7%A6%BB"><span class="nav-number">1.4.6.</span> <span class="nav-text">4.6 清单与代码分离</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%80%E6%9D%A1%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF"><span class="nav-number">1.5.</span> <span class="nav-text">五、一条完整链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="nav-number">1.6.</span> <span class="nav-text">六、构建产物长什么样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91"><span class="nav-number">1.7.</span> <span class="nav-text">七、踩过的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E9%83%A8%E7%BD%B2%EF%BC%9A%E4%B8%A4%E4%B8%AA-location-%E5%B0%B1%E5%A4%9F"><span class="nav-number">1.8.</span> <span class="nav-text">八、部署：两个 location 就够</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E4%B8%BE%E4%B8%80%E5%8F%8D%E4%B8%89%EF%BC%9AVue-3-%E4%B9%9F%E8%83%BD%E8%BF%99%E4%B9%88%E5%B9%B2"><span class="nav-number">1.9.</span> <span class="nav-text">九、举一反三：Vue 3 也能这么干</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E8%BF%99%E5%A5%97%E6%9E%B6%E6%9E%84%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF"><span class="nav-number">1.10.</span> <span class="nav-text">十、这套架构适合什么场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E6%8A%80%E6%9C%AF%E6%A0%88%E6%B8%85%E5%8D%95"><span class="nav-number">1.11.</span> <span class="nav-text">附：技术栈清单</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E7%A0%94%E5%BE%AE%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E5%A5%97%E5%9F%BA%E5%BA%A7%E5%A6%82%E4%BD%95%E6%89%BF%E8%BD%BD-N-%E4%B8%AA%E7%8B%AC%E7%AB%8B%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">自研微前端架构：一套基座如何承载 N 个独立应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">一、要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E7%9B%B4%E6%8E%A5%E7%94%A8%E7%8E%B0%E6%88%90%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">二、为什么没直接用现成方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">三、整体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%AD%E4%B8%AA%E5%BF%85%E9%A1%BB%E5%81%9A%E5%AF%B9%E7%9A%84%E5%86%B3%E7%AD%96"><span class="nav-number">1.4.</span> <span class="nav-text">四、六个必须做对的决策</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E4%BA%A7%E7%89%A9%E5%BD%A2%E6%80%81%EF%BC%9AUMD-%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 产物形态：UMD + 全局对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BE%9D%E8%B5%96%E5%85%B1%E4%BA%AB%EF%BC%9Aexternals-%E5%A4%96%E7%BD%AE%EF%BC%8C%E5%9F%BA%E5%BA%A7%E6%B3%A8%E5%85%A5"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 依赖共享：externals 外置，基座注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E8%B7%AF%E7%94%B1%E5%BD%92%E5%B1%9E%EF%BC%9A%E5%9F%BA%E5%BA%A7%E7%8B%AC%E5%8D%A0-History"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 路由归属：基座独占 History</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E6%A0%B7%E5%BC%8F%E9%9A%94%E7%A6%BB%EF%BC%9A%E6%9E%84%E5%BB%BA%E6%9C%9F%E5%8A%A0%E5%89%8D%E7%BC%80"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 样式隔离：构建期加前缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E4%B8%89%E7%AB%AF%E5%90%8C%E6%BA%90%EF%BC%9A%E7%94%A8-end-%E5%88%87%E5%88%86"><span class="nav-number">1.4.5.</span> <span class="nav-text">4.5 三端同源：用 end 切分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E6%B8%85%E5%8D%95%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%88%86%E7%A6%BB"><span class="nav-number">1.4.6.</span> <span class="nav-text">4.6 清单与代码分离</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%80%E6%9D%A1%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF"><span class="nav-number">1.5.</span> <span class="nav-text">五、一条完整链路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="nav-number">1.6.</span> <span class="nav-text">六、构建产物长什么样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91"><span class="nav-number">1.7.</span> <span class="nav-text">七、踩过的坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E9%83%A8%E7%BD%B2%EF%BC%9A%E4%B8%A4%E4%B8%AA-location-%E5%B0%B1%E5%A4%9F"><span class="nav-number">1.8.</span> <span class="nav-text">八、部署：两个 location 就够</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E4%B8%BE%E4%B8%80%E5%8F%8D%E4%B8%89%EF%BC%9AVue-3-%E4%B9%9F%E8%83%BD%E8%BF%99%E4%B9%88%E5%B9%B2"><span class="nav-number">1.9.</span> <span class="nav-text">九、举一反三：Vue 3 也能这么干</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E8%BF%99%E5%A5%97%E6%9E%B6%E6%9E%84%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF"><span class="nav-number">1.10.</span> <span class="nav-text">十、这套架构适合什么场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E6%8A%80%E6%9C%AF%E6%A0%88%E6%B8%85%E5%8D%95"><span class="nav-number">1.11.</span> <span class="nav-text">附：技术栈清单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%EF%BC%9A%E6%BA%90%E7%A0%81%E4%BB%93%E5%BA%93"><span class="nav-number">1.12.</span> <span class="nav-text">附：源码仓库</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -634,7 +714,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
