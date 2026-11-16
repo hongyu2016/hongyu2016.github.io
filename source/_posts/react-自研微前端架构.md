@@ -430,3 +430,39 @@ Vue 3 甚至有两个额外便利：
 | 部署 | nginx 静态托管 + `/data` 反代 |
 
 整个前端 6 个应用 × 三端 = 13 个产物目录，一次全量构建约 90 秒，站点体积 48MB。
+
+---
+
+## 附：源码仓库
+
+后端一个仓，前端按「基座 / 内核 / 微应用」拆成十一个仓，每个仓独立构建、独立发布。基座不依赖任何业务仓——这也是「新增应用零改基座」能被验证的前提：把业务仓删掉，基座照样能跑，只是菜单里少一项。
+
+**后端**
+
+| 仓库 | 说明 |
+| --- | --- |
+| [micro-backend](https://gitee.com/micro-frontend-app/micro-backend) | FastAPI + MySQL，只存元数据：应用清单、菜单、权限、图表配置 |
+
+**基座与内核**
+
+| 仓库 | 说明 |
+| --- | --- |
+| [runtime-web](https://gitee.com/micro-frontend-app/runtime-web) | 基座壳：布局、路由、加载产物、错误边界 |
+| [yugecore-web](https://gitee.com/micro-frontend-app/yugecore-web) | 内核四件套：loader / registry / request / event |
+| [yui-web](https://gitee.com/micro-frontend-app/yui-web) | 组件库，antd 6 薄封装，统一收口主题 |
+| [yugecharts-web](https://gitee.com/micro-frontend-app/yugecharts-web) | 图表封装：bar / line / pie，基于 echarts |
+| [ypack-web](https://gitee.com/micro-frontend-app/ypack-web) | 构建工具链：webpack 配置工厂、dev server、nginx 部署脚本 |
+
+**微应用**
+
+| 仓库 | 说明 |
+| --- | --- |
+| [di-engine-web](https://gitee.com/micro-frontend-app/di-engine-web) | 数据中台：图表管理、图表设计器、数据看板 |
+| [sys-admin-web](https://gitee.com/micro-frontend-app/sys-admin-web) | 平台运维：应用注册表 |
+| [sys-auth-web](https://gitee.com/micro-frontend-app/sys-auth-web) | 统一认证：个人资料、登录日志 |
+| [sys-right-web](https://gitee.com/micro-frontend-app/sys-right-web) | 权限中心：功能权限、资源权限 |
+| [sys-role-web](https://gitee.com/micro-frontend-app/sys-role-web) | 角色管理：角色列表、成员管理 |
+| [sys-ui-web](https://gitee.com/micro-frontend-app/sys-ui-web) | 组件中心：组件库演示场 |
+
+> 演示站可以直接打开看效果，源码在 Gitee 上按上面的地址分组浏览即可。如果只关心「微前端契约」这一层，建议先看两个文件：`yugecore-web` 的 `src/loader.ts`（脚本加载 + 全局对象校验）和 `runtime-web` 的 `src/platform/AppHost.tsx`（拿到模块后怎么挂进 React 树），看完就能明白整条加载链路。
+
