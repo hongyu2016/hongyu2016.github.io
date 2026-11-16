@@ -164,6 +164,368 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hongyu2016.github.io/posts/1085922d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.png">
+      <meta itemprop="name" content="刘宏羽">
+      <meta itemprop="description" content="记录技术点滴">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="羽歌天地博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/1085922d/" class="post-title-link" itemprop="url">react 自研微前端架构</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-11-16 20:43:40 / 修改时间：21:22:29" itemprop="dateCreated datePublished" datetime="2026-11-16T20:43:40+08:00">2026-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9E%B6%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">架构</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/1085922d/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/1085922d/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="自研微前端架构：一套基座如何承载-N-个独立应用"><a href="#自研微前端架构：一套基座如何承载-N-个独立应用" class="headerlink" title="自研微前端架构：一套基座如何承载 N 个独立应用"></a>自研微前端架构：一套基座如何承载 N 个独立应用</h1><blockquote>
+<p>这不是一篇介绍 qiankun 用法的文章，而是从零实现一套微前端方案的完整复盘：产物怎么设计、依赖怎么共享、路由归谁管、样式怎么隔离、部署怎么收敛。<br>项目本身是一个可运行的演示站（React 19 + Webpack 5 + FastAPI），但文末会说明——<strong>这套架构与框架无关，Vue 3 可以照着复刻</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="一、要解决的问题"><a href="#一、要解决的问题" class="headerlink" title="一、要解决的问题"></a>一、要解决的问题</h2><p>当一个后台系统从 1 个应用长到 6 个、团队从 1 个人变成 4 个人时，真正的痛点不再是「功能怎么写」，而是：</p>
+<ol>
+<li><strong>发布排队</strong>。A 改了 <code>sys-admin</code> 的一个按钮，要等 B 的 <code>di-engine</code> 测完才能一起发版。</li>
+<li><strong>构建变慢</strong>。一个仓库全量打包，改一行代码冷启动要等两三分钟。</li>
+<li><strong>边界糊掉</strong>。<code>sys-role</code> 直接 import 了 <code>di-engine</code> 的组件，删一个模块能连带炸掉五个。</li>
+<li><strong>三端重复</strong>。同一份业务逻辑，PC 管理端、PC 门户端、移动端各写一遍。</li>
+</ol>
+<p>微前端要解决的是第 1、2、3 条；第 4 条是我在这套方案里额外加的一层——<strong>同一份源码按「端」产出三套产物</strong>。</p>
+<p>目标很明确：</p>
+<ul>
+<li>每个应用独立目录、独立构建、独立产物、独立发布；</li>
+<li>基座不感知任何业务代码，新增应用<strong>零改基座</strong>；</li>
+<li>三端共用一套内核与组件库，业务代码按端切分而不是复制。</li>
+</ul>
+<hr>
+<h2 id="二、为什么没直接用现成方案"><a href="#二、为什么没直接用现成方案" class="headerlink" title="二、为什么没直接用现成方案"></a>二、为什么没直接用现成方案</h2><p>主流有三条路，我都评估过：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>让我放弃的原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>iframe</td>
+<td>隔离最彻底，零学习成本</td>
+<td>弹窗/抽屉无法跨应用，路由和登录态要来回传，体验割裂</td>
+</tr>
+<tr>
+<td>qiankun / micro-app</td>
+<td>生态成熟，开箱即用</td>
+<td>强约定 HTML Entry，产物形态被框架绑架；调试时中间层太多</td>
+</tr>
+<tr>
+<td>Module Federation</td>
+<td>原生共享依赖，构建期联邦</td>
+<td>要求所有应用同时升级 Webpack 5，运行时的版本协商对老项目不友好</td>
+</tr>
+</tbody></table>
+<p>我最终选的是<strong>最土的一种</strong>：UMD 产物 + 全局变量 + 一份 JSON 契约。</p>
+<p>理由是它足够简单——简单到任何人接手，看两个文件就能明白整个链路：</p>
+<ol>
+<li>产物是一个 UMD bundle，加载后往 <code>window</code> 上挂一个对象；</li>
+<li>基座按 <code>manifest.json</code> 里的 <code>entry</code> 去拉这个 bundle；</li>
+<li>拿到全局对象，调它的 <code>mount(container, ctx)</code>。</li>
+</ol>
+<p>没有沙箱、没有代理 window、没有 import maps。代价是要自己处理依赖共享和样式隔离（这也正是第四节的内容）。</p>
+<hr>
+<h2 id="三、整体结构"><a href="#三、整体结构" class="headerlink" title="三、整体结构"></a>三、整体结构</h2><p><img src="architecture-overview.svg" alt="整体结构"></p>
+<p>从上到下四层：</p>
+<ul>
+<li><strong>基座（runtime）</strong>：只做四件事——布局、路由、加载产物、注入全局依赖。它不含任何业务代码，也不知道「数据中台」是什么。</li>
+<li><strong>微应用</strong>：各自独立的 React 应用，构建成 UMD 产物，通过 <code>mount</code> 挂进基座的容器。</li>
+<li><strong>nginx</strong>：纯静态。<code>/modules/&lt;app&gt;/&lt;end&gt;/index.js</code> 这个 URL 靠 <code>alias</code> 映射到磁盘目录。</li>
+<li><strong>清单服务（FastAPI）</strong>：只存元数据——有哪些应用、菜单是什么、入口在哪、谁有权限看。<strong>不碰任何前端产物</strong>。</li>
+</ul>
+<p>这里有个关键的分工：<strong>代码在磁盘，元数据在数据库</strong>。前端启动时问后端「我该加载谁」，拿到清单后再去 nginx 取真正的 JS。</p>
+<p>最终跑起来是这样——左侧菜单完全由后端下发的清单渲染，基座里没有一行写死的菜单；下面四张卡片是清单里 6 个微应用各自贡献的入口：</p>
+<p><img src="platform-home.png" alt="演示站首页：基座 + 6 个微应用"></p>
+<hr>
+<h2 id="四、六个必须做对的决策"><a href="#四、六个必须做对的决策" class="headerlink" title="四、六个必须做对的决策"></a>四、六个必须做对的决策</h2><p>在逐条拆解决策之前，先看演示站里那页「架构介绍」——它把这套方案的技术选型、四个最硬的难点和解法、设计要点与落地注意事项压缩在一屏里。下面六节基本就是这页内容的展开：</p>
+<p><img src="platform-architecture.png" alt="架构介绍页：技术选型 / 难点与解法 / 设计要点 / 注意事项"></p>
+<h3 id="4-1-产物形态：UMD-全局对象"><a href="#4-1-产物形态：UMD-全局对象" class="headerlink" title="4.1 产物形态：UMD + 全局对象"></a>4.1 产物形态：UMD + 全局对象</h3><p>微应用不导出 ESM，而是打成 UMD，加载后挂一个全局：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="property">YugeApp_di_engine</span> = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;di-engine&#x27;</span>,</span><br><span class="line">  <span class="attr">routes</span>: [&#123; <span class="attr">path</span>: <span class="string">&#x27;charts&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;图表管理&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Charts</span> &#125;],</span><br><span class="line">  <span class="title function_">mount</span>(<span class="params">container, ctx</span>) &#123; <span class="comment">/* 渲染到 container，用 ctx.navigate 跳转 */</span> &#125;,</span><br><span class="line">  <span class="title function_">unmount</span>(<span class="params"></span>) &#123; <span class="comment">/* 清理 */</span> &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为什么不用 ESM？因为基座需要在<strong>运行时</strong>决定加载哪个地址，而 <code>import()</code> 的路径必须是静态可分析的（或至少在打包时就确定）。用 <code>script</code> 标签动态注入则完全自由——地址可以来自接口、可以带时间戳、可以指向另一台机器上的 dev server。</p>
+<p>这段逻辑在 <code>yugecore/src/loader.ts</code>，核心就是注入 script 并等它 load：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">loadScript</span>(<span class="params">src</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">`script[src=&quot;<span class="subst">$&#123;src&#125;</span>&quot;]`</span>)) <span class="keyword">return</span> <span class="title function_">resolve</span>() <span class="comment">// 幂等</span></span><br><span class="line">    <span class="keyword">const</span> script = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;script&#x27;</span>)</span><br><span class="line">    script.<span class="property">src</span> = src</span><br><span class="line">    script.<span class="property">onload</span> = <span class="function">() =&gt;</span> <span class="title function_">resolve</span>()</span><br><span class="line">    script.<span class="property">onerror</span> = <span class="function">() =&gt;</span> <span class="title function_">reject</span>(<span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`脚本加载失败: <span class="subst">$&#123;src&#125;</span>`</span>))</span><br><span class="line">    <span class="variable language_">document</span>.<span class="property">head</span>.<span class="title function_">appendChild</span>(script)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配套三件事：10 秒超时、失败重试两次、<code>inflight</code> Map 去重（同一个应用被快速点击两次不会重复插入 script）。</p>
+<h3 id="4-2-依赖共享：externals-外置，基座注入"><a href="#4-2-依赖共享：externals-外置，基座注入" class="headerlink" title="4.2 依赖共享：externals 外置，基座注入"></a>4.2 依赖共享：externals 外置，基座注入</h3><p>这是最容易翻车的地方。如果每个微应用都打一份 React，页面上就会有多个 React 实例，<code>useState</code> 直接抛 <code>Invalid hook call</code>。</p>
+<p>解决办法是在构建时把框架运行时全部外置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">APP_EXTERNALS</span> = &#123;</span><br><span class="line">  <span class="attr">react</span>: <span class="string">&#x27;React&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;react-dom&#x27;</span>: <span class="string">&#x27;ReactDOM&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;react/jsx-runtime&#x27;</span>: <span class="string">&#x27;ReactJSXRuntime&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;react-router-dom&#x27;</span>: <span class="string">&#x27;ReactRouterDOM&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;@yuge/yugecore&#x27;</span>: <span class="string">&#x27;Yuge&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;@yuge/yui&#x27;</span>: <span class="string">&#x27;YugeUI&#x27;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>微应用产物里<strong>不含</strong>这些库，运行时从 <code>window</code> 上取。谁往 <code>window</code> 上放？两个角色：</p>
+<ul>
+<li><strong>基座内运行</strong>：基座启动时注入（它自己打包了这些库）；</li>
+<li><strong>独立运行</strong>（直接打开 <code>/&lt;end&gt;/</code> 页面调样式）：由 <code>static/vendor.js</code> 注入。</li>
+</ul>
+<p>两条路径共用同一份契约，所以微应用在两种环境下都能跑，不需要改代码。这也是我坚持保留「独立运行页」的原因——<strong>微应用必须能脱离基座单独调试</strong>，否则每次改个按钮都要起整个平台。</p>
+<blockquote>
+<p>注意 <code>react/jsx-runtime</code> 也要外置。新版本 JSX 编译产物会 import 它，漏了这一个，React 还是会有两份。</p>
+</blockquote>
+<h3 id="4-3-路由归属：基座独占-History"><a href="#4-3-路由归属：基座独占-History" class="headerlink" title="4.3 路由归属：基座独占 History"></a>4.3 路由归属：基座独占 History</h3><p>第二个高频冲突点是路由。如果微应用自己 <code>createBrowserRouter</code>，它就会和基座抢 history，表现为地址栏乱跳、刷新 404。</p>
+<p>规则定得很死：</p>
+<ul>
+<li><strong>基座独占 History</strong>，它渲染 <code>&lt;Routes&gt;</code> 并持有导航能力；</li>
+<li><strong>微应用只导出 <code>routes</code> 数组</strong>，描述「我有哪些页面」，不创建任何 Router 实例；</li>
+<li>基座把 <code>navigate</code> 作为上下文注入，微应用里的跳转调用它。</li>
+</ul>
+<p>URL 契约固定两种形态：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">/</span>manage<span class="operator">/</span><span class="symbol">&lt;app&gt;</span><span class="operator">/</span><span class="symbol">&lt;page&gt;</span>          PC 管理端</span><br><span class="line"><span class="operator">/</span><span class="symbol">&lt;portal&gt;</span><span class="operator">/</span><span class="symbol">&lt;app&gt;</span><span class="operator">/</span><span class="symbol">&lt;page&gt;</span>        PC 门户端 <span class="symbol">/</span> 移动端（portal 是入口标识）</span><br></pre></td></tr></table></figure>
+
+<p>基座用通配路由截住，把 <code>appName</code> 和 <code>end</code> 解析出来后交给 <code>AppHost</code>：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Route</span> path=<span class="string">&quot;/manage/:appName/*&quot;</span> element=&#123;<span class="language-xml"><span class="tag">&lt;<span class="name">AppHost</span> /&gt;</span></span>&#125; /&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/:portal/:appName/*&quot;</span> <span class="attr">element</span>=<span class="string">&#123;</span>&lt;<span class="attr">AppHost</span> /&gt;</span>&#125; /&gt;</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">Route</span> <span class="attr">path</span>=<span class="string">&quot;/&quot;</span> <span class="attr">element</span>=<span class="string">&#123;</span>&lt;<span class="attr">Home</span> /&gt;</span>&#125; /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样浏览器地址栏始终是基座的地址，微应用只是其中一个渲染分支——刷新不会 404，前进后退也归浏览器原生管理。</p>
+<h3 id="4-4-样式隔离：构建期加前缀"><a href="#4-4-样式隔离：构建期加前缀" class="headerlink" title="4.4 样式隔离：构建期加前缀"></a>4.4 样式隔离：构建期加前缀</h3><p>多个应用共用 antd，全局样式互相污染是必然的。我选了最朴素但最可控的做法：<strong>构建时就给产物 CSS 加上作用域前缀</strong>。</p>
+<p>每个应用有个固定的 scope class（<code>yuge-app-di-engine</code>），Webpack 的 postcss 配置里挂一个前缀插件，产物中所有选择器自动变成：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.yuge-app-di-engine</span> <span class="selector-class">.chart-card</span> &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>微应用挂载时在根节点挂上这个 class，样式天然被限定在这棵子树里。比起 Shadow DOM，这种做法兼容性好、调试直观；比起 CSS Modules，它不需要改业务代码的写法。</p>
+<p>代价是<strong>不能用裸标签选择器和全局类名</strong>，否则会漏出作用域——这条写进了团队的编码约定里。</p>
+<h3 id="4-5-三端同源：用-end-切分"><a href="#4-5-三端同源：用-end-切分" class="headerlink" title="4.5 三端同源：用 end 切分"></a>4.5 三端同源：用 <code>end</code> 切分</h3><p>同一份业务代码要产出 PC 管理端、PC 门户端、移动端三套产物。做法是按端切分目录，而不是复制代码：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src<span class="symbol">/</span></span><br><span class="line">├── desktop<span class="symbol">/</span>          四件套（index <span class="symbol">/</span> app <span class="symbol">/</span> menu <span class="symbol">/</span> api）</span><br><span class="line">├── manage<span class="symbol">/</span></span><br><span class="line">├── mobile<span class="symbol">/</span></span><br><span class="line">└── api<span class="symbol">/</span> components<span class="symbol">/</span> hooks<span class="symbol">/</span> types<span class="symbol">/</span> utils<span class="symbol">/</span>     ← 三端共享</span><br></pre></td></tr></table></figure>
+
+<p>构建时用 <code>end</code> 参数决定入口与菜单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node ypack/build-app.mjs di-engine manage     <span class="comment"># → dist/di-engine/manage/</span></span><br><span class="line">node ypack/build-app.mjs di-engine mobile     <span class="comment"># → dist/di-engine/mobile/</span></span><br></pre></td></tr></table></figure>
+
+<p>菜单也在 <code>yuge.manifest.json</code> 里按端声明，构建时只取当前端那一份：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;menus&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;manage&quot;</span><span class="punctuation">:</span>  <span class="punctuation">[</span><span class="punctuation">&#123;</span> <span class="attr">&quot;key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;di-engine/charts&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;图表管理&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;desktop&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span> <span class="attr">&quot;key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;di-engine/dashboard&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;数据看板&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>有个细节值得一提：<strong>PC 两端共用同一份对外 API</strong>。<code>desktop</code> 和 <code>manage</code> 编译时都读 <code>src/desktop/api.ts</code>，只有 <code>mobile</code> 用它自己的。因为「给别的应用提供的组件」在手机端和 PC 端往往是两个东西，强行统一反而别扭。</p>
+<h3 id="4-6-清单与代码分离"><a href="#4-6-清单与代码分离" class="headerlink" title="4.6 清单与代码分离"></a>4.6 清单与代码分离</h3><p>后端只存清单，不代理产物。<code>app_registry</code> 表一条记录对应一个应用，多端信息存在 JSON 字段里：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;di-engine&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;entry&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/modules/di-engine/manage/index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;entries&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;manage&quot;</span><span class="punctuation">:</span>  <span class="punctuation">&#123;</span> <span class="attr">&quot;entry&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/modules/di-engine/manage/index.js&quot;</span><span class="punctuation">,</span>  <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;af3b0fcf&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;desktop&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;entry&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/modules/di-engine/desktop/index.js&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;8b3ece4d&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;mobile&quot;</span><span class="punctuation">:</span>  <span class="punctuation">&#123;</span> <span class="attr">&quot;entry&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/modules/di-engine/mobile/index.js&quot;</span><span class="punctuation">,</span>  <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;92955e8b&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样做的好处：<strong>换机器、换域名只改一个配置文件</strong>（部署期的 <code>config.js</code>），产物和数据库都不用动。清单里的路径全是 <code>/modules/...</code> 这种相对路径，跟机器名无关。</p>
+<hr>
+<h2 id="五、一条完整链路"><a href="#五、一条完整链路" class="headerlink" title="五、一条完整链路"></a>五、一条完整链路</h2><p><img src="loading-sequence.svg" alt="加载时序"></p>
+<p>从登录到渲染，经过了这几步：</p>
+<ol>
+<li>登录拿到 token，基座的 <code>request</code> 统一携带；</li>
+<li>请求 <code>GET /data/platform/bootstrap?end=manage</code>，后端<strong>按端 + 权限</strong>过滤后下发应用清单；</li>
+<li>清单里每个应用注册进 <code>registry</code>（此时只登记元数据，不加载任何 JS）；</li>
+<li>用户点菜单，URL 变成 <code>/manage/di-engine/charts</code>，<code>AppHost</code> 从 URL 解析出 <code>appName</code> 与 <code>end</code>；</li>
+<li><code>loader</code> 按 <code>manifest.entry</code> 加载 <code>/modules/di-engine/manage/index.js</code>；</li>
+<li>拿到 <code>window.YugeApp_di_engine</code>，调 <code>mount(container, ctx)</code> 渲染。</li>
+</ol>
+<p>这里有一个刻意的设计：<strong>清单在启动时一次拉全，产物在进入应用时才加载</strong>。所以首屏代价基本等于一次接口请求，跟应用数量几乎无关。如果平台有 20 个应用，启动时也不会预取 20 个 bundle。</p>
+<p>顺带一个能力：应用 A 想用应用 B 的弹窗组件，走的是 <code>api.js</code> 这条单独的契约——B 在 <code>src/desktop/api.ts</code> 里导出组件，构建成独立的 <code>api.js</code>，A 拿到 manifest 里的地址按需加载。这样「复用组件」不会变成「复制代码」。</p>
+<hr>
+<h2 id="六、构建产物长什么样"><a href="#六、构建产物长什么样" class="headerlink" title="六、构建产物长什么样"></a>六、构建产物长什么样</h2><p><img src="artifacts-contract.svg" alt="产物与契约"></p>
+<p>源码和产物的关系很简单：<strong>一个应用的一个端，对应一个目录</strong>。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">├── manifest<span class="selector-class">.json</span>     契约：我是谁、入口在哪、菜单有什么</span><br><span class="line">├── index<span class="selector-class">.js</span>          UMD 模块入口（externals，供基座加载）</span><br><span class="line">├── style<span class="selector-class">.css</span>         已加作用域前缀</span><br><span class="line">├── api<span class="selector-class">.js</span>            对外导出的能力（UMD，externals）</span><br><span class="line">├── app<span class="selector-class">.js</span>            独立运行 bundle（无 externals，自带 React/antd）</span><br><span class="line">├── index<span class="selector-class">.html</span>        独立运行页面</span><br><span class="line">└── static/vendor<span class="selector-class">.js</span>  独立运行时注入全局依赖</span><br></pre></td></tr></table></figure>
+
+<p>同一个目录里既有「给基座用的模块产物」，又有「能单独打开的完整页面」。这是我特别看重的一点：<strong>产物自己就是文档</strong>——新同学拿到一个目录，打开 <code>index.html</code> 就能跑起来看到界面，不用先理解整个平台。</p>
+<p><code>manifest.json</code> 是构建期自动生成的（<code>ManifestPlugin</code>），内容全部来自源码里的声明，不需要手写：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;di-engine&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;数据中台&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;end&quot;</span><span class="punctuation">:</span> <span class="string">&quot;manage&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;entry&quot;</span><span class="punctuation">:</span> <span class="string">&quot;index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;style&quot;</span><span class="punctuation">:</span> <span class="string">&quot;style.css&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;global&quot;</span><span class="punctuation">:</span> <span class="string">&quot;YugeApp_di_engine&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;af3b0fcf&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;menus&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span> <span class="attr">&quot;key&quot;</span><span class="punctuation">:</span> <span class="string">&quot;di-engine/charts&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;label&quot;</span><span class="punctuation">:</span> <span class="string">&quot;图表管理&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;api&quot;</span><span class="punctuation">:</span> <span class="string">&quot;api.js&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意 <code>entry</code> 只是裸文件名。注册进数据库时会补成 <code>/modules/di-engine/manage/index.js</code>——<strong>URL 形态是注册时算出来的，不是构建时写死的</strong>，这样产物目录可以随便挪。</p>
+<hr>
+<h2 id="七、踩过的坑"><a href="#七、踩过的坑" class="headerlink" title="七、踩过的坑"></a>七、踩过的坑</h2><p>这一节是真实记录，每条都花过时间。</p>
+<p><strong>1. 两份 React 导致的 <code>Invalid hook call</code></strong></p>
+<p>微应用产物里残留了 <code>react</code>，原因是 externals 只写了 <code>react</code> 和 <code>react-dom</code>，漏了 <code>react/jsx-runtime</code>。新版 JSX 编译产物依赖这个入口。</p>
+<p><strong>2. 样式互相污染</strong></p>
+<p>A 应用的 <code>.ant-card</code> 覆盖影响了 B 应用。加 postcss 前缀后解决，但要求团队不用裸标签选择器。</p>
+<p><strong>3. dev server 把 404 回退成 <code>index.html</code>，脚本报语法错误</strong></p>
+<p>访问不存在的 <code>api.js</code>，dev server 返回 200 + HTML，浏览器当 JS 执行，控制台报 <code>Unexpected token &#39;&lt;&#39;</code>，完全指不到真正原因。</p>
+<p>解决：加载前先 <code>fetch</code> 探测 <code>content-type</code>，不是 JS 就跳过候选地址。</p>
+<p><strong>4. 静态资源缺失被 SPA 回退规则吞掉</strong></p>
+<p>nginx 里 <code>try_files $uri $uri/ /index.html</code> 会把缺失的 <code>chunk.js</code> 变成 200 + HTML，同上面的坑，但发生在生产环境。</p>
+<p>解决：静态扩展名单独一条正则 location，强制 <code>try_files $uri =404</code>，让 404 是真 404。</p>
+<p><strong>5. 异步 chunk 掉在站点根目录</strong></p>
+<p><code>output</code> 只配了 <code>filename</code> 没配 <code>chunkFilename</code>，由 <code>import()</code> 拆出来的 chunk 按默认 <code>[id].js</code> 落在产物根目录，于是站点出现 <code>547.js</code> 这种纯数字文件——无 hash、没有长缓存、还和配置文件混在一起。</p>
+<p>解决：补上 <code>chunkFilename: &#39;assets/[name].[contenthash:8].js&#39;</code>，并给 <code>import()</code> 加 <code>webpackChunkName</code>。</p>
+<p><strong>6. 跨应用热更曾经用轮询</strong></p>
+<p>为了「改了 A 应用，正在调试 B 应用的页面能自动刷新」，最初每 3 秒请求一次对方 dev server 的 manifest 拿 hash。结果是控制台被 <code>ERR_CONNECTION_REFUSED</code> 刷满（对方没起服务时）。</p>
+<p>解决：改成由对方 dev server 在编译完成时通过 SSE 推事件，订阅不上就静默放弃——<strong>宁可少一个功能，不要周期性打无用请求</strong>。</p>
+<hr>
+<h2 id="八、部署：两个-location-就够"><a href="#八、部署：两个-location-就够" class="headerlink" title="八、部署：两个 location 就够"></a>八、部署：两个 location 就够</h2><p>nginx 侧非常薄，核心只有两个 <code>location</code>：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 微应用产物：磁盘上是 html/&lt;app&gt;/&lt;end&gt;/，对外是 /modules/&lt;app&gt;/&lt;end&gt;/</span></span><br><span class="line"><span class="section">location</span><span class="regexp"> ^~</span> /modules/ &#123;</span><br><span class="line">    <span class="attribute">alias</span> /usr/share/nginx/html/;</span><br><span class="line">    <span class="attribute">add_header</span> Cache-Control <span class="string">&quot;no-cache&quot;</span>;          <span class="comment"># 固定文件名，发版即生效</span></span><br><span class="line">    <span class="attribute">add_header</span> Access-Control-Allow-Origin <span class="string">&quot;*&quot;</span>;   <span class="comment"># 产物域可能被别的站点引用</span></span><br><span class="line">    <span class="attribute">autoindex</span> <span class="literal">off</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接口反代</span></span><br><span class="line"><span class="section">location</span> /data/ &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8000;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再加一条 SPA 回退给基座（深路由刷新），以及一条静态资源的真 404 规则。</p>
+<p>缓存策略按文件名是否带 hash 来分：</p>
+<ul>
+<li><code>/assets/</code>（带 contenthash）：<code>30d immutable</code>；</li>
+<li><code>/modules/</code>、<code>/static/</code>、<code>/config.js</code>（固定文件名）：<code>no-cache</code>；</li>
+<li><code>/index.html</code>：<code>no-cache</code>。</li>
+</ul>
+<p>最后一条曾经踩过：基座入口页没设缓存头，浏览器启发式缓存住旧版本，替换产物后用户看到的还是旧界面——<strong>旧 bundle 还在磁盘上，页面照常能开，所以极难发现</strong>。</p>
+<p>部署脚本做四件事：构建基座与所有应用 → 备份站点根 → 按账本清理不再产出的目录 → 铺产物 + 生成 <code>config.js</code> + 写部署账本。整个站点 48MB，一次发布两分钟内完成。</p>
+<hr>
+<h2 id="九、举一反三：Vue-3-也能这么干"><a href="#九、举一反三：Vue-3-也能这么干" class="headerlink" title="九、举一反三：Vue 3 也能这么干"></a>九、举一反三：Vue 3 也能这么干</h2><p><img src="react-vue-compare.svg" alt="同一套契约两种框架"></p>
+<p>写完这套东西之后我意识到：<strong>真正与框架绑定的只有「加载器」和「挂载函数」两个点</strong>，其余全是工程约定。所以把这套架构平移到 Vue 3 是完全可行的，只需要换三样东西：</p>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>React 版</th>
+<th>Vue 3 版</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产物形态</td>
+<td>UMD + <code>window.YugeApp_xxx</code></td>
+<td>UMD + 全局，或 <code>defineCustomElement</code> 注册自定义元素</td>
+</tr>
+<tr>
+<td>依赖外置</td>
+<td>react / react-dom / jsx-runtime</td>
+<td>vue / vue-router / element-plus（pinia）</td>
+</tr>
+<tr>
+<td>挂载</td>
+<td><code>createRoot(el).render(mod)</code></td>
+<td><code>createApp(mod).mount(el)</code> 或直接 append 自定义元素</td>
+</tr>
+<tr>
+<td>路由</td>
+<td>基座独占 History，微应用报 <code>routes</code></td>
+<td>完全相同：微应用不建 <code>createRouter</code></td>
+</tr>
+<tr>
+<td>样式隔离</td>
+<td>postcss 前缀 <code>.yuge-app-&lt;name&gt;</code></td>
+<td>同样前缀，或 <code>:host</code> + shadow DOM</td>
+</tr>
+</tbody></table>
+<p><strong>不变的部分恰恰是最有价值的部分</strong>：</p>
+<ul>
+<li>一份 <code>manifest.json</code> 契约；</li>
+<li>后端只存元数据，代码在磁盘；</li>
+<li>路由归基座，微应用只声明页面；</li>
+<li>框架运行时由基座注入唯一实例；</li>
+<li>独立运行页必须保留（能脱离基座调试）。</li>
+</ul>
+<p>换句话说，微前端的复杂度<strong>不在框架层，而在边界设计</strong>。想清楚「谁拥有路由、谁拥有依赖、样式怎么收敛、产物怎么描述自己」这四个问题，用 React 还是 Vue 只是 <code>mount</code> 函数里那几行代码的差别。</p>
+<p>Vue 3 甚至有两个额外便利：</p>
+<ol>
+<li><code>defineCustomElement</code> 把组件直接编译成原生自定义元素，连挂载函数都不用写，基座 <code>appendChild</code> 即可；</li>
+<li><code>scoped</code> 样式天然带作用域，隔离成本比 React 更低。</li>
+</ol>
+<p>反过来，React 的优势在于 <code>&lt;Routes&gt;</code> 的声明式分发和 <code>Suspense</code> 的加载状态管理写起来更顺。</p>
+<hr>
+<h2 id="十、这套架构适合什么场景"><a href="#十、这套架构适合什么场景" class="headerlink" title="十、这套架构适合什么场景"></a>十、这套架构适合什么场景</h2><p><strong>适合</strong>：</p>
+<ul>
+<li>应用数量 ≥ 3，且由不同人、不同节奏维护；</li>
+<li>有「一个按钮的改动要等别人一起发版」的真实痛点；</li>
+<li>需要同一份业务逻辑覆盖多端（PC 管理端 + 门户端 + 移动端）；</li>
+<li>希望新增业务线时不动主工程。</li>
+</ul>
+<p><strong>不适合</strong>：</p>
+<ul>
+<li>单一应用、单团队维护——微前端带来的契约成本（清单、注册、部署）会大于收益；</li>
+<li>页面之间强耦合、频繁共享状态——过度拆分只会让数据流更绕；</li>
+<li>团队里没人愿意维护构建工具链——这套方案的核心资产是 <code>ypack</code> 和 <code>runtime</code>，需要有人对它们负责。</li>
+</ul>
+<p>如果只是「想试试微前端」，qiankun 十分钟就能跑起来；但如果目标是「让 4 个团队互不阻塞地发版，同时保证技术栈可以演进」，那自己写一层薄薄的契约，往往比套一层厚重的框架更划算。</p>
+<hr>
+<h2 id="附：技术栈清单"><a href="#附：技术栈清单" class="headerlink" title="附：技术栈清单"></a>附：技术栈清单</h2><table>
+<thead>
+<tr>
+<th>层</th>
+<th>选型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基座</td>
+<td>React 19 + React Router 7</td>
+</tr>
+<tr>
+<td>构建</td>
+<td>Webpack 5（封装为 <code>ypack</code>，配置工厂模式）</td>
+</tr>
+<tr>
+<td>微前端</td>
+<td>UMD 全局变量 + manifest 契约（自研，未用 Module Federation）</td>
+</tr>
+<tr>
+<td>组件库</td>
+<td>antd 6，经 <code>@yuge/yui</code> 统一收口</td>
+</tr>
+<tr>
+<td>内核</td>
+<td><code>@yuge/yugecore</code>：loader / registry / request / event</td>
+</tr>
+<tr>
+<td>后端</td>
+<td>FastAPI + MySQL 8（只存元数据）</td>
+</tr>
+<tr>
+<td>部署</td>
+<td>nginx 静态托管 + <code>/data</code> 反代</td>
+</tr>
+</tbody></table>
+<p>整个前端 6 个应用 × 三端 = 13 个产物目录，一次全量构建约 90 秒，站点体积 48MB。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://hongyu2016.github.io/posts/b657b88f/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1004,105 +1366,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://hongyu2016.github.io/posts/27736c59/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/avatar.png">
-      <meta itemprop="name" content="刘宏羽">
-      <meta itemprop="description" content="记录技术点滴">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="羽歌天地博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/27736c59/" class="post-title-link" itemprop="url">小程序中使用css变量</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-23 15:09:12" itemprop="dateCreated datePublished" datetime="2020-11-23T15:09:12+08:00">2020-11-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-11-14 17:28:02" itemprop="dateModified" datetime="2026-11-14T17:28:02+08:00">2026-11-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/posts/27736c59/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/posts/27736c59/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在js中我们经常使用变量，但是在css中也能使用变量，你有用过吗？<br>今天我记录下在钉钉小程序工作台插件中使用css变量，因为我现在的工作主要是钉钉的移动端的工作台，是基于钉钉小程序开发的，然后是以单个组件的形式来开发的。<br>组件有可以设置很多配置项，比如：颜色，字体大小，背景等通过改变css样控制整个组件的呈现，这个时候css变量就可以派上用场了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/27736c59/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1170,20 +1437,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <rect x="20" y="20" width="860" height="46" rx="10" fill="#1a1f36"/>
+  <text x="40" y="49" font-size="14" font-weight="600" fill="#ffffff">同一套契约，两种框架实现</text>
+  <text x="640" y="49" font-size="11" fill="#b9bfd0">换框架 ≠ 换架构</text>
+
+  <rect x="20" y="72" width="270" height="38" rx="8" fill="#eef2ff" stroke="#c9d6ff"/>
+  <text x="155" y="96" font-size="12.5" font-weight="600" text-anchor="middle" fill="#1a1f36">React 版（本项目）</text>
+  <rect x="300" y="72" width="300" height="38" rx="8" fill="#f0f8f4" stroke="#b6ddc9"/>
+  <text x="450" y="96" font-size="12.5" font-weight="600" text-anchor="middle" fill="#0f6e56">与框架无关的约束</text>
+  <rect x="610" y="72" width="270" height="38" rx="8" fill="#fdf1ec" stroke="#f2c8b6"/>
+  <text x="745" y="96" font-size="12.5" font-weight="600" text-anchor="middle" fill="#1a1f36">Vue 版（可复刻）</text>
+
+  <rect x="20" y="118" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="38" y="140" font-size="11.5" font-weight="600" fill="#1a1f36">UMD 产物 + window 全局</text>
+  <text x="38" y="160" font-size="11" fill="#5b6274">window.YugeApp_di_engine</text>
+  <rect x="300" y="118" width="300" height="56" rx="8" fill="#f8fdfa" stroke="#d5ece2"/>
+  <text x="318" y="140" font-size="11.5" fill="#0f6e56">产物必须是浏览器可直接加载的</text>
+  <text x="318" y="160" font-size="11" fill="#5b6274">一份 script 进、一个全局对象出</text>
+  <rect x="610" y="118" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="628" y="140" font-size="11.5" font-weight="600" fill="#1a1f36">UMD 或 defineCustomElement</text>
+  <text x="628" y="160" font-size="11" fill="#5b6274">window.YugeApp_di_engine</text>
+
+  <rect x="20" y="182" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="38" y="204" font-size="11.5" font-weight="600" fill="#1a1f36">externals 六项</text>
+  <text x="38" y="224" font-size="11" fill="#5b6274">react / react-dom / antd…</text>
+  <rect x="300" y="182" width="300" height="56" rx="8" fill="#f8fdfa" stroke="#d5ece2"/>
+  <text x="318" y="204" font-size="11.5" fill="#0f6e56">框架运行时只能有一份</text>
+  <text x="318" y="224" font-size="11" fill="#5b6274">由基座注入，微应用不打包</text>
+  <rect x="610" y="182" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="628" y="204" font-size="11.5" font-weight="600" fill="#1a1f36">externals: vue / vue-router</text>
+  <text x="628" y="224" font-size="11" fill="#5b6274">/ element-plus</text>
+
+  <rect x="20" y="246" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="38" y="268" font-size="11.5" font-weight="600" fill="#1a1f36">mountModule(el, ctx)</text>
+  <text x="38" y="288" font-size="11" fill="#5b6274">交给微应用的 mount 函数</text>
+  <rect x="300" y="246" width="300" height="56" rx="8" fill="#f8fdfa" stroke="#d5ece2"/>
+  <text x="318" y="268" font-size="11.5" fill="#0f6e56">基座给容器 + 上下文</text>
+  <text x="318" y="288" font-size="11" fill="#5b6274">微应用自己负责渲染与卸载</text>
+  <rect x="610" y="246" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="628" y="268" font-size="11.5" font-weight="600" fill="#1a1f36">createApp().mount(el)</text>
+  <text x="628" y="288" font-size="11" fill="#5b6274">自定义元素则由基座 append</text>
+
+  <rect x="20" y="310" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="38" y="332" font-size="11.5" font-weight="600" fill="#1a1f36">只导出 routes 数组</text>
+  <text x="38" y="352" font-size="11" fill="#5b6274">不建 BrowserRouter</text>
+  <rect x="300" y="310" width="300" height="56" rx="8" fill="#f8fdfa" stroke="#d5ece2"/>
+  <text x="318" y="332" font-size="11.5" fill="#0f6e56">History 归基座独占</text>
+  <text x="318" y="352" font-size="11" fill="#5b6274">微应用只声明"我有哪些页面"</text>
+  <rect x="610" y="310" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="628" y="332" font-size="11.5" font-weight="600" fill="#1a1f36">只导出 routes 数组</text>
+  <text x="628" y="352" font-size="11" fill="#5b6274">不建 createRouter</text>
+
+  <rect x="20" y="374" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="38" y="396" font-size="11.5" font-weight="600" fill="#1a1f36">postcss 前缀隔离</text>
+  <text x="38" y="416" font-size="11" fill="#5b6274">.yuge-app-&lt;name&gt;</text>
+  <rect x="300" y="374" width="300" height="56" rx="8" fill="#f8fdfa" stroke="#d5ece2"/>
+  <text x="318" y="396" font-size="11.5" fill="#0f6e56">样式必须限定作用域</text>
+  <text x="318" y="416" font-size="11" fill="#5b6274">根节点挂唯一 class 或 shadow DOM</text>
+  <rect x="610" y="374" width="270" height="56" rx="8" fill="#ffffff" stroke="#dfe3ec"/>
+  <text x="628" y="396" font-size="11.5" font-weight="600" fill="#1a1f36">scoped / prefix</text>
+  <text x="628" y="416" font-size="11" fill="#5b6274">.yuge-app-&lt;name&gt; 或 :host</text>
+</svg>
