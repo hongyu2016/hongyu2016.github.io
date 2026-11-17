@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"hongyu2016.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="vue&#x2F;react 项目中常用的前端组件库 整理 表格里 框架 列的含义：React &#x3D; 只适用于 React；Vue &#x3D; 只适用于 Vue；通用 &#x3D; 框架无关，两边都能用；通用&#x2F;React、通用&#x2F;Vue &#x3D; 本身框架无关，但同组里还带了一个该框架的官方封装包。  按场景速查下面这份清单整理自真实项目中的实践经验，只保留业务代码里真正会 import 的部分，按场景归类。所列版本仅作参考——新项目">
+  <meta name="description" content="vue&#x2F;react 项目中常用的前端组件库 整理 表格里 框架 列的含义：React &#x3D; 只适用于 React；Vue &#x3D; 只适用于 Vue；通用 &#x3D; 框架无关，两边都能用。每个库独占一行，功能相近的排在相邻行。  按场景速查下面这份清单整理自真实项目中的实践经验，只保留业务代码里真正会 import 的部分，按场景归类。所列版本仅作参考——新项目按需取最新，但对齐 antd &#x2F; Element">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue&#x2F;react项目中常用的前端组件库">
 <meta property="og:url" content="https://hongyu2016.github.io/posts/4080e15/index.html">
 <meta property="og:site_name" content="羽歌天地博客">
-<meta property="og:description" content="vue&#x2F;react 项目中常用的前端组件库 整理 表格里 框架 列的含义：React &#x3D; 只适用于 React；Vue &#x3D; 只适用于 Vue；通用 &#x3D; 框架无关，两边都能用；通用&#x2F;React、通用&#x2F;Vue &#x3D; 本身框架无关，但同组里还带了一个该框架的官方封装包。  按场景速查下面这份清单整理自真实项目中的实践经验，只保留业务代码里真正会 import 的部分，按场景归类。所列版本仅作参考——新项目">
+<meta property="og:description" content="vue&#x2F;react 项目中常用的前端组件库 整理 表格里 框架 列的含义：React &#x3D; 只适用于 React；Vue &#x3D; 只适用于 Vue；通用 &#x3D; 框架无关，两边都能用。每个库独占一行，功能相近的排在相邻行。  按场景速查下面这份清单整理自真实项目中的实践经验，只保留业务代码里真正会 import 的部分，按场景归类。所列版本仅作参考——新项目按需取最新，但对齐 antd &#x2F; Element">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-17T09:42:47.000Z">
-<meta property="article:modified_time" content="2026-11-17T08:44:00.373Z">
+<meta property="article:modified_time" content="2026-11-17T08:51:44.132Z">
 <meta property="article:author" content="刘宏羽">
 <meta property="article:tag" content="vue">
 <meta property="article:tag" content="react">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-11-17 16:44:00" itemprop="dateModified" datetime="2026-11-17T16:44:00+08:00">2026-11-17</time>
+                <time title="修改时间：2026-11-17 16:51:44" itemprop="dateModified" datetime="2026-11-17T16:51:44+08:00">2026-11-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,7 +238,7 @@
 
       
         <h1 id="vue-react-项目中常用的前端组件库-整理"><a href="#vue-react-项目中常用的前端组件库-整理" class="headerlink" title="vue/react 项目中常用的前端组件库 整理"></a>vue/react 项目中常用的前端组件库 整理</h1><blockquote>
-<p>表格里 <strong>框架</strong> 列的含义：<code>React</code> = 只适用于 React；<code>Vue</code> = 只适用于 Vue；<code>通用</code> = 框架无关，两边都能用；<code>通用/React</code>、<code>通用/Vue</code> = 本身框架无关，但同组里还带了一个该框架的官方封装包。</p>
+<p>表格里 <strong>框架</strong> 列的含义：<code>React</code> = 只适用于 React；<code>Vue</code> = 只适用于 Vue；<code>通用</code> = 框架无关，两边都能用。每个库独占一行，功能相近的排在相邻行。</p>
 </blockquote>
 <h2 id="按场景速查"><a href="#按场景速查" class="headerlink" title="按场景速查"></a>按场景速查</h2><p>下面这份清单整理自真实项目中的实践经验，只保留业务代码里真正会 <code>import</code> 的部分，按场景归类。所列版本仅作参考——新项目按需取最新，但对齐 antd / Element Plus / React / Vue 大版本时这些值能少踩很多坑。</p>
 <span id="more"></span>
@@ -283,16 +283,34 @@
 <td>给 antd v4 的 Table 加虚拟滚动（v5 已内置 <code>virtual</code>）</td>
 </tr>
 <tr>
-<td><code>rc-*</code> / <code>@rc-component/*</code></td>
+<td><code>rc-*</code></td>
 <td>React</td>
 <td>—</td>
-<td>antd 的底层原子组件（<code>rc-select</code>、<code>rc-table</code>…），想脱离 antd 单独用某个交互时才会碰</td>
+<td>antd 的底层原子组件系列（<code>rc-select</code>、<code>rc-table</code>…），想脱离 antd 单独用某个交互时才会碰</td>
 </tr>
 <tr>
-<td><code>element-ui</code> / <code>element-plus</code> / <code>vux</code></td>
+<td><code>@rc-component/*</code></td>
+<td>React</td>
+<td>—</td>
+<td>antd 新版底层原子组件系列，作用同上，是近年重构后的新作用域</td>
+</tr>
+<tr>
+<td><code>element-ui</code></td>
 <td>Vue</td>
 <td>—</td>
-<td>Vue 生态的 PC/移动端组件库；Vue 2 用 <code>element-ui</code>、Vue 3 用 <code>element-plus</code>，新项目别在 Vue 3 上引前两者之外的老库</td>
+<td>Element 的 Vue 2 组件库，中后台老项目常见</td>
+</tr>
+<tr>
+<td><code>element-plus</code></td>
+<td>Vue</td>
+<td>—</td>
+<td>Element 的 Vue 3 版本，国内最流行的 Vue 组件库，中后台首选</td>
+</tr>
+<tr>
+<td><code>vux</code></td>
+<td>Vue</td>
+<td>—</td>
+<td>早期基于微信生态的 Vue 移动端组件库，现已基本停止维护，新项目别用</td>
 </tr>
 <tr>
 <td><code>ant-design-vue</code></td>
@@ -407,10 +425,16 @@
 <td>charts 全家桶（含 plots、流程图），体积大，按需引</td>
 </tr>
 <tr>
-<td><code>@antv/g2</code> / <code>@antv/g2plot</code></td>
+<td><code>@antv/g2</code></td>
 <td>通用</td>
 <td>—</td>
-<td>蚂蚁可视化底层与图表层，想深度定制时直接用它</td>
+<td>蚂蚁的图形语法可视化底层，想深度定制图表时直接用它</td>
+</tr>
+<tr>
+<td><code>@antv/g2plot</code></td>
+<td>通用</td>
+<td>—</td>
+<td>基于 G2 的图表封装，开箱即用，比直接写 G2 简单</td>
 </tr>
 <tr>
 <td><code>d3</code></td>
@@ -419,10 +443,16 @@
 <td>自由度高但学习曲线陡，做定制可视化/坐标系时用</td>
 </tr>
 <tr>
-<td><code>echarts-liquidfill</code> / <code>echarts-wordcloud</code></td>
+<td><code>echarts-liquidfill</code></td>
 <td>通用</td>
 <td>—</td>
-<td>水波球、词云等扩展图表</td>
+<td>ECharts 的水波球扩展图表</td>
+</tr>
+<tr>
+<td><code>echarts-wordcloud</code></td>
+<td>通用</td>
+<td>—</td>
+<td>ECharts 的词云扩展图表</td>
 </tr>
 <tr>
 <td><code>vue-chartjs</code></td>
@@ -459,16 +489,28 @@
 <td>即 React Flow v12，节点连线式画布（流程编排、审批流）最好用</td>
 </tr>
 <tr>
-<td><code>mxgraph</code> / <code>@typed-mxgraph/typed-mxgraph</code></td>
+<td><code>mxgraph</code></td>
 <td>通用</td>
 <td>—</td>
 <td>老牌绘图引擎，流程图/建模工具，体积大、API 老派</td>
 </tr>
 <tr>
-<td><code>@dagrejs/dagre</code> / <code>elkjs</code></td>
+<td><code>@typed-mxgraph/typed-mxgraph</code></td>
 <td>通用</td>
 <td>—</td>
-<td>自动布局算法，配合上面几个画布库算节点坐标</td>
+<td><code>mxgraph</code> 的 TypeScript 类型封装，方便在 TS 项目里调用</td>
+</tr>
+<tr>
+<td><code>@dagrejs/dagre</code></td>
+<td>通用</td>
+<td>—</td>
+<td>有向图自动布局算法，配合画布库算节点坐标</td>
+</tr>
+<tr>
+<td><code>elkjs</code></td>
+<td>通用</td>
+<td>—</td>
+<td>Eclipse 布局引擎，同样用于自动排布节点，复杂图效果更好</td>
 </tr>
 <tr>
 <td><code>@antv/x6</code></td>
@@ -493,10 +535,16 @@
 <td>轻量首选，无 Provider、无样板代码，中小项目几乎零成本</td>
 </tr>
 <tr>
-<td><code>redux</code> + <code>react-redux</code></td>
+<td><code>redux</code></td>
+<td>通用</td>
+<td>5.0.1</td>
+<td>老牌状态管理内核，配合 DevTools 调试体验最好，样板代码多</td>
+</tr>
+<tr>
+<td><code>react-redux</code></td>
 <td>React</td>
-<td>5.0.1 / 9.2.0</td>
-<td>老牌方案，配合 DevTools 调试体验最好，样板代码多</td>
+<td>9.2.0</td>
+<td><code>redux</code> 的 React 绑定，提供 <code>Provider</code> 与 <code>useSelector</code> / <code>useDispatch</code></td>
 </tr>
 <tr>
 <td><code>@reduxjs/toolkit</code></td>
@@ -511,16 +559,28 @@
 <td>基于 Redux 的 model 化封装，另有 <code>@rematch/vue</code>，Vue 用户会觉得像 vuex</td>
 </tr>
 <tr>
-<td><code>immer</code> / <code>use-immer</code></td>
-<td>通用/React</td>
+<td><code>immer</code></td>
+<td>通用</td>
 <td>9.0.19</td>
-<td>用可变写法产出不可变数据，<code>use-immer</code> 是 React hook；Redux Toolkit 已内置</td>
+<td>用可变写法产出不可变数据，Redux Toolkit 已内置</td>
 </tr>
 <tr>
-<td><code>immutable</code>（Immutable.js） / <code>immutability-helper</code></td>
+<td><code>use-immer</code></td>
+<td>React</td>
+<td>—</td>
+<td><code>immer</code> 的 React hook 封装，配合 <code>useState</code> 管理状态</td>
+</tr>
+<tr>
+<td><code>immutable</code></td>
 <td>通用</td>
 <td>—</td>
-<td>数据不可变结构，老项目常见；文档 <a target="_blank" rel="noopener" href="https://www.w3cschool.cn/doc_immutable/%EF%BC%9B%E6%96%B0%E9%A1%B9%E7%9B%AE%E4%B8%80%E8%88%AC%E7%94%A8">https://www.w3cschool.cn/doc_immutable/；新项目一般用</a> immer 替代</td>
+<td>即 Immutable.js，不可变数据结构，老项目常见；文档 <a target="_blank" rel="noopener" href="https://www.w3cschool.cn/doc_immutable/%EF%BC%9B%E6%96%B0%E9%A1%B9%E7%9B%AE%E4%B8%80%E8%88%AC%E7%94%A8">https://www.w3cschool.cn/doc_immutable/；新项目一般用</a> immer 替代</td>
+</tr>
+<tr>
+<td><code>immutability-helper</code></td>
+<td>通用</td>
+<td>—</td>
+<td>用简洁语法对不可变对象做增改删的老牌工具，新项目一般用 immer 替代</td>
 </tr>
 <tr>
 <td><code>vuex</code></td>
@@ -631,16 +691,28 @@
 <td>表单领域模型方案，配合 <code>@formily/react</code>、<code>@formily/reactive-react</code> 做复杂联动表单</td>
 </tr>
 <tr>
-<td><code>@designable/react</code> + <code>@designable/core</code></td>
+<td><code>@designable/react</code></td>
 <td>React</td>
 <td>—</td>
-<td>拖拽式设计器底座，阿里低代码引擎的前身；另有 <code>@designable/vue</code></td>
+<td>拖拽式设计器的 React 实现，阿里低代码引擎的前身</td>
 </tr>
 <tr>
-<td><code>@designable/formily-setters</code> / <code>formily-transformer</code></td>
+<td><code>@designable/core</code></td>
 <td>通用</td>
 <td>—</td>
-<td>把 Formily schema 接进设计器</td>
+<td>设计器内核，负责拖拽编排与 schema 模型，框架无关</td>
+</tr>
+<tr>
+<td><code>@designable/formily-setters</code></td>
+<td>通用</td>
+<td>—</td>
+<td>把 Formily 的属性配置面板接进设计器</td>
+</tr>
+<tr>
+<td><code>formily-transformer</code></td>
+<td>通用</td>
+<td>—</td>
+<td>Formily schema 与设计器 JSON 之间的转换工具</td>
 </tr>
 <tr>
 <td><code>fr-generator</code></td>
@@ -677,10 +749,16 @@
 <td>轻量富文本编辑器，2.0 长期未正式发版，1.3.7 最稳</td>
 </tr>
 <tr>
-<td><code>lexical</code> / <code>@lexical/react</code></td>
-<td>通用/React</td>
+<td><code>lexical</code></td>
+<td>通用</td>
 <td>0.28.0</td>
-<td>Meta 出品的编辑器框架，可扩展性强，适合做定制编辑器</td>
+<td>Meta 出品的编辑器内核，可扩展性强，适合做定制编辑器</td>
+</tr>
+<tr>
+<td><code>@lexical/react</code></td>
+<td>React</td>
+<td>—</td>
+<td><code>lexical</code> 的 React 绑定层</td>
 </tr>
 <tr>
 <td><code>@uiw/react-codemirror</code></td>
@@ -695,22 +773,40 @@
 <td>VS Code 同款，功能最全但体积大（几 MB），适合做「代码编辑」场景</td>
 </tr>
 <tr>
-<td><code>react-ace</code> / <code>ace-builds</code></td>
+<td><code>react-ace</code></td>
 <td>React</td>
 <td>—</td>
-<td>更老的代码编辑器方案</td>
+<td>Ace 编辑器的 React 封装，较老的代码编辑器方案</td>
 </tr>
 <tr>
-<td><code>markdown-it</code> / <code>react-markdown</code></td>
-<td>通用/React</td>
-<td>14.1.0 / 9.0.0</td>
-<td>Markdown 渲染，前者产出 HTML 字符串，后者直接输出 React 元素</td>
-</tr>
-<tr>
-<td><code>prismjs</code> / <code>highlight.js</code></td>
+<td><code>ace-builds</code></td>
 <td>通用</td>
-<td>1.28.0 / 11.8.0</td>
-<td>代码高亮，配合 Markdown 用</td>
+<td>—</td>
+<td>Ace 编辑器的构建产物，<code>react-ace</code> 的底层依赖</td>
+</tr>
+<tr>
+<td><code>markdown-it</code></td>
+<td>通用</td>
+<td>14.1.0</td>
+<td>Markdown 渲染库，产出 HTML 字符串</td>
+</tr>
+<tr>
+<td><code>react-markdown</code></td>
+<td>React</td>
+<td>9.0.0</td>
+<td>Markdown 渲染库，直接输出 React 元素</td>
+</tr>
+<tr>
+<td><code>prismjs</code></td>
+<td>通用</td>
+<td>1.28.0</td>
+<td>轻量代码高亮库，配合 Markdown 用</td>
+</tr>
+<tr>
+<td><code>highlight.js</code></td>
+<td>通用</td>
+<td>11.8.0</td>
+<td>老牌代码高亮库，开箱自动识别语言</td>
 </tr>
 <tr>
 <td><code>react-syntax-highlighter</code></td>
@@ -729,10 +825,16 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>@dnd-kit/core</code> + <code>@dnd-kit/sortable</code></td>
+<td><code>@dnd-kit/core</code></td>
 <td>React</td>
 <td>6.3.1</td>
-<td>新一代拖拽方案，支持键盘与无障碍，维护活跃，优先选它</td>
+<td>新一代拖拽方案的内核，支持键盘与无障碍，维护活跃，优先选它</td>
+</tr>
+<tr>
+<td><code>@dnd-kit/sortable</code></td>
+<td>React</td>
+<td>—</td>
+<td><code>dnd-kit</code> 的列表排序扩展，做拖拽排序时配合 core 用</td>
 </tr>
 <tr>
 <td><code>react-dnd</code></td>
@@ -741,10 +843,22 @@
 <td>基于 HTML5 拖放 API，坑多且维护乏力，老项目常见</td>
 </tr>
 <tr>
-<td><code>sortablejs</code> / <code>react-sortablejs</code> / <code>vuedraggable</code></td>
-<td>通用/React/Vue</td>
+<td><code>sortablejs</code></td>
+<td>通用</td>
 <td>1.15.0</td>
-<td>内核直接操作 DOM，两侧各有官方封装，简单列表排序够用</td>
+<td>拖拽排序内核，直接操作 DOM，框架无关</td>
+</tr>
+<tr>
+<td><code>react-sortablejs</code></td>
+<td>React</td>
+<td>—</td>
+<td><code>sortablejs</code> 的 React 封装，简单列表排序够用</td>
+</tr>
+<tr>
+<td><code>vuedraggable</code></td>
+<td>Vue</td>
+<td>—</td>
+<td><code>sortablejs</code> 的 Vue 封装，Vue 项目里性价比最高的拖拽排序选择</td>
 </tr>
 <tr>
 <td><code>react-rnd</code></td>
@@ -753,16 +867,28 @@
 <td>可拖拽 + 可缩放的容器（弹窗、画布元素）</td>
 </tr>
 <tr>
-<td><code>re-resizable</code> / <code>react-resizable</code></td>
+<td><code>re-resizable</code></td>
 <td>React</td>
 <td>6.9.11</td>
 <td>只缩放不拖拽，面板分栏拖拽调宽度时用</td>
 </tr>
 <tr>
-<td><code>react-custom-scrollbars</code> / <code>@better-scroll/*</code></td>
-<td>React/通用</td>
+<td><code>react-resizable</code></td>
+<td>React</td>
 <td>—</td>
-<td>自定义滚动条（仅 React）与移动端滚动增强（框架无关：下拉刷新、上拉加载、轮播）</td>
+<td>更早的可缩放组件方案，功能类似 <code>re-resizable</code></td>
+</tr>
+<tr>
+<td><code>react-custom-scrollbars</code></td>
+<td>React</td>
+<td>—</td>
+<td>React 的自定义滚动条组件</td>
+</tr>
+<tr>
+<td><code>@better-scroll/*</code></td>
+<td>通用</td>
+<td>—</td>
+<td>移动端滚动增强，支持下拉刷新、上拉加载、轮播，框架无关</td>
 </tr>
 </tbody></table>
 <h3 id="十、长列表与虚拟滚动"><a href="#十、长列表与虚拟滚动" class="headerlink" title="十、长列表与虚拟滚动"></a>十、长列表与虚拟滚动</h3><table>
@@ -793,16 +919,28 @@
 <td>自动高度、动态加载体验最好，聊天记录类场景很合适</td>
 </tr>
 <tr>
-<td><code>react-cool-virtual</code> / <code>rc-virtual-list</code></td>
+<td><code>react-cool-virtual</code></td>
 <td>React</td>
 <td>—</td>
-<td>前者基于 hook，后者是 antd 内部在用的实现</td>
+<td>基于 hook 的虚拟滚动方案</td>
 </tr>
 <tr>
-<td><code>react-infinite-scroll-component</code> / <code>react-lazyload</code></td>
+<td><code>rc-virtual-list</code></td>
 <td>React</td>
 <td>—</td>
-<td>滚动触底加载、图片懒加载的轻量方案</td>
+<td>antd 内部在用的虚拟列表实现</td>
+</tr>
+<tr>
+<td><code>react-infinite-scroll-component</code></td>
+<td>React</td>
+<td>—</td>
+<td>滚动触底加载更多的轻量方案</td>
+</tr>
+<tr>
+<td><code>react-lazyload</code></td>
+<td>React</td>
+<td>—</td>
+<td>图片懒加载的轻量方案</td>
 </tr>
 <tr>
 <td><code>better-scroll</code></td>
@@ -851,10 +989,16 @@
 <td>重复规则（每周一、每月末），日程系统的必备件</td>
 </tr>
 <tr>
-<td><code>cron-parser</code> / <code>cron-expression-validator</code></td>
+<td><code>cron-parser</code></td>
 <td>通用</td>
 <td>—</td>
-<td>解析与校验 cron 表达式，定时任务配置界面用</td>
+<td>解析 cron 表达式，定时任务配置界面用</td>
+</tr>
+<tr>
+<td><code>cron-expression-validator</code></td>
+<td>通用</td>
+<td>—</td>
+<td>校验 cron 表达式是否合法</td>
 </tr>
 <tr>
 <td><code>solarlunar</code></td>
@@ -885,40 +1029,82 @@
 <td>在线 Excel 编辑器（类飞书表格），功能最全但需商业授权</td>
 </tr>
 <tr>
-<td><code>js-export-excel</code> / <code>file-saver</code></td>
+<td><code>js-export-excel</code></td>
 <td>通用</td>
-<td>1.1.4 / 2.0.5</td>
-<td>简单导出与浏览器端存文件</td>
+<td>1.1.4</td>
+<td>前端简单导出 Excel</td>
 </tr>
 <tr>
-<td><code>html2canvas</code> / <code>html-to-image</code></td>
+<td><code>file-saver</code></td>
 <td>通用</td>
-<td>1.4.1 / 1.11.11</td>
+<td>2.0.5</td>
+<td>浏览器端保存文件到本地</td>
+</tr>
+<tr>
+<td><code>html2canvas</code></td>
+<td>通用</td>
+<td>1.4.1</td>
 <td>DOM 转图片（截图、分享海报），跨域图片会踩坑</td>
 </tr>
 <tr>
-<td><code>jspdf</code> / <code>react-to-print</code></td>
-<td>通用/React</td>
+<td><code>html-to-image</code></td>
+<td>通用</td>
+<td>1.11.11</td>
+<td>DOM 转图片，基于 SVG 实现，比 html2canvas 更现代</td>
+</tr>
+<tr>
+<td><code>jspdf</code></td>
+<td>通用</td>
 <td>2.5.2</td>
-<td>前端导出 PDF、调用打印；<code>react-to-print</code> 是 React 封装，Vue 用 <code>vue-print-nb</code> 或直接调 <code>window.print()</code></td>
+<td>前端导出 PDF</td>
 </tr>
 <tr>
-<td><code>qrcode</code> / <code>qrcode.react</code> / <code>jsbarcode</code></td>
-<td>通用/React</td>
-<td>1.5.0</td>
-<td>二维码、条形码生成；<code>qrcode</code>、<code>jsbarcode</code> 框架无关</td>
-</tr>
-<tr>
-<td><code>react-easy-crop</code> / <code>react-cropper</code></td>
+<td><code>react-to-print</code></td>
 <td>React</td>
-<td>4.7.4</td>
-<td>头像裁剪，前者手势体验好，后者功能更全</td>
+<td>—</td>
+<td>React 的打印封装，Vue 可用 <code>vue-print-nb</code> 或直接调 <code>window.print()</code></td>
 </tr>
 <tr>
-<td><code>exif-js</code> / <code>image-size</code></td>
+<td><code>qrcode</code></td>
+<td>通用</td>
+<td>1.5.0</td>
+<td>二维码生成，框架无关</td>
+</tr>
+<tr>
+<td><code>qrcode.react</code></td>
+<td>React</td>
+<td>—</td>
+<td><code>qrcode</code> 的 React 组件封装</td>
+</tr>
+<tr>
+<td><code>jsbarcode</code></td>
 <td>通用</td>
 <td>—</td>
-<td>读 EXIF 方向信息（手机拍照会横躺）、取图片宽高</td>
+<td>条形码生成，框架无关</td>
+</tr>
+<tr>
+<td><code>react-easy-crop</code></td>
+<td>React</td>
+<td>4.7.4</td>
+<td>头像裁剪，手势体验好</td>
+</tr>
+<tr>
+<td><code>react-cropper</code></td>
+<td>React</td>
+<td>—</td>
+<td>头像裁剪，基于 Cropper.js，功能更全</td>
+</tr>
+<tr>
+<td><code>exif-js</code></td>
+<td>通用</td>
+<td>—</td>
+<td>读取图片 EXIF 方向信息（手机拍照会横躺）</td>
+</tr>
+<tr>
+<td><code>image-size</code></td>
+<td>通用</td>
+<td>—</td>
+<td>获取图片宽高</td>
 </tr>
 </tbody></table>
 <h3 id="十三、工具函数"><a href="#十三、工具函数" class="headerlink" title="十三、工具函数"></a>十三、工具函数</h3><table>
@@ -931,34 +1117,70 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>lodash</code> / <code>lodash-es</code></td>
+<td><code>lodash</code></td>
 <td>通用</td>
 <td>4.17.23</td>
-<td>防抖节流、深拷贝、对象路径操作；<code>lodash-es</code> 支持 tree-shaking</td>
+<td>防抖节流、深拷贝、对象路径操作</td>
 </tr>
 <tr>
-<td><code>classnames</code> / <code>react-classnames</code></td>
-<td>通用 / React</td>
-<td>2.5.1</td>
-<td>条件拼 className，写组件必装；<code>react-classnames</code> 是早期 React 版写法，新项目直接用 <code>classnames</code>；Vue 3 内置对象语法可替代它</td>
-</tr>
-<tr>
-<td><code>uuid</code> / <code>nanoid</code></td>
-<td>通用</td>
-<td>9.0.1 / 3.3.11</td>
-<td>唯一 ID，<code>nanoid</code> 体积只有几百字节</td>
-</tr>
-<tr>
-<td><code>crypto-js</code> / <code>jsencrypt</code> / <code>js-base64</code></td>
-<td>通用</td>
-<td>4.1.1 / 3.0.0-rc.1 / 3.6.0</td>
-<td>加解密、RSA、Base64，密码传输与签名常用</td>
-</tr>
-<tr>
-<td><code>js-md5</code> / <code>spark-md5</code></td>
+<td><code>lodash-es</code></td>
 <td>通用</td>
 <td>—</td>
-<td>文件分片上传要算 md5，大文件用 <code>spark-md5</code> 增量算</td>
+<td><code>lodash</code> 的 ES module 版本，支持 tree-shaking</td>
+</tr>
+<tr>
+<td><code>classnames</code></td>
+<td>通用</td>
+<td>2.5.1</td>
+<td>条件拼 className，写组件必装；Vue 3 内置对象语法可替代它</td>
+</tr>
+<tr>
+<td><code>react-classnames</code></td>
+<td>React</td>
+<td>—</td>
+<td>早期的 React 版 className 拼接工具，新项目直接用 <code>classnames</code></td>
+</tr>
+<tr>
+<td><code>uuid</code></td>
+<td>通用</td>
+<td>9.0.1</td>
+<td>生成唯一 ID</td>
+</tr>
+<tr>
+<td><code>nanoid</code></td>
+<td>通用</td>
+<td>3.3.11</td>
+<td>更轻量的唯一 ID 库，体积只有几百字节</td>
+</tr>
+<tr>
+<td><code>crypto-js</code></td>
+<td>通用</td>
+<td>4.1.1</td>
+<td>对称加解密与哈希，密码传输与签名常用</td>
+</tr>
+<tr>
+<td><code>jsencrypt</code></td>
+<td>通用</td>
+<td>3.0.0-rc.1</td>
+<td>RSA 加解密</td>
+</tr>
+<tr>
+<td><code>js-base64</code></td>
+<td>通用</td>
+<td>3.6.0</td>
+<td>Base64 编解码</td>
+</tr>
+<tr>
+<td><code>js-md5</code></td>
+<td>通用</td>
+<td>—</td>
+<td>计算字符串的 MD5</td>
+</tr>
+<tr>
+<td><code>spark-md5</code></td>
+<td>通用</td>
+<td>—</td>
+<td>增量计算 MD5，大文件分片上传时用</td>
 </tr>
 <tr>
 <td><code>pinyin-pro</code></td>
@@ -967,10 +1189,28 @@
 <td>汉字转拼音，通讯录分组、搜索联想用</td>
 </tr>
 <tr>
-<td><code>change-case</code> / <code>omit.js</code> / <code>flat</code> / <code>is-url</code></td>
+<td><code>change-case</code></td>
 <td>通用</td>
 <td>—</td>
-<td>大小写转换、剔除字段、扁平化、URL 判断等小工具</td>
+<td>字符串大小写风格转换</td>
+</tr>
+<tr>
+<td><code>omit.js</code></td>
+<td>通用</td>
+<td>—</td>
+<td>从对象中剔除指定字段</td>
+</tr>
+<tr>
+<td><code>flat</code></td>
+<td>通用</td>
+<td>—</td>
+<td>对象扁平化与反扁平化</td>
+</tr>
+<tr>
+<td><code>is-url</code></td>
+<td>通用</td>
+<td>—</td>
+<td>判断字符串是否为合法 URL</td>
 </tr>
 <tr>
 <td><code>lz-string</code></td>
@@ -979,16 +1219,28 @@
 <td>字符串压缩后存 localStorage，避免超配额</td>
 </tr>
 <tr>
-<td><code>clipboard</code> / <code>copy-to-clipboard</code></td>
+<td><code>clipboard</code></td>
 <td>通用</td>
 <td>2.0.11</td>
-<td>一键复制</td>
+<td>一键复制，基于 <code>document.execCommand</code></td>
 </tr>
 <tr>
-<td><code>ahooks</code> / <code>react-use</code></td>
+<td><code>copy-to-clipboard</code></td>
+<td>通用</td>
+<td>—</td>
+<td>一键复制，更轻量的实现</td>
+</tr>
+<tr>
+<td><code>ahooks</code></td>
 <td>React</td>
-<td>3.9.6 / 17.4.2</td>
-<td>常用 hooks 合集，能省掉大量样板代码（分页、防抖、监听、请求）</td>
+<td>3.9.6</td>
+<td>阿里出品的常用 hooks 合集，省掉大量样板代码（分页、防抖、监听、请求）</td>
+</tr>
+<tr>
+<td><code>react-use</code></td>
+<td>React</td>
+<td>17.4.2</td>
+<td>社区 hooks 合集，覆盖面广</td>
 </tr>
 <tr>
 <td><code>@vueuse/core</code></td>
@@ -1009,10 +1261,16 @@
 <td>阿里 <code>ahooks</code> 的 Vue 3 移植，React 转 Vue 几乎零学习成本</td>
 </tr>
 <tr>
-<td><code>pubsub-js</code> / <code>@evecalm/message-hub</code></td>
+<td><code>pubsub-js</code></td>
 <td>通用</td>
 <td>—</td>
-<td>跨组件事件总线，微前端里做应用间通信</td>
+<td>跨组件事件总线（发布订阅）</td>
+</tr>
+<tr>
+<td><code>@evecalm/message-hub</code></td>
+<td>通用</td>
+<td>—</td>
+<td>消息中心，微前端里做应用间通信</td>
 </tr>
 </tbody></table>
 <h3 id="十四、动画与交互反馈"><a href="#十四、动画与交互反馈" class="headerlink" title="十四、动画与交互反馈"></a>十四、动画与交互反馈</h3><table>
@@ -1055,10 +1313,16 @@
 <td>顶部进度条，路由切换时用</td>
 </tr>
 <tr>
-<td><code>react-countup</code> / <code>typewriter-effect</code></td>
+<td><code>react-countup</code></td>
 <td>React</td>
 <td>—</td>
-<td>数字滚动、打字机效果，数据大屏常见</td>
+<td>数字滚动动画，数据大屏常见</td>
+</tr>
+<tr>
+<td><code>typewriter-effect</code></td>
+<td>React</td>
+<td>—</td>
+<td>打字机效果</td>
 </tr>
 <tr>
 <td><code>intro.js-react</code></td>
@@ -1083,16 +1347,34 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>swiper</code> / <code>react-slick</code> / <code>slick-carousel</code></td>
-<td>通用/React</td>
-<td>8.4.5 / 0.31.0</td>
-<td>轮播，<code>swiper</code> 手感更好且自带 Vue 组件，<code>react-slick</code> 更贴合 React</td>
+<td><code>swiper</code></td>
+<td>通用</td>
+<td>8.4.5</td>
+<td>轮播，手感好且自带 Vue / React 组件</td>
 </tr>
 <tr>
-<td><code>pullltorefreshjs</code> / <code>inobounce</code></td>
+<td><code>react-slick</code></td>
+<td>React</td>
+<td>0.31.0</td>
+<td>更贴合 React 写法的轮播组件</td>
+</tr>
+<tr>
+<td><code>slick-carousel</code></td>
 <td>通用</td>
 <td>—</td>
-<td>下拉刷新、禁用 iOS 橡皮筋回弹</td>
+<td><code>react-slick</code> 依赖的底层轮播库</td>
+</tr>
+<tr>
+<td><code>pullltorefreshjs</code></td>
+<td>通用</td>
+<td>—</td>
+<td>H5 下拉刷新</td>
+</tr>
+<tr>
+<td><code>inobounce</code></td>
+<td>通用</td>
+<td>—</td>
+<td>禁用 iOS 橡皮筋回弹</td>
 </tr>
 <tr>
 <td><code>@amap/amap-jsapi-loader</code></td>
@@ -1107,10 +1389,28 @@
 <td>百度地图的 React 封装</td>
 </tr>
 <tr>
-<td><code>dingtalk-jsapi</code> / <code>weixin-js-sdk</code> / <code>wps-jsapi</code> / <code>gdt-jsapi</code></td>
+<td><code>dingtalk-jsapi</code></td>
 <td>通用</td>
 <td>—</td>
-<td>钉钉、微信、WPS、广点通的 JSAPI，做企业内嵌应用时绕不开</td>
+<td>钉钉 JSAPI，企业内嵌应用调用原生能力用</td>
+</tr>
+<tr>
+<td><code>weixin-js-sdk</code></td>
+<td>通用</td>
+<td>—</td>
+<td>微信 JS-SDK，公众号 / H5 调用微信能力用</td>
+</tr>
+<tr>
+<td><code>wps-jsapi</code></td>
+<td>通用</td>
+<td>—</td>
+<td>WPS JSAPI，WPS 内嵌应用用</td>
+</tr>
+<tr>
+<td><code>gdt-jsapi</code></td>
+<td>通用</td>
+<td>—</td>
+<td>广点通 JSAPI，投放落地页场景用</td>
 </tr>
 </tbody></table>
 <h3 id="十六、国际化"><a href="#十六、国际化" class="headerlink" title="十六、国际化"></a>十六、国际化</h3><table>
@@ -1123,10 +1423,16 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>react-i18next</code> + <code>i18next</code></td>
-<td>通用/React</td>
-<td>12.1.5 / 22.4.9</td>
-<td>生态最完整，支持命名空间、按需加载语言包；<code>i18next</code> 内核框架无关</td>
+<td><code>react-i18next</code></td>
+<td>React</td>
+<td>12.1.5</td>
+<td>React 国际化方案，生态最完整，支持命名空间与按需加载语言包</td>
+</tr>
+<tr>
+<td><code>i18next</code></td>
+<td>通用</td>
+<td>22.4.9</td>
+<td>国际化内核，框架无关，<code>react-i18next</code> 基于它</td>
 </tr>
 <tr>
 <td><code>react-intl</code></td>
@@ -1157,16 +1463,28 @@
 <td>模块打包，<code>Module Federation</code> 是 v5 新增能力</td>
 </tr>
 <tr>
-<td><code>@swc/core</code> / <code>swc-loader</code></td>
+<td><code>@swc/core</code></td>
 <td>通用</td>
 <td>1.7.40</td>
-<td>用 Rust 换掉 babel，构建速度提升明显</td>
+<td>用 Rust 实现的编译内核，换掉 babel 后构建速度提升明显</td>
 </tr>
 <tr>
-<td><code>sass</code> / <code>less</code></td>
+<td><code>swc-loader</code></td>
 <td>通用</td>
-<td>1.43.5 / 3.9.0</td>
-<td>CSS 预处理器，<code>sass</code> 用 dart-sass（<code>node-sass</code> 已废弃）</td>
+<td>—</td>
+<td><code>@swc/core</code> 的 webpack loader</td>
+</tr>
+<tr>
+<td><code>sass</code></td>
+<td>通用</td>
+<td>1.43.5</td>
+<td>CSS 预处理器，现用 dart-sass（node-sass 已废弃）</td>
+</tr>
+<tr>
+<td><code>less</code></td>
+<td>通用</td>
+<td>3.9.0</td>
+<td>CSS 预处理器，语法更接近 CSS</td>
 </tr>
 <tr>
 <td><code>typescript</code></td>
@@ -1175,16 +1493,34 @@
 <td>类型系统</td>
 </tr>
 <tr>
-<td><code>eslint</code> + <code>@typescript-eslint/*</code></td>
+<td><code>eslint</code></td>
 <td>通用</td>
 <td>7.32.0</td>
-<td>代码规范，v9 起换成 <code>eslint.config.js</code> 扁平配置；Vue 项目另加 <code>eslint-plugin-vue</code></td>
+<td>代码规范检查，v9 起换成 <code>eslint.config.js</code> 扁平配置</td>
 </tr>
 <tr>
-<td><code>husky</code> / <code>lint-staged</code> / <code>@commitlint/cli</code></td>
+<td><code>@typescript-eslint/*</code></td>
+<td>通用</td>
+<td>—</td>
+<td>ESLint 的 TypeScript 规则插件，Vue 项目另加 <code>eslint-plugin-vue</code></td>
+</tr>
+<tr>
+<td><code>husky</code></td>
 <td>通用</td>
 <td>9.1.7</td>
-<td>提交前校验与提交信息规范</td>
+<td>Git hooks 管理，挂载提交前检查</td>
+</tr>
+<tr>
+<td><code>lint-staged</code></td>
+<td>通用</td>
+<td>—</td>
+<td>只对暂存区文件跑 lint</td>
+</tr>
+<tr>
+<td><code>@commitlint/cli</code></td>
+<td>通用</td>
+<td>—</td>
+<td>校验提交信息格式规范</td>
 </tr>
 <tr>
 <td><code>vconsole</code></td>
